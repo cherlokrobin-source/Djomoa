@@ -1,271 +1,244 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Djomoa | الرزمانة المزدوجة</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="style.css">
+<title>الرزنامة المزدوجة</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Cairo', sans-serif;
-        }
+<style>
 
-        body {
-            background: radial-gradient(circle at top, #1e3a8a 0%, #0f172a 40%, #020617 100%);
-            color: white;
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        /* خلفية متحركة */
-        body::before {
-            content: '';
-            position: fixed;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(#38bdf8 1px, transparent 1px);
-            background-size: 40px 40px;
-            opacity: 0.08;
-            animation: move 40s linear infinite;
-            z-index: -1;
-        }
+body{
+    font-family:Arial;
+    overflow:hidden;
+    color:white;
 
-        @keyframes move {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(-300px, -300px); }
-        }
+    background:
+    linear-gradient(rgba(0,0,0,0.55),
+    rgba(0,0,0,0.75)),
 
-        /* Header */
-        header {
-            padding: 120px 20px 80px;
-            text-align: center;
-        }
+    url("https://images.unsplash.com/photo-1532693322450-2cb5c511067d?q=80&w=1920");
 
-        .logo {
-            font-size: 65px;
-            font-weight: 900;
-            background: linear-gradient(90deg, #38bdf8, #818cf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+}
 
-        .subtitle {
-            margin-top: 20px;
-            font-size: 22px;
-            color: #cbd5e1;
-            max-width: 800px;
-            margin-inline: auto;
-            line-height: 1.8;
-        }
+#canvas{
+    width:100vw;
+    height:70vh;
+    display:block;
 
-        /* Navigation */
-        nav {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            padding-bottom: 40px;
-        }
+    background:rgba(0,0,0,0.2);
 
-        nav a {
-            text-decoration: none;
-            color: white;
-            padding: 14px 26px;
-            border-radius: 14px;
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(12px);
-            transition: 0.3s;
-            font-weight: 700;
-        }
+    backdrop-filter:blur(3px);
+}
 
-        nav a:hover {
-            background: #38bdf8;
-            color: #0f172a;
-            transform: translateY(-4px);
-        }
+header{
+    width:100%;
+    padding:20px;
 
-        /* Hero Card */
-        .hero {
-            max-width: 1200px;
-            margin: auto;
-            padding: 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
+    position:absolute;
+    top:0;
 
-        .card {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(18px);
-            padding: 35px;
-            border-radius: 24px;
-            transition: 0.4s;
-            position: relative;
-            overflow: hidden;
-        }
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
-            transition: 0.8s;
-        }
+    background:rgba(0,0,0,0.25);
 
-        .card:hover::before {
-            left: 100%;
-        }
+    backdrop-filter:blur(10px);
+}
 
-        .card:hover {
-            transform: translateY(-8px);
-            border-color: #38bdf8;
-            box-shadow: 0 15px 40px rgba(56, 189, 248, 0.2);
-        }
+.logo{
+    font-size:28px;
+    font-weight:bold;
 
-        .card h2 {
-            font-size: 28px;
-            margin-bottom: 15px;
-            color: #38bdf8;
-        }
+    color:#ffd54f;
+}
 
-        .card p {
-            line-height: 2;
-            color: #e2e8f0;
-        }
+.menu{
+    display:flex;
+    gap:15px;
+}
 
-        /* Stats */
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            padding: 70px 20px;
-        }
+.menu button{
+    padding:10px 18px;
 
-        .stat {
-            text-align: center;
-        }
+    border:none;
+    border-radius:12px;
 
-        .stat h3 {
-            font-size: 48px;
-            color: #38bdf8;
-        }
+    background:rgba(255,255,255,0.08);
 
-        .stat p {
-            color: #cbd5e1;
-        }
+    color:white;
 
-        /* CTA */
-        .cta {
-            text-align: center;
-            padding: 60px 20px;
-        }
+    cursor:pointer;
 
-        .cta button {
-            padding: 18px 40px;
-            font-size: 20px;
-            border: none;
-            border-radius: 18px;
-            background: linear-gradient(90deg, #38bdf8, #818cf8);
-            color: white;
-            cursor: pointer;
-            font-weight: 900;
-            transition: 0.4s;
-        }
+    transition:0.3s;
+}
 
-        .cta button:hover {
-            transform: scale(1.07);
-            box-shadow: 0 0 30px rgba(56, 189, 248, 0.5);
-        }
+.menu button:hover{
+    background:rgba(255,255,255,0.18);
 
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 40px;
-            color: #94a3b8;
-            margin-top: 60px;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-        }
-    </style>
+    transform:translateY(-2px);
+}
+
+#panel{
+
+    position:absolute;
+
+    bottom:20px;
+
+    width:100%;
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:20px;
+
+    flex-wrap:wrap;
+}
+
+.card{
+
+    min-width:220px;
+
+    padding:20px;
+
+    border-radius:18px;
+
+    background:rgba(255,255,255,0.08);
+
+    border:1px solid rgba(255,255,255,0.15);
+
+    backdrop-filter:blur(10px);
+
+    text-align:center;
+
+    transition:0.3s;
+
+    box-shadow:
+    0 0 20px rgba(0,0,0,0.35);
+}
+
+.card:hover{
+
+    transform:translateY(-5px)
+    scale(1.03);
+
+    background:rgba(255,255,255,0.12);
+}
+
+.card i{
+
+    font-size:30px;
+
+    margin-bottom:10px;
+
+    display:block;
+}
+
+.fa-sun{
+    color:orange;
+}
+
+.fa-moon{
+    color:#9ecbff;
+}
+
+.fa-calendar-days{
+    color:white;
+}
+
+.title{
+    font-size:18px;
+    margin-bottom:10px;
+}
+
+.value{
+    font-size:22px;
+    font-weight:bold;
+}
+
+</style>
 </head>
 
 <body>
 
-    <header>
-        <div class="logo">📅 DJOMOA</div>
-        <p class="subtitle">
-            منصة الرزمانة المزدوجة لحساب الزمن بين النظامين الشمسي والقمري
-            مع نموذج تراكمي يمتد حتى 50,000 سنة.
-        </p>
-    </header>
+<header>
 
-    <nav>
-        <a href="#">الرئيسية</a>
-        <a href="#">الرزمانة</a>
-        <a href="#">الحساب</a>
-        <a href="#">المخطط الزمني</a>
-    </nav>
+<div class="logo">
+☀ الرزنامة المزدوجة 🌙
+</div>
 
-    <section class="hero">
-        <div class="card">
-            <h2>🌍 الرؤية</h2>
-            <p>بناء نظام زمني متكامل يجمع بين التقويم الشمسي والقمري في واجهة بصرية حديثة ودقيقة.</p>
-        </div>
+<div class="menu">
 
-        <div class="card">
-            <h2>📆 الرزمانة</h2>
-            <p>عرض السنوات والأيام بشكل تراكمي مع احتساب الفروقات الزمنية الطويلة.</p>
-        </div>
+<button>الرئيسية</button>
 
-        <div class="card">
-            <h2>⚡ التقنية</h2>
-            <p>موقع سريع وحديث مبني بتقنيات الويب ويعمل مباشرة على GitHub Pages.</p>
-        </div>
-    </section>
+<button>البحث</button>
 
-    <section class="stats">
-        <div class="stat">
-            <h3>50K+</h3>
-            <p>سنة مستهدفة</p>
-        </div>
+<button>الخط الزمني</button>
 
-        <div class="stat">
-            <h3>2</h3>
-            <p>تقويمات مدمجة</p>
-        </div>
+<button>حول النظام</button>
 
-        <div class="stat">
-            <h3>∞</h3>
-            <p>توسع مستقبلي</p>
-        </div>
-    </section>
+</div>
 
-    <section class="cta">
-        <button onclick="showMessage()">تشغيل النظام التجريبي</button>
-        <p id="msg" style="margin-top:25px; font-size:20px; color:#38bdf8;"></p>
-    </section>
+</header>
 
-    <footer>
-        © 2026 Djomoa Project — الرزمانة المزدوجة
-    </footer>
+<canvas id="canvas"></canvas>
 
-    <script>
-        function showMessage(){
-            document.getElementById("msg").innerHTML = "تم تشغيل النظام التجريبي بنجاح ✔";
-        }
-    </script>
-    <script src="script.js"></script>
+<div id="panel">
+
+<div class="card">
+
+<i class="fa-solid fa-sun"></i>
+
+<div class="title">التاريخ الشمسي</div>
+
+<div class="value" id="solarText">
+1/1/1
+</div>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-moon"></i>
+
+<div class="title">التاريخ القمري</div>
+
+<div class="value" id="lunarText">
+1/1/1
+</div>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-calendar-days"></i>
+
+<div class="title">اسم اليوم</div>
+
+<div class="value" id="weekText">
+Sunday
+</div>
+
+</div>
+
+</div>
+
+<script src="engine.js"></script>
+<script src="timeline.js"></script>
+
 </body>
 </html>

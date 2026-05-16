@@ -1,0 +1,16 @@
+body {
+    margin: 0;
+    padding: 0;
+
+    background-image:
+        linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.75)),
+        url("https://images.unsplash.com/photo-1532693322450-2cb5c511067d");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+
+    color: white;
+    font-family: Arial, sans-serif;
+}

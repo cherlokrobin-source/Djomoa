@@ -3,39 +3,119 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Djomoa</title>
+<title>Djomoa | محرك الزمن</title>
 
 <style>
 body{
-font-family: Arial;
-background:#0f172a;
+margin:0;
+font-family: Arial, sans-serif;
+background: linear-gradient(135deg,#0f172a,#1e293b);
 color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.container{
+background: rgba(255,255,255,0.05);
+backdrop-filter: blur(10px);
+padding:25px;
+border-radius:20px;
+width:90%;
+max-width:420px;
+box-shadow: 0 10px 30px rgba(0,0,0,0.4);
 text-align:center;
-padding-top:100px;
+}
+
+h1{
+margin-bottom:5px;
+font-size:28px;
+}
+
+p{
+opacity:0.8;
+font-size:14px;
+margin-bottom:20px;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:none;
+border-radius:10px;
+font-size:16px;
+outline:none;
 }
 
 button{
-padding:15px 25px;
-font-size:18px;
+width:100%;
+padding:12px;
+margin-top:15px;
 border:none;
 border-radius:10px;
-background:#22c55e;
+font-size:16px;
+background:#38bdf8;
+color:black;
 cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#0ea5e9;
+}
+
+.result{
+margin-top:20px;
+text-align:right;
+background: rgba(255,255,255,0.05);
+padding:10px;
+border-radius:10px;
+font-size:14px;
+line-height:1.6;
 }
 </style>
+
 </head>
 
 <body>
 
-<h1>Djomoa</h1>
-<p>النظام يعمل الآن بدون أخطاء</p>
+<div class="container">
 
-<button onclick="showTime()">عرض الوقت</button>
+<h1>Djomoa</h1>
+<p>محرك الزمن القمري والشمسي</p>
+
+<input type="number" id="yearInput" placeholder="أدخل سنة (1 - 50000)">
+
+<button onclick="calculate()">ابدأ الحساب</button>
+
+<div class="result" id="result">النتائج ستظهر هنا...</div>
+
+</div>
 
 <script>
-function showTime(){
-const now = new Date();
-alert("الوقت الآن: " + now.toLocaleString());
+function calculate(){
+
+let year = parseInt(document.getElementById("yearInput").value);
+
+if(isNaN(year) || year < 1 || year > 50000){
+document.getElementById("result").innerHTML =
+"⚠️ أدخل سنة صحيحة بين 1 و 50000";
+return;
+}
+
+// نموذج حساب مبسط قابل للتطوير
+let lunar = year * 1.03;
+let solar = year * 0.97;
+let diff = lunar - solar;
+
+document.getElementById("result").innerHTML =
+"📅 السنة المدخلة: " + year + "<br><br>" +
+"🌙 الحساب القمري: " + lunar.toFixed(2) + "<br>" +
+"☀️ الحساب الشمسي: " + solar.toFixed(2) + "<br>" +
+"📊 الفارق التراكمي: " + diff.toFixed(2) + "<br><br>" +
+"🎯 مرجع النظام: 2083 داخل نموذج Djomoa";
 }
 </script>
 

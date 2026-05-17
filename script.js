@@ -1,63 +1,63 @@
 // ====================================================
-//        Djomoa Core Engine: The Pure Simulator
+//    Djomoa Core Engine: Parallel Boundary Simulator
 // ====================================================
 
-// المصفوفة المرجعية لأيام الأسبوع (نقطة الانطلاق الثابتة للمشروع: اليوم 1 هو الجمعة)
+// مصفوفة الأيام (نقطة الصفر الثابتة للمشروع: اليوم 1 هو الجمعة)
 const WEEK_DAYS = ["الجمعة", "السبت", "الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس"];
 
 // أطوال الشهور الشمسية المعيارية
 const SOLAR_MONTH_DAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
-// أسماء الشهور لغرض العرض في الواجهة
+// أسماء الشهور للعرض في الواجهة
 const SOLAR_MONTH_NAMES = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
 const LUNAR_MONTH_NAMES = ["محرم", "صفر", "ربيع الأول", "ربيع الآخر", "جمادى الأولى", "جمادى الآخرة", "رجب", "شعبان", "رمضان", "شوال", "ذو القعدة", "ذو الحجة"];
 
-// 1. تدقيق كبس السنة الشمسية (النظام اليولياني/القرني المعياري)
+// 1. قاعدة كبس السنة الشمسية المعيارية
 function isSolarLeap(year) {
     return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
 }
 
-// 2. تدقيق كبس السنة القمرية (الدورة الاصطلاحية الثلاثينية)
+// 2. قاعدة كبس السنة القمرية (الدورة الاصطلاحية الثلاثينية لضبط شهر ذو الحجة)
 function isLunarLeap(year) {
-    const leapYearsInCycle = [2, 5, 7, 10, 13, 16, 18, 21, 24, 26, 29];
-    return leapYearsInCycle.includes(year % 30);
+    const leapYearsCycle = [2, 5, 7, 10, 13, 16, 18, 21, 24, 26, 29];
+    return leapYearsCycle.includes(year % 30);
 }
 
-// 3. دالة المحاكاة المطلقة: الحساب يوماً بيوم وتتبع التقويمين معاً
-function runAbsoluteSimulation() {
+// 3. المحرك النهائي: محاكاة شرط التوقف المزدوج والصارم
+function runParallelSimulation() {
     // إعدادات نقطة الصفر المشتركة (1 يناير سنة 1 = 1 محرم سنة 1)
-    let sDay = 1, sMonth = 0, sYear = 1; // عدادات التقويم الشمسي
-    let lDay = 1, lMonth = 0, lYear = 1; // عدادات التقويم القمري
+    let sDay = 1, sMonth = 0, sYear = 1; 
+    let lDay = 1, lMonth = 0, lYear = 1; 
     
-    let totalDaysElapsed = 0; // العداد الكلي للأيام المارة في المشروع
-    const TARGET_LUNAR_YEAR = 49999; // سقف التوقف القمري المستهدف
+    let totalDaysElapsed = 0; 
+    const TARGET_YEAR_LIMIT = 49999; 
     
-    let snapshotResult = null;
+    let lunarFreezeSnapshot = null; // لتخزين لحظة تجمد القمري
+    let finalSolarSnapshot = null;  // لتخزين لحظة إغلاق الشمسي
 
-    // حلقة التكرار التي تمشي عبر الزمن يوماً تلو الآخر
+    // المرحلة الأولى: التقويمان يركضان معاً حتى يتجمد القمري عند 30 ذو الحجة 49999
     while (true) {
         totalDaysElapsed++;
 
-        // [أ] تتبع حركة التاريخ القمري الفعلي
-        let currentLunarMonthDays = (lMonth % 2 === 0) ? 30 : 29; // شهور وترية وزوجية بالتناوب
-        if (lMonth === 11) { // شهر ذو الحجة يتأثر بالركود والكبس
+        // وتيرة الشهور القمرية (فردي 30 وزوجي 29)
+        let currentLunarMonthDays = (lMonth % 2 === 0) ? 30 : 29;
+        if (lMonth === 11) { // ذو الحجة
             currentLunarMonthDays = isLunarLeap(lYear) ? 30 : 29;
         }
 
-        // قنص اللحظة التاريخية المطلوبة: إتمام 30 ذو الحجة سنة 49999
-        if (lYear === TARGET_LUNAR_YEAR && lMonth === 11 && lDay === currentLunarMonthDays) {
-            let dayOfWeekIndex = (totalDaysElapsed - 1) % 7; // استخراج اسم اليوم بدقة رياضية
-            
-            snapshotResult = {
+        // فحص شرط تجمد القمري: نهاية ذو الحجة سنة 49999
+        if (lYear === TARGET_YEAR_LIMIT && lMonth === 11 && lDay === currentLunarMonthDays) {
+            let dayOfWeekIndex = (totalDaysElapsed - 1) % 7;
+            lunarFreezeSnapshot = {
                 lunarDate: `${lDay} ${LUNAR_MONTH_NAMES[lMonth]} ${lYear} هـ`,
-                solarDate: `${sDay} ${SOLAR_MONTH_NAMES[sMonth]} ${sYear} م`,
+                solarDateMated: `${sDay} ${SOLAR_MONTH_NAMES[sMonth]} ${sYear} م`,
                 dayName: WEEK_DAYS[dayOfWeekIndex],
-                daysCount: totalDaysElapsed
+                daysAtFreeze: totalDaysElapsed
             };
-            break; // إيقاف العداد القمري وتجميد المحاكاة فوراً عند خط النهاية
+            break; // كسر الحلقة الأولى وتثبيت العداد القمري للأبد عند هذه النقطة!
         }
 
-        // الانتقال لليوم القمري التالي
+        // تحريك اليوم القمري
         lDay++;
         if (lDay > currentLunarMonthDays) {
             lDay = 1;
@@ -68,13 +68,10 @@ function runAbsoluteSimulation() {
             }
         }
 
-        // [ب] تتبع حركة التاريخ الشمسي الفعلي بالتوازي
+        // تحريك اليوم الشمسي بالتوازي
         let currentSolarMonthDays = SOLAR_MONTH_DAYS[sMonth];
-        if (sMonth === 1 && isSolarLeap(sYear)) { // معالجة 29 فبراير في السنوات الكبيسة شمسياً
-            currentSolarMonthDays = 29;
-        }
+        if (sMonth === 1 && isSolarLeap(sYear)) { currentSolarMonthDays = 29; }
 
-        // الانتقال لليوم الشمسي التالي
         sDay++;
         if (sDay > currentSolarMonthDays) {
             sDay = 1;
@@ -86,31 +83,66 @@ function runAbsoluteSimulation() {
         }
     }
 
-    return snapshotResult;
+    // المرحلة الثانية: العداد الشمسي يستمر بالركض وحيداً في خط الزمن حتى يغلق 31 ديسمبر 49999
+    while (true) {
+        // فحص شرط إغلاق الشمسي النهائي للمشروع
+        if (sYear === TARGET_YEAR_LIMIT && sMonth === 11 && sDay === 31) {
+            let finalDayIndex = totalDaysElapsed % 7; // استخراج اسم يوم الإغلاق الشمسي
+            finalSolarSnapshot = {
+                solarDateFinal: `${sDay} ${SOLAR_MONTH_NAMES[sMonth]} ${sYear} م`,
+                finalDayName: WEEK_DAYS[finalDayIndex],
+                daysAtFinal: totalDaysElapsed
+            };
+            break; // إغلاق المحرك بالكامل!
+        }
+
+        totalDaysElapsed++;
+
+        // تحريك اليوم الشمسي فقط
+        let currentSolarMonthDays = SOLAR_MONTH_DAYS[sMonth];
+        if (sMonth === 1 && isSolarLeap(sYear)) { currentSolarMonthDays = 29; }
+
+        sDay++;
+        if (sDay > currentSolarMonthDays) {
+            sDay = 1;
+            sMonth++;
+            if (sMonth > 11) {
+                sMonth = 0;
+                sYear++;
+            }
+        }
+    }
+
+    // حساب صافي الفارق بالأيام التي قطعها الشمسي بمفرده بعد تجمد القمري
+    let netWaitingDays = finalSolarSnapshot.daysAtFinal - lunarFreezeSnapshot.daysAtFreeze;
+
+    return {
+        freeze: lunarFreezeSnapshot,
+        final: finalSolarSnapshot,
+        waitingDays: netWaitingDays
+    };
 }
 
-// 4. ربط العداد بالواجهة (عند الضغط على الزر يتم تفعيل المحاكي وعرض النتيجة)
+// 4. ربط المحرك بالواجهة الرسومية للموقع
 function initDjomoaEngine() {
     const calcBtn = document.getElementById("calcBtn") || document.querySelector(".searchBox button");
     const container = document.querySelector(".searchBox");
 
     if (!calcBtn || !container) return;
 
-    // تهيئة نص الزر ليدل على العداد الحقيقي
-    calcBtn.textContent = "تشغيل العداد المثالي (50,000 سنة)";
+    calcBtn.textContent = "تشغيل عداد السباق المتوازي النهائي";
 
     calcBtn.addEventListener("click", () => {
-        // تشغيل العداد
-        const result = runAbsoluteSimulation();
+        // تشغيل المحاكاة الصارمة
+        const result = runParallelSimulation();
 
-        // إنشاء أو تحديث صندوق عرض النتائج في الواجهة
         let resultBox = document.getElementById("engineResult");
         if (!resultBox) {
             resultBox = document.createElement("div");
             resultBox.id = "engineResult";
             resultBox.style.marginTop = "25px";
             resultBox.style.padding = "20px";
-            resultBox.style.background = "rgba(0, 0, 0, 0.75)";
+            resultBox.style.background = "rgba(0, 0, 0, 0.85)";
             resultBox.style.borderRadius = "16px";
             resultBox.style.border = "2px solid #ffd54f";
             resultBox.style.textAlign = "right";
@@ -118,27 +150,31 @@ function initDjomoaEngine() {
         }
 
         resultBox.innerHTML = `
-            <h3 style="color: #ffd54f; margin-bottom: 15px; font-size: 18px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px;">📊 نتيجة العداد الحقيقي لـ Djomoa</h3>
+            <h3 style="color: #ffd54f; margin-bottom: 15px; font-size: 18px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px;">🏁 نتائج محاكاة خط النهاية الصارم لـ Djomoa</h3>
             
-            <p style="margin: 8px 0; font-size: 15px; color: #fff;">🛑 <b>نقطة تجمد العداد القمري:</b> <span style="color: #ffb300; font-weight: bold;">${result.lunarDate}</span></p>
-            
-            <div style="background: rgba(167, 255, 235, 0.05); border-radius: 8px; padding: 12px; margin-top: 12px; border-right: 4px solid #a7ffeb;">
-                <p style="margin: 0; font-size: 14px; color: #a7ffeb; font-weight: bold;">📅 التاريخ الشمسي الموازي في تلك اللحظة:</p>
-                <p style="margin: 5px 0 0 0; font-size: 16px; color: #fff;">
-                    يوافق تماماً: <span style="color: #ffd54f; font-weight: bold;">${result.solarDate}</span>
+            <div style="background: rgba(255, 179, 0, 0.08); border-radius: 8px; padding: 12px; margin-top: 10px; border-right: 4px solid #ffb300;">
+                <p style="margin: 0; font-size: 14px; color: #ffb300; font-weight: bold;">🛑 محطة تجمد العداد القمري الأول:</p>
+                <p style="margin: 5px 0 0 0; font-size: 14px; color: #fff; line-height: 1.5;">
+                    تجمد عند: <span style="color: #ffd54f; font-weight: bold;">${result.freeze.lunarDate}</span><br>
+                    وكان اسم اليوم هو: <span style="color: #a7ffeb; font-weight: bold;">يوم [ ${result.freeze.dayName} ]</span><br>
+                    والتاريخ الشمسي المقابل له في تلك اللحظة: <span style="color: #9ecbff; font-weight: bold;">${result.freeze.solarDateMated}</span>
                 </p>
             </div>
 
-            <div style="background: rgba(255, 213, 79, 0.05); border-radius: 8px; padding: 12px; margin-top: 10px; border-right: 4px solid #ffd54f;">
-                <p style="margin: 0; font-size: 14px; color: #ffd54f; font-weight: bold;">📅 اسم اليوم الحقيقي عند التوقف الدقيق:</p>
-                <p style="margin: 5px 0 0 0; font-size: 18px; color: #fff; font-weight: bold; text-align: center; color: #a7ffeb;">
-                    يوم [ ${result.dayName} ]
+            <div style="background: rgba(167, 255, 235, 0.08); border-radius: 8px; padding: 12px; margin-top: 12px; border-right: 4px solid #a7ffeb;">
+                <p style="margin: 0; font-size: 14px; color: #a7ffeb; font-weight: bold;">📅 محطة إغلاق العداد الشمسي اللاحق:</p>
+                <p style="margin: 5px 0 0 0; font-size: 14px; color: #fff; line-height: 1.5;">
+                    استمر وحيداً حتى أغلق عند: <span style="color: #ffd54f; font-weight: bold;">${result.final.solarDateFinal}</span><br>
+                    اسم يوم الإغلاق النهائي للمشروع: <span style="color: #a7ffeb; font-weight: bold;">يوم [ ${result.final.finalDayName} ]</span>
                 </p>
             </div>
 
-            <p style="margin-top: 12px; font-size: 11px; color: rgba(255,255,255,0.4); text-align: center;">
-                ⏳ عدد الأيام المطلقة المارة المتراكمة بالكامل: ${result.daysCount.toLocaleString()} يوماً.
-            </p>
+            <div style="background: rgba(255, 79, 79, 0.08); border-radius: 8px; padding: 12px; margin-top: 12px; border-right: 4px solid #ff4f4f;">
+                <p style="margin: 0; font-size: 14px; color: #ff4f4f; font-weight: bold;">📊 مسافة الفارق الصافي الكلي بالأيام:</p>
+                <p style="margin: 5px 0 0 0; font-size: 14px; color: #fff;">
+                    قطع العداد الشمسي بمفرده بعد تجمد القمري مسافة: <span style="color: #9ecbff; font-weight: bold;">${result.waitingDays.toLocaleString()} يوماً كاملة</span> لكي يلحق برقم السنة ويقفل الدورة الشاملة.
+                </p>
+            </div>
         `;
     });
 }

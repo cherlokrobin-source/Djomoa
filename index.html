@@ -1,328 +1,244 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الرزنامة المزدوجة</title>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        /* إعدادات عامة وتصفير الهوامش */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+<title>الرزنامة المزدوجة</title>
 
-        body {
-            overflow: hidden;
-            color: white;
-            background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.85)),
-                        url("https://images.unsplash.com/photo-1532693322450-2cb5c511067d?q=80&w=1920");
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-        /* شريط التنقل العلوي */
-        header {
-            width: 100%;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            z-index: 10;
-        }
+<style>
 
-        .logo {
-            font-size: 22px;
-            font-weight: bold;
-            color: #ffd54f;
-            text-shadow: 0 0 10px rgba(255, 213, 79, 0.3);
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        .menu {
-            display: flex;
-            gap: 12px;
-        }
+body{
+    font-family:Arial;
+    overflow:hidden;
+    color:white;
 
-        .menu button {
-            padding: 10px 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.85);
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+    background:
+    linear-gradient(rgba(0,0,0,0.55),
+    rgba(0,0,0,0.75)),
 
-        .menu button:hover, .menu button.active-btn {
-            background: #ffd54f;
-            color: #111;
-            border-color: #ffd54f;
-            box-shadow: 0 4px 15px rgba(255, 213, 79, 0.2);
-            transform: translateY(-2px);
-        }
+    url("https://images.unsplash.com/photo-1532693322450-2cb5c511067d?q=80&w=1920");
 
-        /* منطقة محتوى الصفحات والكانفاس */
-        .main-container {
-            position: relative;
-            flex: 1;
-            width: 100%;
-        }
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+}
 
-        #canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none; /* للسماح بالضغط على العناصر تحته */
-        }
+#canvas{
+    width:100vw;
+    height:70vh;
+    display:block;
 
-        /* نظام الصفحات */
-        .page {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: none; /* مخفية افتراضياً */
-            justify-content: center;
-            align-items: center;
-            z-index: 2;
-            padding: 20px;
-            animation: fadeIn 0.5s ease forwards;
-        }
+    background:rgba(0,0,0,0.2);
 
-        .page.active {
-            display: flex;
-        }
+    backdrop-filter:blur(3px);
+}
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.98); }
-            to { opacity: 1; transform: scale(1); }
-        }
+header{
+    width:100%;
+    padding:20px;
 
-        /* لوحة التحكم الرئيسية (البطاقات) */
-        #panel {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            flex-wrap: wrap;
-            width: 100%;
-            max-width: 1000px;
-        }
+    position:absolute;
+    top:0;
 
-        .card {
-            min-width: 240px;
-            padding: 30px 20px;
-            border-radius: 24px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            text-align: center;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-        }
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 
-        .card:hover {
-            transform: translateY(-8px);
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-        }
+    background:rgba(0,0,0,0.25);
 
-        .card i {
-            font-size: 36px;
-            margin-bottom: 15px;
-            display: block;
-        }
+    backdrop-filter:blur(10px);
+}
 
-        .fa-sun { color: #ffb300; text-shadow: 0 0 15px rgba(255,179,0,0.4); }
-        .fa-moon { color: #9ecbff; text-shadow: 0 0 15px rgba(158,203,255,0.4); }
-        .fa-calendar-days { color: #a7ffeb; text-shadow: 0 0 15px rgba(167,255,235,0.4); }
+.logo{
+    font-size:28px;
+    font-weight:bold;
 
-        .title {
-            font-size: 15px;
-            color: rgba(255, 255, 255, 0.6);
-            margin-bottom: 12px;
-            letter-spacing: 0.5px;
-        }
+    color:#ffd54f;
+}
 
-        .value {
-            font-size: 28px;
-            font-weight: bold;
-            color: #ffffff;
-        }
+.menu{
+    display:flex;
+    gap:15px;
+}
 
-        /* تنسيق صناديق الصفحات الأخرى */
-        .searchBox, .aboutBox, .timelineBox {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 40px;
-            border-radius: 24px;
-            text-align: center;
-            max-width: 500px;
-            width: 100%;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-        }
+.menu button{
+    padding:10px 18px;
 
-        h2 {
-            color: #ffd54f;
-            margin-bottom: 20px;
-            font-size: 24px;
-        }
+    border:none;
+    border-radius:12px;
 
-        /* المدخلات والأزرار لصفحة البحث */
-        .searchBox input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 10px;
-            background: rgba(0, 0, 0, 0.3);
-            color: white;
-            font-size: 16px;
-            text-align: center;
-            outline: none;
-            transition: 0.3s;
-        }
+    background:rgba(255,255,255,0.08);
 
-        .searchBox input:focus {
-            border-color: #ffd54f;
-            box-shadow: 0 0 10px rgba(255, 213, 79, 0.2);
-        }
+    color:white;
 
-        .searchBox button {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 10px;
-            background: #ffd54f;
-            color: #111;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+    cursor:pointer;
 
-        .searchBox button:hover {
-            background: #ffe082;
-            transform: translateY(-2px);
-        }
+    transition:0.3s;
+}
 
-        .aboutBox p {
-            font-size: 16px;
-            line-height: 1.8;
-            color: rgba(255, 255, 255, 0.8);
-        }
-    </style>
+.menu button:hover{
+    background:rgba(255,255,255,0.18);
+
+    transform:translateY(-2px);
+}
+
+#panel{
+
+    position:absolute;
+
+    bottom:20px;
+
+    width:100%;
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:20px;
+
+    flex-wrap:wrap;
+}
+
+.card{
+
+    min-width:220px;
+
+    padding:20px;
+
+    border-radius:18px;
+
+    background:rgba(255,255,255,0.08);
+
+    border:1px solid rgba(255,255,255,0.15);
+
+    backdrop-filter:blur(10px);
+
+    text-align:center;
+
+    transition:0.3s;
+
+    box-shadow:
+    0 0 20px rgba(0,0,0,0.35);
+}
+
+.card:hover{
+
+    transform:translateY(-5px)
+    scale(1.03);
+
+    background:rgba(255,255,255,0.12);
+}
+
+.card i{
+
+    font-size:30px;
+
+    margin-bottom:10px;
+
+    display:block;
+}
+
+.fa-sun{
+    color:orange;
+}
+
+.fa-moon{
+    color:#9ecbff;
+}
+
+.fa-calendar-days{
+    color:white;
+}
+
+.title{
+    font-size:18px;
+    margin-bottom:10px;
+}
+
+.value{
+    font-size:22px;
+    font-weight:bold;
+}
+
+</style>
 </head>
+
 <body>
 
-    <header>
-        <div class="logo">
-            <i class="fa-solid fa-sun"></i> الرزنامة المزدوجة <i class="fa-solid fa-moon"></i>
-        </div>
-        <div class="menu">
-            <button onclick="showPage('homePage', this)" class="active-btn">الرئيسية</button>
-            <button onclick="showPage('searchPage', this)">البحث</button>
-            <button onclick="showPage('timelinePage', this)">الخط الزمني</button>
-            <button onclick="showPage('aboutPage', this)">حول النظام</button>
-        </div>
-    </header>
+<header>
 
-    <div class="main-container">
-        
-        <canvas id="canvas"></canvas>
+<div class="logo">
+☀ الرزنامة المزدوجة 🌙
+</div>
 
-        <section id="homePage" class="page active">
-            <div id="panel">
-                <div class="card">
-                    <i class="fa-solid fa-sun"></i>
-                    <div class="title">التاريخ الشمسي</div>
-                    <div class="value" id="solarText">1/1/1</div>
-                </div>
+<div class="menu">
 
-                <div class="card">
-                    <i class="fa-solid fa-moon"></i>
-                    <div class="title">التاريخ القمري</div>
-                    <div class="value" id="lunarText">1/1/1</div>
-                </div>
+<button>الرئيسية</button>
 
-                <div class="card">
-                    <i class="fa-solid fa-calendar-days"></i>
-                    <div class="title">اسم اليوم</div>
-                    <div class="value" id="weekText">Sunday</div>
-                </div>
-            </div>
-        </section>
+<button>البحث</button>
 
-        <section id="searchPage" class="page">
-            <div class="searchBox">
-                <h2><i class="fa-solid fa-magnifying-glass"></i> البحث عن تاريخ</h2>
-                <input type="number" id="yearInput" placeholder="السنة">
-                <input type="number" id="monthInput" placeholder="الشهر">
-                <input type="number" id="dayInput" placeholder="اليوم">
-                <button onclick="searchDate()">بحث مرن</button>
-            </div>
-        </section>
+<button>الخط الزمني</button>
 
-        <section id="timelinePage" class="page">
-            <div class="timelineBox">
-                <h2><i class="fa-solid fa-timeline"></i> الخط الزمني</h2>
-                <p>محتوى الخط الزمني والأحداث الفلكية والتقويمية ستظهر هنا.</p>
-            </div>
-        </section>
+<button>حول النظام</button>
 
-        <section id="aboutPage" class="page">
-            <div class="aboutBox">
-                <h2><i class="fa-solid fa-circle-info"></i> حول النظام</h2>
-                <p>مشروع متطور يمثل نظام رزنامة مزدوجة (شمسي وقمري مستقل)، مصمم بمعادلات وخوارزميات دقيقة لحساب الفروقات الزمنية بدقة متناهية تمتد حتى 50,000 سنة.</p>
-            </div>
-        </section>
+</div>
 
-    </div>
+</header>
 
-    <script>
-        function showPage(pageId, buttonElement) {
-            // إخفاء كل الصفحات
-            const pages = document.querySelectorAll('.page');
-            pages.forEach(page => page.classList.remove('active'));
+<canvas id="canvas"></canvas>
 
-            // إظهار الصفحة المطلوبة
-            const selectedPage = document.getElementById(pageId);
-            if(selectedPage) {
-                selectedPage.classList.add('active');
-            }
+<div id="panel">
 
-            // تحديث تصميم الزر النشط
-            const buttons = document.querySelectorAll('.menu button');
-            buttons.forEach(btn => btn.classList.remove('active-btn'));
-            if(buttonElement) {
-                buttonElement.classList.add('active-btn');
-            }
-        }
-    </script>
+<div class="card">
 
-    <script src="engine.js"></script>
-    <script src="timeline.js"></script>
+<i class="fa-solid fa-sun"></i>
+
+<div class="title">التاريخ الشمسي</div>
+
+<div class="value" id="solarText">
+1/1/1
+</div>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-moon"></i>
+
+<div class="title">التاريخ القمري</div>
+
+<div class="value" id="lunarText">
+1/1/1
+</div>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-calendar-days"></i>
+
+<div class="title">اسم اليوم</div>
+
+<div class="value" id="weekText">
+Sunday
+</div>
+
+</div>
+
+</div>
+
+<script src="engine.js"></script>
+<script src="timeline.js"></script>
 
 </body>
 </html>

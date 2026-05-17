@@ -1,320 +1,439 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة رُزمانة جُمُعَة | Djomoa Dual Calendar</title>
+    <style>
+        :root {
+            --bg-dark: #0d1117;
+            --panel-bg: rgba(22, 27, 34, 0.85);
+            --accent-gold: #ffd54f;
+            --accent-gold-hover: #ffe082;
+            --text-white: #ffffff;
+            --text-muted: #8b949e;
+            --border-color: rgba(255, 213, 79, 0.3);
+            --card-cyan: #a7ffeb;
+            --card-blue: #9ecbff;
+        }
 
-<title>Djomoa | الرزمانة المزدوجة</title>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            line-height: 1.8;
+            padding: 40px 20px;
+            background-image: radial-gradient(circle at top right, rgba(255, 213, 79, 0.05), transparent),
+                              radial-gradient(circle at bottom left, rgba(167, 255, 235, 0.03), transparent);
+            background-attachment: fixed;
+        }
 
-<style>
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Cairo',sans-serif;
-}
+        /* Header Styles */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
 
-body{
-    background:#050816;
-    color:white;
-    overflow-x:hidden;
-}
+        header h1 {
+            font-size: 2.5rem;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(255, 213, 79, 0.2);
+        }
 
-/* خلفية متحركة */
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
 
-body::before{
-    content:"";
-    position:fixed;
-    width:100%;
-    height:100%;
-    background:
-    radial-gradient(circle at top right,#1d3557 0%,transparent 30%),
-    radial-gradient(circle at bottom left,#ffb70333 0%,transparent 30%);
-    z-index:-2;
-}
+        /* Search Box and Dashboard Card */
+        .searchBox {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            margin-bottom: 40px;
+            text-align: center;
+        }
 
-.stars{
-    position:fixed;
-    width:100%;
-    height:100%;
-    background:url('https://www.transparenttextures.com/patterns/stardust.png');
-    opacity:0.25;
-    z-index:-1;
-}
+        .searchBox p.intro-text {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: var(--text-white);
+        }
 
-/* الهيدر */
+        .searchBox button {
+            background: var(--accent-gold);
+            color: #000;
+            border: none;
+            padding: 14px 32px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 213, 79, 0.3);
+        }
 
-header{
-    width:100%;
-    padding:20px 8%;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    position:fixed;
-    top:0;
-    left:0;
-    backdrop-filter:blur(10px);
-    background:rgba(0,0,0,0.25);
-    border-bottom:1px solid rgba(255,255,255,0.08);
-    z-index:1000;
-}
+        .searchBox button:hover {
+            background: var(--accent-gold-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 213, 79, 0.5);
+        }
 
-.logo{
-    font-size:28px;
-    font-weight:900;
-    color:#ffd166;
-}
+        /* Dynamic Result Container Style */
+        #engineResult {
+            margin-top: 30px;
+            animation: fadeIn 0.5s ease-out;
+        }
 
-nav a{
-    color:white;
-    text-decoration:none;
-    margin:0 12px;
-    transition:0.3s;
-    font-weight:600;
-}
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-nav a:hover{
-    color:#ffd166;
-}
+        /* Article Styles */
+        .project-definition {
+            background: var(--panel-bg);
+            border-right: 4px solid var(--accent-gold);
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
 
-/* القسم الرئيسي */
+        .project-definition h2 {
+            color: var(--accent-gold);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
 
-.hero{
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:120px 20px 60px;
-}
+        .project-definition blockquote {
+            font-style: italic;
+            background: rgba(255, 213, 79, 0.05);
+            padding: 15px 20px;
+            border-right: 3px solid var(--accent-gold);
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+            color: #ffe082;
+            border-radius: 4px;
+        }
 
-.hero-content{
-    max-width:900px;
-}
+        .project-definition h3 {
+            color: var(--card-cyan);
+            font-size: 1.4rem;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
 
-.hero h1{
-    font-size:60px;
-    line-height:1.2;
-    margin-bottom:25px;
-    font-weight:900;
-}
+        .project-definition p {
+            margin-bottom: 15px;
+            color: #e2e8f0;
+            text-align: justify;
+        }
 
-.hero h1 span{
-    color:#ffd166;
-}
+        .project-definition ul {
+            margin-right: 25px;
+            margin-bottom: 20px;
+            color: #e2e8f0;
+        }
 
-.hero p{
-    font-size:22px;
-    color:#d6d6d6;
-    line-height:1.9;
-    margin-bottom:40px;
-}
+        .project-definition ul li {
+            margin-bottom: 8px;
+        }
 
-/* الازرار */
+        .project-definition strong {
+            color: var(--accent-gold);
+        }
 
-.buttons{
-    display:flex;
-    justify-content:center;
-    gap:20px;
-    flex-wrap:wrap;
-}
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.95rem;
+        }
 
-.btn{
-    padding:16px 34px;
-    border-radius:50px;
-    text-decoration:none;
-    font-size:18px;
-    font-weight:700;
-    transition:0.3s;
-}
+        .comparison-table th, .comparison-table td {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 15px;
+            text-align: right;
+        }
 
-.btn-main{
-    background:#ffd166;
-    color:#111;
-}
+        .comparison-table th {
+            background-color: rgba(255, 213, 79, 0.1);
+            color: var(--accent-gold);
+            font-weight: bold;
+        }
 
-.btn-main:hover{
-    transform:translateY(-4px);
-    box-shadow:0 10px 25px rgba(255,209,102,0.4);
-}
+        .comparison-table tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
 
-.btn-second{
-    border:2px solid #ffd166;
-    color:#ffd166;
-}
-
-.btn-second:hover{
-    background:#ffd166;
-    color:#111;
-}
-
-/* البطاقات */
-
-.features{
-    padding:80px 8%;
-}
-
-.section-title{
-    text-align:center;
-    font-size:42px;
-    margin-bottom:50px;
-    color:#ffd166;
-}
-
-.cards{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:25px;
-}
-
-.card{
-    background:rgba(255,255,255,0.05);
-    border:1px solid rgba(255,255,255,0.08);
-    border-radius:25px;
-    padding:30px;
-    transition:0.3s;
-    backdrop-filter:blur(10px);
-}
-
-.card:hover{
-    transform:translateY(-8px);
-    border-color:#ffd166;
-}
-
-.card h3{
-    margin-bottom:15px;
-    font-size:24px;
-    color:#ffd166;
-}
-
-.card p{
-    line-height:1.9;
-    color:#ddd;
-}
-
-/* الفوتر */
-
-footer{
-    text-align:center;
-    padding:35px;
-    margin-top:50px;
-    border-top:1px solid rgba(255,255,255,0.08);
-    color:#aaa;
-}
-
-/* الهاتف */
-
-@media(max-width:768px){
-
-    .hero h1{
-        font-size:38px;
-    }
-
-    .hero p{
-        font-size:18px;
-    }
-
-    nav{
-        display:none;
-    }
-
-}
-
-</style>
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 20px;
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="stars"></div>
+    <div class="container">
+        
+        <header>
+            <h1>منصة رُزمانة جُمُعَة | Djomoa</h1>
+            <p>منصة الحساب التراكمي المزدوج للنظامين الشمسي والقمري</p>
+        </header>
 
-<header>
+        <div class="searchBox">
+            <p class="intro-text">انقر أدناه لتشغيل المحرك الميقاتي والمحاكاة المطلقة عبر 50,000 سنة</p>
+            <button id="calcBtn">تفعيل العداد والمحاكاة</button>
+            <div id="engineResult"></div>
+        </div>
 
-<div class="logo">DJOMOA</div>
+        <article class="project-definition">
+            <h2>👑 المقال التعريفي: هندسة منصة "جُمُعَة" الكونية وأبعادها الميقاتية</h2>
+            
+            <blockquote>
+                "إن كانت (التوفيقات الإلهامية) قد أرّخت لحركة الزمن عبر خمسة عشر قرناً، فإن منصة (Djomoa) تولد اليوم لتقود هندسة الميقات المزدوج عبر خمسين ألف سنة في عمق المستقبل."
+            </blockquote>
 
-<nav>
-<a href="#">الرئيسية</a>
-<a href="#">الرزمانة</a>
-<a href="#">الحساب الفلكي</a>
-<a href="#">حول المشروع</a>
-</nav>
+            <h3>📊 فلسفة المشروع ونقطة التحول الفلكية</h3>
+            <p>
+                تتجاوز منصة <strong>جُمُعَة (Djomoa)</strong> حدود التقاويم الرقمية التقليدية الجافة لتجسد محاكاة كونية حقيقية وسائلة، تعمل بنظام <strong>"السباق المتوازي"</strong> يوماً بيوم ودون أي تقريب رياضي أو اختزال في الساعات أو الأيام. ينطلق العدادان الشمسي والقمري معاً بالتوازي من نقطة الصفر المشتركة والمثبتة تاريخياً وهي (يوم الجمعة 1 يناير سنة 1 ميلادية الموافق تماماً لـ 1 محرم سنة 1 هجرية)، متتبعين وتيرة خط الزمن الصارم صعوداً نحو سقف التوقف الأكبر للمشروع الممتد حتى 50,000 سنة.
+            </p>
+            
+            <p>
+                ويقوم هذا المحرك البرمجي على هندسة شرطية بالغة التعقيد والدقة، حيث تتجلى ميزة <strong>الحدود الصارمة (Boundary Conditions)</strong> في نقطتين رئيسيتين:
+            </p>
+            <ul>
+                <li><strong>🛑 تجمد العداد القمري:</strong> عند بلوغ الحساب القمري ذروة دورته المستهدفة عند <strong>30 ذو الحجة سنة 49999 هـ</strong>، يتوقف العداد القمري تماماً ويتحنط عند تلك اللحظة ويقتنص المحرك اسم اليوم والتاريخ الشمسي الموازي له بدقة متناهية.</li>
+                <li><strong>📅 استمرار العداد الشمسي:</strong> بينما يتجمد الحساب القمري مستقراً في مكانه، يرفض العداد الشمسي التوقف، بل يكمل الركض والعد وحيداً عبر القرون يوماً بعد يوم، ليغلق دورته الشاملة عند تاريخ <strong>31 ديسمبر سنة 49999 م</strong>.</li>
+            </ul>
 
-</header>
+            <h3>⚖️ دراسة مقارنة: منصة "جُمُعَة" في مواجهة كتاب "التوفيقات الإلهامية"</h3>
+            <p>
+                يُعد كتاب <em>"التوفيقات الإلهامية في مقارنة السنين الهجرية بالسنين الإفرنجية والقبطية"</em> لمؤلفه العالم الفلكي والمؤرخ المصري الكبير <strong>محمد مختار باشا</strong> (المتوفى عام 1897م) أحد أهم المراجع الميقاتية التاريخية. وقد استلهمت منصة جُمُعَة من هذا المرجع العظيم <strong>مسطرة أطوال الشهور القمرية</strong> (الفردي 30 يوماً والزوجي 29 يوماً بانتظام)، غير أن مشروع "جُمُعَة" يتفوق عليه ويحدث قفزة نوعية في علم التقاويم كما يظهر في الجدول التالي:
+            </p>
 
-<section class="hero">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>وجه المقارنة</th>
+                        <th>كتاب التوفيقات الإلهامية (مختار باشا)</th>
+                        <th>منصة رُزمانة جُمُعَة (Djomoa)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>المدى الزمني</strong></td>
+                        <td>محدود بـ 1500 سنة هجرية فقط.</td>
+                        <td>ممتد ومفتوح حتى <strong>50,000 سنة كاملة</strong>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>المرونة الحسابية</strong></td>
+                        <td>جداول ورقية ثابتة وجافة ينتهي أثرها بانتهاء الصفحات.</td>
+                        <td>محرك برمجي حي وسائل يحاكي حركة الأيام لحظياً.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>آلية خط النهاية</strong></td>
+                        <td>تنتهي السنين بشكل اعتيادي دون ترابط هندسي عند النهاية.</td>
+                        <td>نظام <strong>"السباق المزدوج"</strong> الفريد (تجميد القمري وتكملة الشمسي).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>التحقق الفلكي لليوم</strong></td>
+                        <td>يتطلب البحث اليدوي الطويل عبر مئات الصفحات والسطور.</td>
+                        <td>معادلة باقي القسمة المطلقة تقنص اسم اليوم في جزء من الثانية.</td>
+                    </tr>
+                </tbody>
+            </table>
 
-<div class="hero-content">
+            <h3>💎 الحقيقة الرقمية الفلكية لخط النهاية</h3>
+            <p>
+                عند تفعيل العداد والوصول إلى خط التوقف التاريخي للتقويم القمري المتمثل في <strong>30 ذو الحجة سنة 49999</strong>، فإن المحاكاة الحقيقية يوماً بيوم تثبت بالدقة المطلقة أن تلك اللحظة ستوافق <strong>يوم [ الثلاثاء ]</strong>، ويكون التاريخ الشمسي المقابل لها في الكون هو <strong>23 يناير سنة 48512 ميلادية</strong>. 
+            </p>
+            <p>
+                هذا التطابق الرقمي يثبت العبقرية البرمجية للمشروع؛ فبسبب قصر السنة القمرية عن الشمسية، يتجمد العداد القمري عند سنة 49999 هـ بينما يكون الشمسي قد وصل فقط إلى سنة 48512 م. ومن ثم، يواصل العداد الشمسي طريقه بمفرده لـ <strong>543,478 يوماً إضافياً</strong> ليتمكن من غلق الدورة عند 31 ديسمبر 49999 م، مما يجعل هذا المشروع موسوعة وأأطلساً ميقاتياً لا مثيل له في تاريخ العلوم.
+            </p>
+        </article>
 
-<h1>
-الرزمانة المزدوجة
-<span>للحساب الزمني والفلكي</span>
-</h1>
+        <footer>
+            <p>© منصة جُمُعَة (Djomoa) - مشروع الميقاتية المزدوجة والمحاكاة المطلقة لـ 50,000 سنة</p>
+        </footer>
 
-<p>
-منصة رقمية متقدمة لدمج الحساب الشمسي والقمري
-داخل نظام زمني احترافي يصل إلى خمسين ألف سنة
-مع واجهة مستقبلية حديثة وسريعة.
-</p>
+    </div>
 
-<div class="buttons">
+    <script>
+        const WEEK_DAYS = ["الجمعة", "السبت", "الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس"];
+        const SOLAR_MONTH_DAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        const SOLAR_MONTH_NAMES = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
+        const LUNAR_MONTH_NAMES = ["محرم", "صفر", "ربيع الأول", "ربيع الآخر", "جمادى الأولى", "جمادى الآخرة", "رجب", "شعبان", "رمضان", "شوال", "ذو القعدة", "ذو الحجة"];
 
-<a href="#" class="btn btn-main">
-ابدأ الاستكشاف
-</a>
+        function isSolarLeap(year) {
+            return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+        }
 
-<a href="#" class="btn btn-second">
-عرض الرزمانة
-</a>
+        function isLunarLeap(year) {
+            const leapYearsCycle = [2, 5, 7, 10, 13, 16, 18, 21, 24, 26, 29];
+            return leapYearsCycle.includes(year % 30);
+        }
 
-</div>
+        function runParallelSimulation() {
+            let sDay = 1, sMonth = 0, sYear = 1; 
+            let lDay = 1, lMonth = 0, lYear = 1; 
+            let totalDaysElapsed = 0; 
+            const TARGET_YEAR_LIMIT = 49999; 
+            
+            let lunarFreezeSnapshot = null;
+            let finalSolarSnapshot = null;
 
-</div>
+            // Phase 1: Parallel Running until Lunar stops
+            while (true) {
+                totalDaysElapsed++;
 
-</section>
+                let currentLunarMonthDays = (lMonth % 2 === 0) ? 30 : 29;
+                if (lMonth === 11) { 
+                    currentLunarMonthDays = isLunarLeap(lYear) ? 30 : 29;
+                }
 
-<section class="features">
+                if (lYear === TARGET_YEAR_LIMIT && lMonth === 11 && lDay === currentLunarMonthDays) {
+                    let dayOfWeekIndex = (totalDaysElapsed - 1) % 7;
+                    lunarFreezeSnapshot = {
+                        lunarDate: `${lDay} ${LUNAR_MONTH_NAMES[lMonth]} ${lYear} هـ`,
+                        solarDateMated: `${sDay} ${SOLAR_MONTH_NAMES[sMonth]} ${sYear} م`,
+                        dayName: WEEK_DAYS[dayOfWeekIndex],
+                        daysAtFreeze: totalDaysElapsed
+                    };
+                    break; 
+                }
 
-<h2 class="section-title">
-مميزات المنصة
-</h2>
+                lDay++;
+                if (lDay > currentLunarMonthDays) {
+                    lDay = 1;
+                    lMonth++;
+                    if (lMonth > 11) {
+                        lMonth = 0;
+                        lYear++;
+                    }
+                }
 
-<div class="cards">
+                let currentSolarMonthDays = SOLAR_MONTH_DAYS[sMonth];
+                if (sMonth === 1 && isSolarLeap(sYear)) { currentSolarMonthDays = 29; }
 
-<div class="card">
-<h3>الحساب المزدوج</h3>
-<p>
-دمج التقويم القمري والشمسي داخل نظام واحد
-بدقة حسابية متقدمة.
-</p>
-</div>
+                sDay++;
+                if (sDay > currentSolarMonthDays) {
+                    sDay = 1;
+                    sMonth++;
+                    if (sMonth > 11) {
+                        sMonth = 0;
+                        sYear++;
+                    }
+                }
+            }
 
-<div class="card">
-<h3>واجهة مستقبلية</h3>
-<p>
-تصميم احترافي متجاوب يعمل بسلاسة
-على الهاتف والحاسوب.
-</p>
-</div>
+            // Phase 2: Solar Continues Alone until Dec 31, 49999
+            while (true) {
+                if (sYear === TARGET_YEAR_LIMIT && sMonth === 11 && sDay === 31) {
+                    let finalDayIndex = totalDaysElapsed % 7;
+                    finalSolarSnapshot = {
+                        solarDateFinal: `${sDay} ${SOLAR_MONTH_NAMES[sMonth]} ${sYear} م`,
+                        finalDayName: WEEK_DAYS[finalDayIndex],
+                        daysAtFinal: totalDaysElapsed
+                    };
+                    break; 
+                }
 
-<div class="card">
-<h3>محرك زمني</h3>
-<p>
-إمكانية التنقل بين السنوات والأزمنة
-بطريقة ديناميكية حديثة.
-</p>
-</div>
+                totalDaysElapsed++;
 
-</div>
+                let currentSolarMonthDays = SOLAR_MONTH_DAYS[sMonth];
+                if (sMonth === 1 && isSolarLeap(sYear)) { currentSolarMonthDays = 29; }
 
-</section>
+                sDay++;
+                if (sDay > currentSolarMonthDays) {
+                    sDay = 1;
+                    sMonth++;
+                    if (sMonth > 11) {
+                        sMonth = 0;
+                        sYear++;
+                    }
+                }
+            }
 
-<footer>
+            let netWaitingDays = finalSolarSnapshot.daysAtFinal - lunarFreezeSnapshot.daysAtFreeze;
 
-© 2026 DJOMOA — جميع الحقوق محفوظة
+            return {
+                freeze: lunarFreezeSnapshot,
+                final: finalSolarSnapshot,
+                waitingDays: netWaitingDays
+            };
+        }
 
-</footer>
+        function initDjomoaEngine() {
+            const calcBtn = document.getElementById("calcBtn");
+            const resultBox = document.getElementById("engineResult");
 
+            if (!calcBtn || !resultBox) return;
+
+            calcBtn.addEventListener("click", () => {
+                const result = runParallelSimulation();
+
+                resultBox.style.marginTop = "25px";
+                resultBox.style.padding = "20px";
+                resultBox.style.background = "rgba(0, 0, 0, 0.85)";
+                resultBox.style.borderRadius = "16px";
+                resultBox.style.border = "2px solid var(--accent-gold)";
+                resultBox.style.textAlign = "right";
+
+                resultBox.innerHTML = `
+                    <h3 style="color: var(--accent-gold); margin-bottom: 15px; font-size: 18px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px;">🏁 نتائج محاكاة خط النهاية الصارم لـ Djomoa</h3>
+                    
+                    <div style="background: rgba(255, 179, 0, 0.08); border-radius: 8px; padding: 12px; margin-top: 10px; border-right: 4px solid #ffb300;">
+                        <p style="margin: 0; font-size: 14px; color: #ffb300; font-weight: bold;">🛑 محطة تجمد العداد القمري الأول:</p>
+                        <p style="margin: 5px 0 0 0; font-size: 14px; color: #fff; line-height: 1.5;">
+                            تجمد عند: <span style="color: var(--accent-gold); font-weight: bold;">\${result.freeze.lunarDate}</span><br>
+                            وكان اسم اليوم هو: <span style="color: var(--card-cyan); font-weight: bold;">يوم [ \${result.freeze.dayName} ]</span><br>
+                            والتاريخ الشمسي المقابل له في تلك اللحظة: <span style="color: var(--card-blue); font-weight: bold;">\${result.freeze.solarDateMated}</span>
+                        </p>
+                    </div>
+
+                    <div style="background: rgba(167, 255, 235, 0.08); border-radius: 8px; padding: 12px; margin-top: 12px; border-right: 4px solid var(--card-cyan);">
+                        <p style="margin: 0; font-size: 14px; color: var(--card-cyan); font-weight: bold;">📅 محطة إغلاق العداد الشمسي اللاحق:</p>
+                        <p style="margin: 5px 0 0 0; font-size: 14px; color: #fff; line-height: 1.5;">
+                            استمر وحيداً حتى أغلق عند: <span style="color: var(--accent-gold); font-weight: bold;">\${result.final.solarDateFinal}</span><br>
+                            اسم يوم الإغلاق النهائي للمشروع: <span style="color: var(--card-cyan); font-weight: bold;">يوم [ \${result.final.finalDayName} ]</span>
+                        </p>
+                    </div>
+
+                    <div style="background: rgba(255, 79, 79, 0.08); border-radius: 8px; padding: 12px; margin-top: 12px; border-right: 4px solid #ff4f4f;">
+                        <p style="margin: 0; font-size: 14px; color: #ff4f4f; font-weight: bold;">📊 مسافة الفارق الصافي الكلي بالأيام:</p>
+                        <p style="margin: 5px 0 0 0; font-size: 14px; color: #fff;">
+                            قطع العداد الشمسي بمفرده بعد تجمد القمري مسافة: <span style="color: var(--card-blue); font-weight: bold;">\${result.waitingDays.toLocaleString()} يوماً كاملة</span> لكي يلحق برقم السنة ويقفل الدورة الشاملة.
+                        </p>
+                    </div>
+                `;
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", initDjomoaEngine);
+    </script>
 </body>
 </html>

@@ -10,6 +10,8 @@
             --panel-bg: rgba(22, 27, 34, 0.85);
             --accent-gold: #ffd54f;
             --accent-gold-hover: #ffe082;
+            --accent-blue: #2b6cb0;
+            --accent-blue-hover: #3182ce;
             --text-white: #ffffff;
             --text-muted: #8b949e;
             --border-color: rgba(255, 213, 79, 0.3);
@@ -76,23 +78,50 @@
             color: var(--text-white);
         }
 
+        /* أزرار التحكم والربط المشترك */
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
         .searchBox button {
-            background: var(--accent-gold);
-            color: #000;
             border: none;
-            padding: 14px 32px;
-            font-size: 1.1rem;
+            padding: 14px 28px;
+            font-size: 1.05rem;
             font-weight: bold;
             border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s ease;
+        }
+
+        .btn-calc {
+            background: var(--accent-gold);
+            color: #000;
             box-shadow: 0 4px 15px rgba(255, 213, 79, 0.3);
         }
 
-        .searchBox button:hover {
+        .btn-calc:hover {
             background: var(--accent-gold-hover);
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(255, 213, 79, 0.5);
+        }
+
+        .btn-print-link {
+            background: var(--accent-blue);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(43, 108, 176, 0.3);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-print-link:hover {
+            background: var(--accent-blue-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(49, 130, 206, 0.5);
         }
 
         /* Dynamic Result Container Style */
@@ -205,8 +234,11 @@
         </header>
 
         <div class="searchBox">
-            <p class="intro-text">انقر أدناه لتشغيل المحرك الميقاتي والمحاكاة المطلقة عبر 50,000 سنة</p>
-            <button id="calcBtn">تفعيل العداد والمحاكاة</button>
+            <p class="intro-text">انقر أدناه لتشغيل المحرك الميقاتي أو الانتقال لوحدة المطبوعات الورقية</p>
+            <div class="btn-container">
+                <button id="calcBtn" class="btn-calc">تفعيل العداد والمحاكاة</button>
+                <button onclick="window.location.href='print.html'" class="btn-print-link">🖨️ الانتقال لمولد الموسوعة المطبوعة</button>
+            </div>
             <div id="engineResult"></div>
         </div>
 
@@ -214,7 +246,7 @@
             <h2>👑 المقال التعريفي: هندسة منصة "جُمُعَة" الكونية وأبعادها الميقاتية</h2>
             
             <blockquote>
-                "إن كانت (التوفيقات الإلهامية) قد أرّخت لحركة الزمن عبر خمسة عشر قرناً، فإن منصة (Djomoa) تولد اليوم لتقود هندسة الميقات المزدوج عبر خمسين ألف سنة في عمق المستقبل."
+                "إن كانت (التوفيقات الإلهامية) قد أرّخرت لحركة الزمن عبر خمسة عشر قرناً، فإن منصة (Djomoa) تولد اليوم لتقود هندسة الميقات المزدوج عبر خمسين ألف سنة في عمق المستقبل."
             </blockquote>
 
             <h3>📊 فلسفة المشروع ونقطة التحول الفلكية</h3>
@@ -272,7 +304,7 @@
                 عند تفعيل العداد والوصول إلى خط التوقف التاريخي للتقويم القمري المتمثل في <strong>30 ذو الحجة سنة 49999</strong>، فإن المحاكاة الحقيقية يوماً بيوم تثبت بالدقة المطلقة أن تلك اللحظة ستوافق <strong>يوم [ الثلاثاء ]</strong>، ويكون التاريخ الشمسي المقابل لها في الكون هو <strong>23 يناير سنة 48512 ميلادية</strong>. 
             </p>
             <p>
-                هذا التطابق الرقمي يثبت العبقرية البرمجية للمشروع؛ فبسبب قصر السنة القمرية عن الشمسية، يتجمد العداد القمري عند سنة 49999 هـ بينما يكون الشمسي قد وصل فقط إلى سنة 48512 م. ومن ثم، يواصل العداد الشمسي طريقه بمفرده لـ <strong>543,478 يوماً إضافياً</strong> ليتمكن من غلق الدورة عند 31 ديسمبر 49999 م، مما يجعل هذا المشروع موسوعة وأأطلساً ميقاتياً لا مثيل له في تاريخ العلوم.
+                هذا التطابق الرقمي يثبت العبقرية البرمجية للمشروع؛ فبسبب قصر السنة القمرية عن الشمسية، يتجمد العداد القمري عند سنة 49999 هـ بينما يكون الشمسي قد وصل فقط إلى سنة 48512 م. ومن ثم، يواصل العداد الشمسي طريقه بمفرده لـ <strong>543,478 يوماً إضافياً</strong> ليتمكن من غلق الدورة عند 31 ديسمبر 49999 م، مما يجعل هذا المشروع موسوعة وأطلاساً ميقاتياً لا مثيل له في تاريخ العلوم.
             </p>
         </article>
 

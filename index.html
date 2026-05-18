@@ -70,6 +70,7 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             margin-bottom: 40px;
             text-align: center;
+            backdrop-filter: blur(10px);
         }
 
         .searchBox p.intro-text {
@@ -142,6 +143,7 @@
             border-radius: 16px;
             padding: 35px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            margin-bottom: 40px;
         }
 
         .project-definition h2 {
@@ -214,13 +216,76 @@
             background-color: rgba(255, 255, 255, 0.02);
         }
 
+        /* Footer المتطور والزجاجي */
         footer {
             text-align: center;
             margin-top: 50px;
+            background: var(--panel-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 213, 79, 0.1);
+            padding: 30px 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        footer p.footer-title {
+            color: #ccc;
+            margin-bottom: 15px;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .social-links a {
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 15px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .link-facebook {
+            color: #1877f2;
+        }
+        .link-facebook:hover {
+            background: rgba(24, 119, 242, 0.15);
+            box-shadow: 0 0 12px rgba(24, 119, 242, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .link-x {
+            color: #ffffff;
+        }
+        .link-x:hover {
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .link-linkedin {
+            color: #0077b5;
+        }
+        .link-linkedin:hover {
+            background: rgba(0, 119, 181, 0.15);
+            box-shadow: 0 0 12px rgba(0, 119, 181, 0.3);
+            transform: translateY(-2px);
+        }
+
+        footer p.copyright {
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 12px;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding-top: 20px;
+            padding-top: 15px;
         }
     </style>
 </head>
@@ -309,7 +374,13 @@
         </article>
 
         <footer>
-            <p>© منصة جُمُعَة (Djomoa) - مشروع الميقاتية المزدوجة والمحاكاة المطلقة لـ 50,000 سنة</p>
+            <p class="footer-title">🌐 تواصل مع المطور العام للمنصة (Adam Nesri)</p>
+            <div class="social-links">
+                <a href="https://facebook.com" target="_blank" class="link-facebook">🔵 Facebook</a>
+                <a href="https://x.com" target="_blank" class="link-x">🕈 X / Twitter</a>
+                <a href="https://linkedin.com" target="_blank" class="link-linkedin">💼 LinkedIn</a>
+            </div>
+            <p class="copyright">© 2026 منصة جُمُعَة (Djomoa) - مشروع الميقاتية المزدوجة والمحاكاة المطلقة لـ 50,000 سنة</p>
         </footer>
 
     </div>

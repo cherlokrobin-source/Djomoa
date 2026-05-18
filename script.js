@@ -23,19 +23,18 @@ function isLunarLeap(year) {
     return leapYearsCycle.includes(year % 30);
 }
 
-// 3. المحرك النهائي: محاكاة شرط التوقف المزدوج والصارم
-function runParallelSimulation() {
+// 3. المحرك النهائي: تعديل الدالة لتستقبل السنة المطلوبة ديناميكياً
+function runParallelSimulation(targetLimit) {
     // إعدادات نقطة الصفر المشتركة (1 يناير سنة 1 = 1 محرم سنة 1)
     let sDay = 1, sMonth = 0, sYear = 1; 
     let lDay = 1, lMonth = 0, lYear = 1; 
     
     let totalDaysElapsed = 0; 
-    const TARGET_YEAR_LIMIT = 49999; 
     
     let lunarFreezeSnapshot = null; // لتخزين لحظة تجمد القمري
     let finalSolarSnapshot = null;  // لتخزين لحظة إغلاق الشمسي
 
-    // المرحلة الأولى: التقويمان يركضان معاً حتى يتجمد القمري عند 30 ذو الحجة 49999
+    // المرحلة الأولى: التقويمان يركضان معاً حتى يتجمد القمري عند نهاية ذو الحجة للسنة المختارة
     while (true) {
         totalDaysElapsed++;
 
@@ -45,8 +44,8 @@ function runParallelSimulation() {
             currentLunarMonthDays = isLunarLeap(lYear) ? 30 : 29;
         }
 
-        // فحص شرط تجمد القمري: نهاية ذو الحجة سنة 49999
-        if (lYear === TARGET_YEAR_LIMIT && lMonth === 11 && lDay === currentLunarMonthDays) {
+        // فحص شرط تجمد القمري بناءً على المدخل الحقيقي المستهدف
+        if (lYear === targetLimit && lMonth === 11 && lDay === currentLunarMonthDays) {
             let dayOfWeekIndex = (totalDaysElapsed - 1) % 7;
             lunarFreezeSnapshot = {
                 lunarDate: `${lDay} ${LUNAR_MONTH_NAMES[lMonth]} ${lYear} هـ`,
@@ -83,10 +82,10 @@ function runParallelSimulation() {
         }
     }
 
-    // المرحلة الثانية: العداد الشمسي يستمر بالركض وحيداً في خط الزمن حتى يغلق 31 ديسمبر 49999
+    // المرحلة الثانية: العداد الشمسي يستمر بالركض وحيداً حتى يغلق 31 ديسمبر لنفس رقم السنة المحددة
     while (true) {
-        // فحص شرط إغلاق الشمسي النهائي للمشروع
-        if (sYear === TARGET_YEAR_LIMIT && sMonth === 11 && sDay === 31) {
+        // فحص شرط إغلاق الشمسي النهائي للمشروع بناءً على المدخل الديناميكي
+        if (sYear === targetLimit && sMonth === 11 && sDay === 31) {
             let finalDayIndex = totalDaysElapsed % 7; // استخراج اسم يوم الإغلاق الشمسي
             finalSolarSnapshot = {
                 solarDateFinal: `${sDay} ${SOLAR_MONTH_NAMES[sMonth]} ${sYear} م`,
@@ -123,18 +122,28 @@ function runParallelSimulation() {
     };
 }
 
-// 4. ربط المحرك بالواجهة الرسومية للموقع
+// 4. ربط المحرك بالواجهة الرسومية التفاعلية للموقع
 function initDjomoaEngine() {
     const calcBtn = document.getElementById("calcBtn") || document.querySelector(".searchBox button");
     const container = document.querySelector(".searchBox");
+    const targetYearInput = document.getElementById("targetYear"); // ربط الحقل النصي الرقمي
 
     if (!calcBtn || !container) return;
 
-    calcBtn.textContent = "تشغيل عداد السباق المتوازي النهائي";
+    calcBtn.textContent = "🚀 تشغيل المحاكاة الحية";
 
     calcBtn.addEventListener("click", () => {
-        // تشغيل المحاكاة الصارمة
-        const result = runParallelSimulation();
+        // قراءة قيمة الحقل البرمي وتحويلها لرقم، وفي حال عدم وجود حقل إدخال يتم الاعتماد على 49999 كقيمة افتراضية
+        let chosenYear = targetYearInput ? parseInt(targetYearInput.value) : 49999;
+
+        // حماية ميكانيكية للمحرك لمنع الانهيار بسبب مدخلات خاطئة
+        if (isNaN(chosenYear) || chosenYear < 1 || chosenYear > 49999) {
+            alert("الرجاء إدخال سنة صحيحة بين 1 و 49999");
+            return;
+        }
+
+        // تشغيل المحاكاة الصارمة بالسنة المحددة
+        const result = runParallelSimulation(chosenYear);
 
         let resultBox = document.getElementById("engineResult");
         if (!resultBox) {
@@ -150,22 +159,22 @@ function initDjomoaEngine() {
         }
 
         resultBox.innerHTML = `
-            <h3 style="color: #ffd54f; margin-bottom: 15px; font-size: 18px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px;">🏁 نتائج محاكاة خط النهاية الصارم لـ Djomoa</h3>
+            <h3 style="color: #ffd54f; margin-bottom: 15px; font-size: 18px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px;">🏁 نتائج محاكاة خط النهاية للسنة [ ${chosenYear} ]</h3>
             
             <div style="background: rgba(255, 179, 0, 0.08); border-radius: 8px; padding: 12px; margin-top: 10px; border-right: 4px solid #ffb300;">
                 <p style="margin: 0; font-size: 14px; color: #ffb300; font-weight: bold;">🛑 محطة تجمد العداد القمري الأول:</p>
                 <p style="margin: 5px 0 0 0; font-size: 14px; color: #fff; line-height: 1.5;">
-                    تجمد عند: <span style="color: #ffd54f; font-weight: bold;">${result.freeze.lunarDate}</span><br>
+                    تجمد عند نهاية السنة الهجرية: <span style="color: #ffd54f; font-weight: bold;">${result.freeze.lunarDate}</span><br>
                     وكان اسم اليوم هو: <span style="color: #a7ffeb; font-weight: bold;">يوم [ ${result.freeze.dayName} ]</span><br>
-                    والتاريخ الشمسي المقابل له في تلك اللحظة: <span style="color: #9ecbff; font-weight: bold;">${result.freeze.solarDateMated}</span>
+                    والتاريخ الشمسي المقابل له في تلك اللحظة الكونية: <span style="color: #9ecbff; font-weight: bold;">${result.freeze.solarDateMated}</span>
                 </p>
             </div>
 
             <div style="background: rgba(167, 255, 235, 0.08); border-radius: 8px; padding: 12px; margin-top: 12px; border-right: 4px solid #a7ffeb;">
                 <p style="margin: 0; font-size: 14px; color: #a7ffeb; font-weight: bold;">📅 محطة إغلاق العداد الشمسي اللاحق:</p>
                 <p style="margin: 5px 0 0 0; font-size: 14px; color: #fff; line-height: 1.5;">
-                    استمر وحيداً حتى أغلق عند: <span style="color: #ffd54f; font-weight: bold;">${result.final.solarDateFinal}</span><br>
-                    اسم يوم الإغلاق النهائي للمشروع: <span style="color: #a7ffeb; font-weight: bold;">يوم [ ${result.final.finalDayName} ]</span>
+                    استمر وحيداً حتى أغلق نهاية السنة الميلادية: <span style="color: #ffd54f; font-weight: bold;">${result.final.solarDateFinal}</span><br>
+                    اسم يوم الإغلاق النهائي للمشروع الشمسي: <span style="color: #a7ffeb; font-weight: bold;">يوم [ ${result.final.finalDayName} ]</span>
                 </p>
             </div>
 

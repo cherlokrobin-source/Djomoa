@@ -205,7 +205,242 @@
         <h1>📅 رُزمانة جُمُعَة</h1>
         <p>منصة الحساب الزمني المزدوج • التقويم الشمسي (الغريغوري) و القمري (الهجري) الدقيق</p>
     </div>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>منصة رُزمانة جُمُعَة | Djomoa Dual Calendar</title>
+
+<style>
+
+:root{
+    --bg-dark:#0d1117;
+    --panel:#161b22;
+    --gold:#ffd54f;
+    --gold-hover:#ffe082;
+    --blue:#2b6cb0;
+    --white:#ffffff;
+    --muted:#8b949e;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Tahoma, sans-serif;
+    background:
+    radial-gradient(circle at top, rgba(43,108,176,0.25), transparent 40%),
+    radial-gradient(circle at bottom, rgba(255,213,79,0.15), transparent 40%),
+    var(--bg-dark);
+
+    color:var(--white);
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+/* النجوم */
+body::before{
+    content:"";
+    position:fixed;
+    width:100%;
+    height:100%;
+    background-image:
+    radial-gradient(white 1px, transparent 1px);
+    background-size:40px 40px;
+    opacity:0.08;
+    z-index:-1;
+}
+
+/* الهيدر */
+header{
+    padding:30px 20px 20px;
+    text-align:center;
+}
+
+header h1{
+    font-size:3rem;
+    color:var(--gold);
+    margin-bottom:10px;
+}
+
+header p{
+    color:var(--muted);
+    font-size:1.1rem;
+}
+
+/* بسم الله */
+.bismillah{
+    text-align:center;
+    font-size:2rem;
+    font-weight:bold;
+    color:var(--gold);
+    text-shadow:0 0 8px rgba(255,213,79,0.5);
+    margin:20px auto 10px;
+    letter-spacing:2px;
+    background:rgba(0,0,0,0.3);
+    display:inline-block;
+    width:100%;
+    padding:10px 0;
+    border-radius:50px;
+}
+
+/* البطاقة الرئيسية */
+.hero{
+    width:90%;
+    max-width:1000px;
+    margin:20px auto;
+    background:rgba(22,27,34,0.85);
+    border:1px solid rgba(255,213,79,0.2);
+    border-radius:25px;
+    padding:40px;
+    backdrop-filter:blur(10px);
+    box-shadow:0 0 40px rgba(0,0,0,0.4);
+}
+
+/* الحقول */
+.input-group{
+    margin-top:25px;
+}
+
+input{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:15px;
+    background:#0d1117;
+    color:white;
+    font-size:1rem;
+    outline:none;
+    border:1px solid #30363d;
+}
+
+input:focus{
+    border-color:var(--gold);
+}
+
+/* الأزرار */
+button{
+    margin-top:20px;
+    padding:15px 30px;
+    border:none;
+    border-radius:15px;
+    background:linear-gradient(135deg,var(--gold),#ffca28);
+    color:black;
+    font-size:1rem;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:translateY(-3px);
+    background:linear-gradient(135deg,var(--gold-hover),#ffd54f);
+}
+
+/* النتائج */
+.result{
+    margin-top:30px;
+    padding:25px;
+    border-radius:20px;
+    background:#0d1117;
+    border:1px solid rgba(255,255,255,0.08);
+    line-height:2;
+    font-size:1.1rem;
+}
+
+/* الفوتر */
+footer{
+    text-align:center;
+    padding:30px;
+    color:var(--muted);
+    margin-top:40px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>رُزمانة جُمُعَة</h1>
+    <p>
+        منصة الحساب الزمني الشمسي والقمري المتقدم
+    </p>
+</header>
+
+<!-- إضافة بسم الله الرحمن الرحيم باللون الذهبي -->
+<div class="bismillah">
+    بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
+</div>
+
+<section class="hero">
+
+    <h2>حاسبة الرزمانة المزدوجة</h2>
+
+    <div class="input-group">
+        <input
+        type="number"
+        id="solarYears"
+        placeholder="أدخل عدد السنوات الشمسية">
+    </div>
+
+    <button onclick="calculateCalendar()">
+        احسب الآن
+    </button>
+
+    <div class="result" id="result">
+        النتائج ستظهر هنا...
+    </div>
+
+</section>
+
+<footer>
+    Djomoa Dual Calendar © 2026
+</footer>
+
+<script>
+
+function calculateCalendar(){
+
+    let solar =
+    document.getElementById("solarYears").value;
+
+    if(solar === ""){
+        alert("أدخل عدد السنوات");
+        return;
+    }
+
+    let lunar =
+    Math.floor((solar * 365.2422) / 354.367);
+
+    let difference =
+    lunar - solar;
+
+    document.getElementById("result").innerHTML = `
+
+    🌞 السنوات الشمسية:
+    <b>${solar}</b>
+    <br><br>
+
+    🌙 السنوات القمرية:
+    <b>${lunar}</b>
+    <br><br>
+
+    ⏳ الفارق التراكمي:
+    <b>${difference}</b> سنة
+
+    `;
+}
+
+</script>
+
+</body>
+</html>
     <!-- شريط التاريخ الحالي -->
     <div class="current-date-bar" id="currentDateBar">
         جاري تحميل التقويم الحي...

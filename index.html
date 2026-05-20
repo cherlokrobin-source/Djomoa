@@ -1,687 +1,153 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>رُزمانة جُمُعَة | Djomoa Dual Calendar - التقويم المزدوج الدقيق</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: radial-gradient(circle at 20% 30%, rgba(43, 108, 176, 0.2), transparent 65%),
-                        radial-gradient(circle at 85% 70%, rgba(255, 213, 79, 0.15), transparent 55%),
-                        #0a0f16;
-            font-family: 'Segoe UI', 'Tahoma', system-ui, -apple-system, sans-serif;
-            color: #f0f3f8;
-            min-height: 100vh;
-            padding: 1.5rem;
-        }
-
-        /* stars subtle */
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            background-image: radial-gradient(2px 2px at 15px 40px, #ffd966, rgba(0,0,0,0)),
-                              radial-gradient(1px 1px at 80px 250px, #fff, rgba(0,0,0,0));
-            background-size: 55px 55px, 120px 120px;
-            background-repeat: repeat;
-            opacity: 0.1;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        /* main container */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        /* Bismillah style */
-        .bismillah {
-            text-align: center;
-            font-family: 'Traditional Arabic', 'Simplified Arabic', serif;
-            font-size: 1.6rem;
-            color: #FFE2A4;
-            opacity: 0.85;
-            margin-bottom: 1rem;
-            letter-spacing: 1px;
-        }
-
-        /* header */
-        .brand {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        .brand h1 {
-            font-size: 2.7rem;
-            background: linear-gradient(135deg, #FFE79E, #FFC857);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            letter-spacing: -0.5px;
-        }
-        .brand p {
-            color: #9aa9bb;
-            font-size: 1.05rem;
-            border-top: 1px dashed rgba(255,213,79,0.3);
-            display: inline-block;
-            padding-top: 8px;
-        }
-
-        /* cards grid */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2.5rem;
-        }
-
-        .card {
-            background: rgba(18, 25, 35, 0.85);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 213, 79, 0.25);
-            border-radius: 2rem;
-            padding: 1.8rem;
-            transition: all 0.2s;
-            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.4);
-        }
-        .card:hover {
-            border-color: rgba(255, 213, 79, 0.5);
-            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.5);
-        }
-        .card h2 {
-            font-size: 1.7rem;
-            border-right: 5px solid #ffd966;
-            padding-right: 1rem;
-            margin-bottom: 1.5rem;
-            color: #FFE2A4;
-        }
-        .input-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin: 1.2rem 0;
-            align-items: center;
-        }
-        .input-field {
-            flex: 1;
-            min-width: 140px;
-        }
-        label {
-            display: block;
-            font-size: 0.85rem;
-            color: #b9c7db;
-            margin-bottom: 6px;
-        }
-        input, select {
-            width: 100%;
-            padding: 12px 14px;
-            background: #0e141f;
-            border: 1px solid #2d3748;
-            border-radius: 1rem;
-            color: white;
-            font-size: 1rem;
-            outline: none;
-            transition: 0.2s;
-        }
-        input:focus, select:focus {
-            border-color: #ffd966;
-            box-shadow: 0 0 0 2px rgba(255,213,79,0.2);
-        }
-        button {
-            background: linear-gradient(95deg, #ffd966, #ffc107);
-            border: none;
-            padding: 12px 24px;
-            border-radius: 2rem;
-            font-weight: bold;
-            font-size: 0.95rem;
-            color: #1e2a3a;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin-top: 12px;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-        }
-        button:hover {
-            transform: translateY(-2px);
-            background: linear-gradient(95deg, #ffe085, #ffce3a);
-            box-shadow: 0 8px 18px rgba(0,0,0,0.25);
-        }
-        .result-box {
-            background: #0a0f18e0;
-            border-radius: 1.4rem;
-            padding: 1.3rem;
-            margin-top: 1.5rem;
-            border: 1px solid rgba(255,215,0,0.2);
-            font-size: 1rem;
-            line-height: 1.7;
-        }
-        .highlight {
-            color: #ffdf8c;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-        .badge-friday {
-            background: #f0b42920;
-            border-right: 3px solid #ffb347;
-            padding: 6px 12px;
-            border-radius: 20px;
-            margin-top: 12px;
-        }
-        .flex-btns {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin: 10px 0;
-        }
-        hr {
-            border-color: #2a3748;
-            margin: 15px 0;
-        }
-        
-        /* Article & Intro Section */
-        .article-card {
-            background: rgba(13, 22, 33, 0.75);
-            border: 1px solid rgba(43, 108, 176, 0.3);
-            border-radius: 2rem;
-            padding: 2rem;
-            margin-bottom: 2.5rem;
-            line-height: 1.8;
-        }
-        .article-card h3 {
-            color: #FFE79E;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .article-card p {
-            color: #cbd5e1;
-            font-size: 1.05rem;
-            margin-bottom: 1.2rem;
-            text-align: justify;
-        }
-        .book-link-btn {
-            display: inline-block;
-            background: rgba(255, 213, 79, 0.1);
-            border: 1px dashed #ffd966;
-            color: #ffd966;
-            padding: 10px 20px;
-            border-radius: 1.5rem;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 0.95rem;
-            transition: all 0.3s;
-        }
-        .book-link-btn:hover {
-            background: #ffd966;
-            color: #0a0f16;
-            transform: translateY(-1px);
-        }
-
-        /* Social Developer Links */
-        .developer-section {
-            text-align: center;
-            margin-top: 1.5rem;
-            padding: 1rem;
-        }
-        .developer-section p {
-            font-size: 0.95rem;
-            color: #b9c7db;
-            margin-bottom: 10px;
-        }
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        .social-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 18px;
-            border-radius: 1.2rem;
-            color: #fff;
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 500;
-            transition: all 0.2s ease;
-        }
-        .social-btn.linkedin { background-color: #0077b5; }
-        .social-btn.facebook { background-color: #1877f2; }
-        .social-btn.twitter { background-color: #1da1f2; }
-        .social-btn:hover {
-            transform: scale(1.05);
-            filter: brightness(1.1);
-        }
-
-        footer {
-            text-align: center;
-            padding: 1.5rem 0.5rem;
-            color: #6e7f92;
-            border-top: 1px solid #1f2a36;
-            margin-top: 1rem;
-        }
-        @media (max-width: 750px) {
-            body { padding: 1rem; }
-            .grid { grid-template-columns: 1fr; }
-            .card { padding: 1.2rem; }
-            .brand h1 { font-size: 2.2rem; }
-        }
-        .small-note {
-            font-size: 0.8rem;
-            color: #8ba0bb;
-        }
-        .current-date-bar {
-            background: #0d1622aa;
-            border-radius: 3rem;
-            padding: 12px 20px;
-            text-align: center;
-            margin-bottom: 2rem;
-            backdrop-filter: blur(4px);
-            border: 1px solid #ffd96630;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مشروع الرزمانة المزدوجة</title>
+    <!-- استدعاء مكتبة الأيقونات Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- ربط ملف الـ CSS الخارجي -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="container">
-    
-    <!-- البسملة المباركة في الأعلى -->
-    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
 
-    <div class="brand">
-        <h1>📅 رُزمانة جُمُعَة</h1>
-        <p>منصة الحساب الزمني المزدوج • التقويم الشمسي (الغريغوري) و القمري (الهجري) الدقيق</p>
-    </div>
+    <!-- شريط التنقل العلوي -->
+    <header>
+        <div class="logo">الرّزمانة المزدوجة</div>
+        <nav class="menu">
+            <button class="menu-btn active-btn" onclick="switchPage('home')">الرئيسية</button>
+            <button class="menu-btn" onclick="switchPage('search')">البحث</button>
+            <button class="menu-btn" onclick="switchPage('timeline')">الخط الزمني</button>
+            <button class="menu-btn" onclick="switchPage('about')">عن المشروع</button>
+        </nav>
+    </header>
 
-    <!-- شريط التاريخ الحالي -->
-    <div class="current-date-bar" id="currentDateBar">
-        جاري تحميل التقويم الحي...
-    </div>
+    <!-- منطقة محتوى الصفحات والكانفاس -->
+    <main class="main-container">
+        <!-- كانفاس الخلفية التفاعلية -->
+        <canvas id="canvas"></canvas>
 
-    <!-- مقال تعريفي ومقارنة تاريخية -->
-    <div class="article-card">
-        <h3>📖 فلسفة رزمانة جمعة والكتاب الخالد "التوفيقات الإلهامية"</h3>
-        <p>
-            على مر العصور، ظل ربط الزمن الشمسي بالدورة القمرية تحديًا واجه الفلكيين والمؤرخين لتسجيل الأحداث بدقة. وفي القرن التاسع عشر، أهدى إلينا العالم الفلكي والمؤرخ الكبير <strong>محمد مختار باشا</strong> عمله الموسوعي الفذ الفارق: كتاب <strong>"التوفيقات الإلهامية في مقارنة السنين الهجرية بالسنين الإفرنجية"</strong>. هذا الكتاب يُعد "الأب الروحي للتقاويم المقارنة"، حيث صاغ فيه جداول رياضية مبهرة تمتد لقرون لتربط اليوم الهجري بيومه الميلادي بدقة لامتناهية معتمداً على الأنظمة الحسابية الحكيمة.
-        </p>
-        <p>
-            تأتي <strong>"رُزمانة جُمُعَة الرقمية"</strong> كامتداد عصري لهذه الفلسفة التاريخية العريقة. بينما كان الباحث قديماً يتصفح مئات الصفحات في كتاب "التوفيقات الإلهامية" للبحث عن يومٍ معين أو لحساب الفارق بين السنوات عبر خوارزميات الجمع والطرح اليدوية، تقوم هذه المنصة باختصار كل ذلك في جزء من الثانية! نستخدم هنا <i>نظام اليوم اليولياني (JDN) الحسابي</i> مدمجاً بـ <i>التقويم الهجري الاصطلاحي التعديلي</i> (دورة الـ 30 سنة) لنوفر لك أدق تحويل مرن يطابق القواعد الفلكية التأسيسية التي قام عليها كتاب التوفيقات، مع ميزة فريدة وهي تعقّب وإبراز بركة "أيام الجمعة" عبر التاريخ.
-        </p>
-        <a href="https://archive.org/details/al-tawfiqat-al-ilhamiya" target="_blank" class="book-link-btn">
-            📚 تصفح وتحميل كتاب التوفيقات الإلهامية من أرشيف الإنترنت
-        </a>
-    </div>
-
-    <div class="grid">
-        <!-- القسم 1: تحويل السنوات (المدى الطويل) -->
-        <div class="card">
-            <h2>🌓 تحويل السنين • الرزمانة الكبرى</h2>
-            <div class="input-row">
-                <div class="input-field">
-                    <label>🌟 سنوات شمسية (غريغورية)</label>
-                    <input type="number" id="solarYearsInput" placeholder="مثال: 30" value="30" min="0" max="50000">
+        <!-- 1. الصفحة الرئيسية (لوحة التحكم) -->
+        <section id="home-page" class="page active">
+            <div id="panel">
+                <div class="card">
+                    <i class="fa-solid fa-sun"></i>
+                    <div class="title">التوقيت الشمسي</div>
+                    <div class="value" id="solar-time">00:00</div>
                 </div>
-                <div class="input-field">
-                    <label>🌙 سنوات قمرية (هجرية)</label>
-                    <input type="number" id="lunarYearsInput" placeholder="مثال: 31" value="31" min="0" max="50000">
+                <div class="card">
+                    <i class="fa-solid fa-moon"></i>
+                    <div class="title">التوقيت القمري</div>
+                    <div class="value" id="lunar-time">00:00</div>
+                </div>
+                <div class="card">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <div class="title">التاريخ الحالي</div>
+                    <div class="value" id="current-date">-- / -- / ----</div>
                 </div>
             </div>
-            <div class="flex-btns">
-                <button id="solarToLunarBtn">🌞 شمسي ➜ قمري</button>
-                <button id="lunarToSolarBtn">🌙 قمري ➜ شمسي</button>
-            </div>
-            <div class="result-box" id="yearConversionResult">
-                ⏳ سيتم عرض الفارق الزمني بين النظامين...
-            </div>
-            <div class="small-note">
-                * تعتمد الحسابات على متوسط طول السنة الشمسية (365.2422 يوم) والقمرية (354.36707 يوم). يدعم حتى 50,000 سنة.
-            </div>
-        </div>
+        </section>
 
-        <!-- القسم 2: تحويل التاريخ الدقيق (يوم/شهر/سنة) ثنائي الاتجاه -->
-        <div class="card">
-            <h2>📆 التحويل المزدوج • رزمانة الأيام</h2>
-            <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: space-between;">
-                <div style="flex: 1; min-width: 200px;">
-                    <label>🌞 التاريخ الشمسي (غريغوري)</label>
-                    <div class="input-row" style="margin:5px 0; gap: 6px;">
-                        <input type="number" id="gregDay" placeholder="يوم" min="1" max="31" style="width:23%">
-                        <input type="number" id="gregMonth" placeholder="شهر" min="1" max="12" style="width:23%">
-                        <input type="number" id="gregYear" placeholder="سنة" min="1" max="9999" style="width:38%">
+        <!-- 2. صفحة البحث -->
+        <section id="search-page" class="page">
+            <div class="searchBox">
+                <h2>البحث المتقدم في الرزمانة</h2>
+                <input type="text" placeholder="أدخل التاريخ أو الحدث المُراد البحث عنه..." id="searchInput">
+                <button onclick="performSearch()">ابدأ البحث</button>
+            </div>
+        </section>
+
+        <!-- 3. صفحة الخط الزمني -->
+        <section id="timeline-page" class="page">
+            <div class="timelineBox">
+                <h2>الخط الزمني الفلكي</h2>
+                <p>هنا يتم عرض الأحداث والمحطات الزمنية الكبرى المرتبطة بحركة الأجرام وتوثيق التوفيقات الإلهامية.</p>
+                <!-- يمكنك إضافة عناصر الخط الزمني هنا لاحقاً -->
+            </div>
+        </section>
+
+        <!-- 4. صفحة عن المشروع (المقال، الجدول، وروابط التواصل) -->
+        <section id="about-page" class="page">
+            <div class="aboutBox">
+                <h2>عن مشروع الرزمانة</h2>
+                <p>يعتمد هذا المشروع على دمج وتوثيق الحسابات الزمنية العميقة التي تربط بين حركة الشمس والقمر، ممتداً بجذوره في التاريخ الفلكي ومستنداً إلى مصادر علمية وتاريخية عريقة لتسهيل فهم التحولات الكونية الزمنية.</p>
+                
+                <h3>مقارنة الحسابات الزمنية</h3>
+                <!-- الجدول المقارن المتجاوب -->
+                <div class="table-responsive">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>المعيار</th>
+                                <th>النظام الشمسي</th>
+                                <th>النظام القمري</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>الاعتماد الأساسي</td>
+                                <td>دوران الأرض حول الشمس</td>
+                                <td>دورة القمر حول الأرض</td>
+                            </tr>
+                            <tr>
+                                <td>متوسط طول السنة</td>
+                                <td>365.24 يوم</td>
+                                <td>354.36 يوم</td>
+                            </tr>
+                            <tr>
+                                <td>الدقة الفلكية</td>
+                                <td>عالية المرونة فصلياً</td>
+                                <td>مرتبطة برؤية الأهلة</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- الاقتباس وزر تصفح الكتاب -->
+                <div class="project-quote">
+                    "إن التوافق بين المطالع الشمسية والمنازل القمرية آية من آيات الحساب البديع المنسق في الكون."
+                </div>
+                <div class="book-action">
+                    <a href="https://archive.org/details/al-tawfiqat-al-ilhamiya" target="_blank" class="btn-book">
+                        <i class="fa-solid fa-book-open"></i> تصفح كتاب التوفيقات الإلهامية
+                    </a>
+                </div>
+
+                <!-- قسم شبكات التواصل الاجتماعي للمطور المطور حديثاً -->
+                <div class="social-developer-box">
+                    <span>تواصل مع مطور الرزمانة المزدوجة</span>
+                    <div class="developer-links">
+                        <a href="https://linkedin.com/in/YOUR_USERNAME" target="_blank" class="dev-social-item linkedin">
+                            <i class="fa-brands fa-linkedin-in"></i> لينكد إن
+                        </a>
+                        <a href="https://facebook.com/YOUR_USERNAME" target="_blank" class="dev-social-item facebook">
+                            <i class="fa-brands fa-facebook-f"></i> فيسبوك
+                        </a>
+                        <a href="https://twitter.com/YOUR_USERNAME" target="_blank" class="dev-social-item twitter">
+                            <i class="fa-brands fa-x-twitter"></i> إكس / تويتر
+                        </a>
                     </div>
-                    <button id="toHijriBtn">🔄 تحويل إلى هجري ➕</button>
-                </div>
-                <div style="flex: 1; min-width: 200px;">
-                    <label>🌙 التاريخ القمري (الهجري)</label>
-                    <div class="input-row" style="margin:5px 0; gap: 6px;">
-                        <input type="number" id="hijriDay" placeholder="يوم" min="1" max="30" style="width:23%">
-                        <input type="number" id="hijriMonth" placeholder="شهر" min="1" max="12" style="width:23%">
-                        <input type="number" id="hijriYear" placeholder="سنة" min="1" max="9999" style="width:38%">
-                    </div>
-                    <button id="toGregBtn">🪐 تحويل إلى شمسي ➕</button>
                 </div>
             </div>
-            <div class="result-box" id="exactDateResult">
-                ✨ اختر التاريخ من أي نظام ثم اضغط على الزر المقابل لعرض التحويل مع اسم اليوم و تفاصيل الجمعة.
-            </div>
-        </div>
-    </div>
+        </section>
+    </main>
 
-    <!-- قسم إضافي: معلومات عن رزمانة الجمعة -->
-    <div style="background: #111b24aa; border-radius: 1.5rem; padding: 1rem 1.5rem; margin-top: 0.5rem; text-align: center; border:1px solid #ffd96630;">
-        <span style="color:#ffdb7e;">⭐ رُزمانة جُمُعَة | دمج الزمن الشمسي بالقمرى مع إبراز أيام الجمعة المباركة ⭐</span>
-    </div>
-
-    <!-- تواصل مع المطور -->
-    <div class="developer-section">
-        <p>👨‍💻 تواصل مع مطور الرزمانة:</p>
-        <div class="social-links">
-            <a href="https://linkedin.com" target="_blank" class="social-btn linkedin">💼 لينكد إن</a>
-            <a href="https://facebook.com" target="_blank" class="social-btn facebook">🔵 فيسبوك</a>
-            <a href="https://twitter.com" target="_blank" class="social-btn twitter">🐦 إكس / تويتر</a>
-        </div>
-    </div>
-
-    <footer>
-        Djomoa Dual Calendar © 2026 • حِسابات دقيقة تعتمد على التقويم الهجري التعديلي (جدول 30 سنة) والتقويم الغريغوري. يدعم حتى 50,000 سنة.
-    </footer>
-</div>
-
-<script>
-    // ----------------------------------------------
-    // 1. التواريخ الأساسية: خوارزميات يولياني / هجري (تبويب عالي الدقة)
-    // ----------------------------------------------
-    const HIJRI_EPOCH_JDN = 1948440;   // 1 محرم 1 هـ (يوم الجمعة 16 يوليو 622 م - بالنظام اليولياني)
-
-    // تحويل غريغوري -> JDN (عدد الأيام اليولياني)
-    function gregorianToJDN(year, month, day) {
-        if (month < 3) {
-            year -= 1;
-            month += 12;
+    <!-- سكريبت بسيط لتشغيل التنقل بين الصفحات بشكل مبدئي -->
+    <script>
+        function switchPage(pageId) {
+            // إخفاء جميع الصفحات وإلغاء تفعيل الأزرار
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.querySelectorAll('.menu-btn').forEach(btn => btn.classList.remove('active-btn'));
+            
+            // إظهار الصفحة المطلوبة وتفعيل زرها
+            document.getElementById(`${pageId}-page`).classList.add('active');
+            event.target.classList.add('active-btn');
         }
-        let a = Math.floor(year / 100);
-        let b = Math.floor(a / 4);
-        let c = 2 - a + b;
-        let e = Math.floor(365.25 * (year + 4716));
-        let f = Math.floor(30.6001 * (month + 1));
-        return Math.floor(c + day + e + f - 1524.5);
-    }
 
-    // JDN -> غريغوري (تاريخ ميلادي)
-    function jdnToGregorian(jdn) {
-        let j = jdn + 0.5;
-        let z = Math.floor(j);
-        let f = j - z;
-        let a = Math.floor((z - 1867216.25) / 36524.25);
-        let b = z + 1 + a - Math.floor(a / 4);
-        let c = b + 1524;
-        let d = Math.floor((c - 122.1) / 365.25);
-        let e = Math.floor(365.25 * d);
-        let g = Math.floor((c - e) / 30.6001);
-        let day = c - e - Math.floor(30.6001 * g);
-        let month = (g < 13.5) ? g - 1 : g - 13;
-        let year = (month > 2) ? d - 4716 : d - 4715;
-        return { year: year, month: month, day: Math.floor(day) };
-    }
-
-    // تحديد هل السنة الهجرية كبيسة (في نظام 30 سنة)
-    function isHijriLeapYear(year) {
-        let remainder = year % 30;
-        let traditionalLeaps = [2,5,7,10,13,16,18,21,24,26,29];
-        return traditionalLeaps.includes(remainder);
-    }
-
-    // عدد أيام السنة الهجرية
-    function hijriYearDays(year) {
-        return isHijriLeapYear(year) ? 355 : 354;
-    }
-
-    // عدد أيام شهر هجري معين (1-12)
-    function hijriMonthLength(year, month) {
-        if (month < 1 || month > 12) return 0;
-        if (month <= 6) return 30;   // الأشهر الفردية 30
-        if (month <= 11) return 29;
-        // الشهر 12 ذو الحجة: 29 في العادي و 30 في الكبيسة
-        return isHijriLeapYear(year) ? 30 : 29;
-    }
-
-    // تحويل التاريخ الهجري -> JDN (أساسي)
-    function hijriToJDN(year, month, day) {
-        let jdn = HIJRI_EPOCH_JDN - 1;
-        for (let y = 1; y < year; y++) {
-            jdn += hijriYearDays(y);
+        function performSearch() {
+            const query = document.getElementById('searchInput').value;
+            if(query) alert('جاري البحث عن: ' + query);
         }
-        for (let m = 1; m < month; m++) {
-            jdn += hijriMonthLength(year, m);
-        }
-        jdn += day;
-        return jdn;
-    }
-
-    // تحويل JDN -> التاريخ الهجري (دقيق)
-    function jdnToHijri(jdn) {
-        let daysSinceEpoch = jdn - (HIJRI_EPOCH_JDN - 1);
-        if (daysSinceEpoch < 0) return { year: 1, month: 1, day: 1 };
-        let year = 1;
-        let remaining = daysSinceEpoch;
-        while (true) {
-            let daysInYear = hijriYearDays(year);
-            if (remaining <= daysInYear) break;
-            remaining -= daysInYear;
-            year++;
-        }
-        let month = 1;
-        while (month <= 12) {
-            let monthDays = hijriMonthLength(year, month);
-            if (remaining <= monthDays) break;
-            remaining -= monthDays;
-            month++;
-        }
-        let day = remaining;
-        return { year: year, month: month, day: day };
-    }
-
-    // أسماء الشهور
-    const hijriMonths = ["محرم", "صفر", "ربيع الأول", "ربيع الآخر", "جمادى الأولى", "جمادى الآخرة", "رجب", "شعبان", "رمضان", "شوال", "ذو القعدة", "ذو الحجة"];
-    const gregMonths = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
-    const weekDaysAr = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
-
-    function getDayOfWeek(jdn) {
-        let dow = (jdn + 1) % 7;
-        return weekDaysAr[dow];
-    }
-
-    function convertGregToHijri(year, month, day) {
-        if (!isValidGregorian(year, month, day)) return null;
-        let jdn = gregorianToJDN(year, month, day);
-        let hijri = jdnToHijri(jdn);
-        let dayName = getDayOfWeek(jdn);
-        return { hijri, jdn, dayName };
-    }
-
-    function convertHijriToGreg(year, month, day) {
-        if (!isValidHijri(year, month, day)) return null;
-        let jdn = hijriToJDN(year, month, day);
-        let greg = jdnToGregorian(jdn);
-        let dayName = getDayOfWeek(jdn);
-        return { gregorian: greg, jdn, dayName };
-    }
-
-    // التحقق من صحة المدخلات
-    function isValidGregorian(y, m, d) {
-        if (y < 1 || m < 1 || m > 12 || d < 1) return false;
-        let daysInMonth = new Date(y, m, 0).getDate();
-        return !isNaN(daysInMonth) && d <= daysInMonth;
-    }
-    function isValidHijri(y, m, d) {
-        if (y < 1 || m < 1 || m > 12 || d < 1) return false;
-        return d <= hijriMonthLength(y, m);
-    }
-
-    // قسم تحويل السنوات (الرزمانة الكبرى)
-    const SOLAR_DAYS = 365.2422;
-    const LUNAR_DAYS = 354.36707;
-
-    function solarToLunarYears(solarYears) {
-        let lunarRaw = (solarYears * SOLAR_DAYS) / LUNAR_DAYS;
-        let lunarFull = Math.floor(lunarRaw);
-        let diffYears = lunarFull - solarYears;
-        let remainderDays = ((solarYears * SOLAR_DAYS) - (lunarFull * LUNAR_DAYS)).toFixed(2);
-        return { lunar: lunarFull, diff: diffYears, remainderDays: remainderDays };
-    }
-
-    function lunarToSolarYears(lunarYears) {
-        let solarRaw = (lunarYears * LUNAR_DAYS) / SOLAR_DAYS;
-        let solarFull = Math.floor(solarRaw);
-        let diffYears = solarFull - lunarYears;
-        let remainderDays = ((lunarYears * LUNAR_DAYS) - (solarFull * SOLAR_DAYS)).toFixed(2);
-        return { solar: solarFull, diff: diffYears, remainderDays: remainderDays };
-    }
-
-    function updateYearConversion(mode, value) {
-        let resultDiv = document.getElementById("yearConversionResult");
-        if (mode === 'solar2lunar') {
-            let solarVal = parseFloat(value);
-            if (isNaN(solarVal) || solarVal < 0) { resultDiv.innerHTML = "⚠️ الرجاء إدخال عدد صحيح أو عشري موجب."; return; }
-            if (solarVal > 50000) { resultDiv.innerHTML = "⚠️ الحد الأقصى للسنوات هو 50,000 سنة."; return; }
-            let res = solarToLunarYears(solarVal);
-            resultDiv.innerHTML = `
-                🌞 <strong>${solarVal}</strong> سنة شمسية ≈ <strong class="highlight">${res.lunar}</strong> سنة قمرية<br>
-                📊 الفارق التراكمي: <strong>${res.diff >=0 ? '+' : ''}${res.diff}</strong> سنة (قمري - شمسي)<br>
-                🕰️ بواقي أيام تقريبية: ${res.remainderDays} يوم
-                <div class="small-note">⚡ متوسط طول السنة القمرية أقل بحوالي 10-11 يومًا، فيتراكم فرق ~ سنة كل 33 سنة شمسية تقريبًا.</div>
-            `;
-        } else if (mode === 'lunar2solar') {
-            let lunarVal = parseFloat(value);
-            if (isNaN(lunarVal) || lunarVal < 0) { resultDiv.innerHTML = "⚠️ أدخل قيمة صحيحة للسنوات القمرية."; return; }
-            if (lunarVal > 50000) { resultDiv.innerHTML = "⚠️ الحد الأقصى للسنوات هو 50,000 سنة."; return; }
-            let res = lunarToSolarYears(lunarVal);
-            resultDiv.innerHTML = `
-                🌙 <strong>${lunarVal}</strong> سنة قمرية ≈ <strong class="highlight">${res.solar}</strong> سنة شمسية<br>
-                📊 الفارق: <strong>${res.diff >=0 ? '+' : ''}${res.diff}</strong> سنة (شمسي - قمري)<br>
-                🕰️ بواقي أيام: ${res.remainderDays} يوم
-                <div class="small-note">✨ التحويل يعكس معادلة الرزمانة التاريخية.</div>
-            `;
-        }
-    }
-
-    function displayExactDateResult(htmlContent, isFriday = false) {
-        let resultBox = document.getElementById("exactDateResult");
-        resultBox.innerHTML = htmlContent;
-        if (isFriday && !htmlContent.includes("الجمعة المباركة")) {
-            resultBox.innerHTML += `<div class="badge-friday">🌟 جمعة مباركة - رزمانة الجمعة 🌟</div>`;
-        }
-    }
-
-    function onGregToHijri() {
-        let day = parseInt(document.getElementById("gregDay").value);
-        let month = parseInt(document.getElementById("gregMonth").value);
-        let year = parseInt(document.getElementById("gregYear").value);
-        if (isNaN(day) || isNaN(month) || isNaN(year)) {
-            displayExactDateResult("❌ يرجى إكمال حقول التاريخ الشمسي (يوم، شهر، سنة).");
-            return;
-        }
-        let result = convertGregToHijri(year, month, day);
-        if (!result) {
-            displayExactDateResult("⚠️ التاريخ الغريغوري غير صالح (تحقق من الأيام حسب الشهر).");
-            return;
-        }
-        let hij = result.hijri;
-        let dayName = result.dayName;
-        let isFriday = (dayName === "الجمعة");
-        let hijriMonthName = hijriMonths[hij.month-1] || "";
-        let output = `
-            🌞 <strong>${year}/${month}/${day}</strong> ميلادي<br>
-            🌙 يقابله في التقويم الهجري: <strong class="highlight">${hij.year} هـ  -  ${hijriMonthName} (${hij.month})  -  اليوم ${hij.day}</strong><br>
-            📆 يوم الأسبوع: ${dayName} ${isFriday ? "<span style='color:#FFD966;'>(الجمعة المبارك)</span>" : ""}<br>
-            🪐 الفرق الأساسي: ${Math.abs(hij.year - year)} سنة (تقريبي)
-        `;
-        displayExactDateResult(output, isFriday);
-        document.getElementById("hijriDay").value = hij.day;
-        document.getElementById("hijriMonth").value = hij.month;
-        document.getElementById("hijriYear").value = hij.year;
-    }
-
-    function onHijriToGreg() {
-        let day = parseInt(document.getElementById("hijriDay").value);
-        let month = parseInt(document.getElementById("hijriMonth").value);
-        let year = parseInt(document.getElementById("hijriYear").value);
-        if (isNaN(day) || isNaN(month) || isNaN(year)) {
-            displayExactDateResult("❌ الرجاء ملء التاريخ الهجري (يوم، شهر، سنة).");
-            return;
-        }
-        let conv = convertHijriToGreg(year, month, day);
-        if (!conv) {
-            displayExactDateResult("⚠️ التاريخ الهجري غير صالح (تحقق من أيام الشهر والكبيسة).");
-            return;
-        }
-        let greg = conv.gregorian;
-        let dayName = conv.dayName;
-        let isFriday = (dayName === "الجمعة");
-        let gregMonthName = gregMonths[greg.month-1];
-        let output = `
-            🌙 <strong>${year} هـ - ${hijriMonths[month-1]} (${month}) - اليوم ${day}</strong><br>
-            🌞 يوافق التاريخ الميلادي: <strong class="highlight">${greg.year} م  -  ${gregMonthName} (${greg.month})  -  اليوم ${greg.day}</strong><br>
-            📅 يوم الأسبوع: ${dayName} ${isFriday ? "<span style='color:#FFD966;'>(الجمعة المبارك)</span>" : ""}<br>
-            🔄 الفارق الزمني التقريبي: ~ ${Math.abs(year - greg.year)} سنة
-        `;
-        displayExactDateResult(output, isFriday);
-        document.getElementById("gregDay").value = greg.day;
-        document.getElementById("gregMonth").value = greg.month;
-        document.getElementById("gregYear").value = greg.year;
-    }
-
-    function displayCurrentDates() {
-        let today = new Date();
-        let gYear = today.getFullYear();
-        let gMonth = today.getMonth() + 1;
-        let gDay = today.getDate();
-        let hijriNow = convertGregToHijri(gYear, gMonth, gDay);
-        if (hijriNow) {
-            let hij = hijriNow.hijri;
-            let dayName = hijriNow.dayName;
-            let hijriMonthName = hijriMonths[hij.month-1];
-            let fridayNote = (dayName === "الجمعة") ? "🎉 اليوم جمعة - رزمانة ميمونة 🎉" : "";
-            document.getElementById("currentDateBar").innerHTML = `
-                📍 <strong>اليوم</strong> : ${gYear}/${gMonth}/${gDay} م (${dayName}) &nbsp;|&nbsp;
-                <strong>التاريخ الهجري:</strong> ${hij.year} هـ - ${hijriMonthName} ${hij.month} - ${hij.day} &nbsp; ${fridayNote}
-                <span style="margin-right:12px;">⭐ رزمانة جُمُعَة: دمج الزمنين</span>
-            `;
-            document.getElementById("gregDay").value = gDay;
-            document.getElementById("gregMonth").value = gMonth;
-            document.getElementById("gregYear").value = gYear;
-            document.getElementById("hijriDay").value = hij.day;
-            document.getElementById("hijriMonth").value = hij.month;
-            document.getElementById("hijriYear").value = hij.year;
-        } else {
-            document.getElementById("currentDateBar").innerHTML = "عذراً، لم نتمكن من تحميل التقويم.";
-        }
-    }
-
-    // ربط الأحداث
-    document.getElementById("solarToLunarBtn").addEventListener("click", () => {
-        let solarVal = document.getElementById("solarYearsInput").value;
-        updateYearConversion('solar2lunar', solarVal);
-    });
-    document.getElementById("lunarToSolarBtn").addEventListener("click", () => {
-        let lunarVal = document.getElementById("lunarYearsInput").value;
-        updateYearConversion('lunar2solar', lunarVal);
-    });
-    document.getElementById("toHijriBtn").addEventListener("click", onGregToHijri);
-    document.getElementById("toGregBtn").addEventListener("click", onHijriToGreg);
-
-    window.addEventListener("DOMContentLoaded", () => {
-        displayCurrentDates();
-        updateYearConversion('solar2lunar', 30);
-    });
-</script>
+    </script>
 </body>
 </html>

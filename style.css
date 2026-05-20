@@ -160,7 +160,7 @@ header {
 }
 
 /* تنسيق صناديق الصفحات الأخرى */
-.searchBox, .aboutBox, .timelineBox {
+.searchBox, .timelineBox {
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(20px);
@@ -173,12 +173,128 @@ header {
     box-shadow: 0 20px 40px rgba(0,0,0,0.5);
 }
 
+/* تحديث وتطوير صندوق عن المشروع ليتحمل المقال والجدول */
+.aboutBox {
+    background: rgba(15, 15, 25, 0.65); /* تظليل أعمق قليلاً لزيادة وضوح المقال البصري */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    padding: 35px 25px;
+    border-radius: 24px;
+    max-width: 800px; /* تم تكبير العرض ليناسب الجدول والمقارنة */
+    width: 100%;
+    max-height: 85vh; /* يمنع الصندوق من الخروج عن حدود الشاشة الثابتة */
+    overflow-y: auto; /* يسمح بالتمرير داخل الصندوق بنعومة */
+    box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+    direction: rtl; /* اتجاه الكتابة من اليمين لليسار */
+    text-align: right; /* محاذاة النص لليمين لتناسب المقال العربي */
+}
+
+/* تحسين شكل شريط التمرير الداخلي في الـ aboutBox */
+.aboutBox::-webkit-scrollbar {
+    width: 6px;
+}
+.aboutBox::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+}
+.aboutBox::-webkit-scrollbar-thumb {
+    background: rgba(255, 213, 79, 0.3);
+    border-radius: 10px;
+}
+.aboutBox::-webkit-scrollbar-thumb:hover {
+    background: #ffd54f;
+}
+
 h2 {
     color: #ffd54f;
     margin-bottom: 20px;
     font-size: 24px;
+    text-shadow: 0 0 10px rgba(255, 213, 79, 0.2);
 }
 
+h3 {
+    color: #ffd54f;
+    margin: 25px 0 15px 0;
+    font-size: 19px;
+}
+
+.aboutBox p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 15px;
+}
+
+/* تنسيق جدول المقارنة المتجاوب داخل المقال */
+.table-responsive {
+    overflow-x: auto;
+    margin: 20px 0;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: right;
+    min-width: 550px;
+}
+
+.comparison-table th, .comparison-table td {
+    padding: 12px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 14px;
+}
+
+.comparison-table th {
+    background-color: rgba(255, 213, 79, 0.1);
+    color: #ffd54f;
+    font-weight: bold;
+}
+
+.comparison-table tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* تنسيق الاقتباس */
+.project-quote {
+    border-right: 4px solid #ffd54f;
+    padding: 10px 15px;
+    margin: 20px 0;
+    background: rgba(255, 213, 79, 0.03);
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* زر رابط كتاب التوفيقات الإلهامية */
+.book-action {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.btn-book {
+    display: inline-block;
+    padding: 12px 25px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #111;
+    background-color: #ffd54f;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 213, 79, 0.2);
+}
+
+.btn-book:hover {
+    background-color: #ffe082;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 213, 79, 0.3);
+}
+
+/* بقية عناصر المدخلات والماتشات القديمة */
 .searchBox input {
     width: 100%;
     padding: 12px;
@@ -214,10 +330,4 @@ h2 {
 .searchBox button:hover {
     background: #ffe082;
     transform: translateY(-2px);
-}
-
-.aboutBox p {
-    font-size: 16px;
-    line-height: 1.8;
-    color: rgba(255, 255, 255, 0.8);
 }

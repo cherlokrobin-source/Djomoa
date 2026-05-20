@@ -4,14 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مشروع الرزمانة المزدوجة</title>
-    <!-- استدعاء مكتبة الأيقونات Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- ربط ملف الـ CSS الخارجي -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- شريط التنقل العلوي -->
     <header>
         <div class="logo">الرّزمانة المزدوجة</div>
         <nav class="menu">
@@ -22,12 +19,9 @@
         </nav>
     </header>
 
-    <!-- منطقة محتوى الصفحات والكانفاس -->
     <main class="main-container">
-        <!-- كانفاس الخلفية التفاعلية -->
         <canvas id="canvas"></canvas>
 
-        <!-- 1. الصفحة الرئيسية (لوحة التحكم) -->
         <section id="home-page" class="page active">
             <div id="panel">
                 <div class="card">
@@ -48,32 +42,52 @@
             </div>
         </section>
 
-        <!-- 2. صفحة البحث -->
         <section id="search-page" class="page">
             <div class="searchBox">
-                <h2>البحث المتقدم في الرزمانة</h2>
-                <input type="text" placeholder="أدخل التاريخ أو الحدث المُراد البحث عنه..." id="searchInput">
-                <button onclick="performSearch()">ابدأ البحث</button>
+                <h2>البحث المتقدم في الرّزمانة (عبر 50,000 سنة)</h2>
+                
+                <div class="search-range-info" style="margin-bottom: 15px; font-size: 0.95rem; color: #ccc;">
+                    نطاق المدخلات المتاحة: <strong>من الجمعة 1 يناير إلى الخميس 31 ديسمبر</strong>
+                </div>
+
+                <input type="number" min="1" max="49999" placeholder="أدخل السنة الشمسية المُراد البحث عنها (1 - 49999)..." id="searchInput" style="direction: rtl;">
+                
+                <button onclick="performSearch()">ابدأ البحث الزمني</button>
+
+                <div class="freeze-note" style="margin-top: 15px; font-size: 0.85rem; color: #e6b800; line-height: 1.5; border-top: 1px solid #333; padding-top: 10px;">
+                    * يتوقف الربط القمري المزدوج ويتجمد عند <strong>30 ذو الحجة 49999</strong> (الموافق لـ <strong>48482 ش</strong>)، ويمتد الحساب الشمسي منفرداً حتى <strong>31 ديسمبر 49999</strong>.
+                </div>
             </div>
         </section>
 
-        <!-- 3. صفحة الخط الزمني -->
         <section id="timeline-page" class="page">
             <div class="timelineBox">
                 <h2>الخط الزمني الفلكي</h2>
                 <p>هنا يتم عرض الأحداث والمحطات الزمنية الكبرى المرتبطة بحركة الأجرام وتوثيق التوفيقات الإلهامية.</p>
-                <!-- يمكنك إضافة عناصر الخط الزمني هنا لاحقاً -->
-            </div>
+                </div>
         </section>
 
-        <!-- 4. صفحة عن المشروع (المقال، الجدول، وروابط التواصل) -->
         <section id="about-page" class="page">
             <div class="aboutBox">
                 <h2>عن مشروع الرزمانة</h2>
                 <p>يعتمد هذا المشروع على دمج وتوثيق الحسابات الزمنية العميقة التي تربط بين حركة الشمس والقمر، ممتداً بجذوره في التاريخ الفلكي ومستنداً إلى مصادر علمية وتاريخية عريقة لتسهيل فهم التحولات الكونية الزمنية.</p>
                 
+                <div class="scientific-article" style="margin-top: 25px; margin-bottom: 25px; border-right: 3px solid #e6b800; padding-right: 15px; text-align: justify; line-height: 1.6;">
+                    <h3 style="color: #e6b800; margin-bottom: 10px;">الدقة الرياضية والنطاق الزمني للمحرك</h3>
+                    <p>
+                        ينطلق هذا النظام الفلكي الرياضي من نقطة تزامُن محورية في عمق التاريخ، حيث يبدأ حساب التاريخ الشمسي من 
+                        <strong>أول جمعة، 1 يناير من السنة 1</strong>، والتي توافق تماماً 
+                        <strong>الجمعة، 1 محرم من السنة 1 من التاريخ القمري</strong> ليمتد تدفقه الحسابي عبر الزمن بشكل دقيق متزامن.
+                    </p>
+                    <p>
+                        ويستمر هذا الارتباط التزامني بين التقويمين حتى يصل إلى حدود المعادلة الرياضية القصوى للمشروع؛ حيث 
+                        <strong>يتجمد العد القمري تماماً عند تاريخ 30 ذو الحجة سنة 49999</strong> (الموافق لـ <strong>48482 سنة شمسية هجرية</strong>)، 
+                        في حين يمتد الحساب الشمسي منفرداً ليستكمل دورته الزمنية المستقلة إلى غاية 
+                        <strong>31 ديسمبر من السنة 49999</strong>.
+                    </p>
+                </div>
+
                 <h3>مقارنة الحسابات الزمنية</h3>
-                <!-- الجدول المقارن المتجاوب -->
                 <div class="table-responsive">
                     <table class="comparison-table">
                         <thead>
@@ -103,7 +117,6 @@
                     </table>
                 </div>
 
-                <!-- الاقتباس وزر تصفح الكتاب -->
                 <div class="project-quote">
                     "إن التوافق بين المطالع الشمسية والمنازل القمرية آية من آيات الحساب البديع المنسق في الكون."
                 </div>
@@ -113,7 +126,6 @@
                     </a>
                 </div>
 
-                <!-- قسم شبكات التواصل الاجتماعي للمطور المطور حديثاً -->
                 <div class="social-developer-box">
                     <span>تواصل مع مطور الرزمانة المزدوجة</span>
                     <div class="developer-links">
@@ -132,7 +144,6 @@
         </section>
     </main>
 
-    <!-- سكريبت بسيط لتشغيل التنقل بين الصفحات بشكل مبدئي -->
     <script>
         function switchPage(pageId) {
             // إخفاء جميع الصفحات وإلغاء تفعيل الأزرار
@@ -146,7 +157,17 @@
 
         function performSearch() {
             const query = document.getElementById('searchInput').value;
-            if(query) alert('جاري البحث عن: ' + query);
+            if(query) {
+                // التأكد من أن السنة المدخلة تقع ضمن النطاق المطلوب قبل المتابعة
+                const year = parseInt(query);
+                if (year >= 1 && year <= 49999) {
+                    alert('جاري البحث الحسابي في النطاق الشمسي للسنة: ' + year);
+                } else {
+                    alert('الرجاء إدخال سنة صحيحة بين 1 و 49999');
+                }
+            } else {
+                alert('الرجاء إدخال رقم السنة للبحث.');
+            }
         }
     </script>
 </body>

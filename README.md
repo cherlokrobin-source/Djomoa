@@ -56,4 +56,4 @@ Developers, designers, mathematicians, and astronomy enthusiasts are welcome to 
 ---
 
 © 2026 Djomoa — All Rights Reserved
-جميع حقوق الطبع محفوظة 
+جميع حقوق الطبع محفوظة ademnasri@

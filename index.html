@@ -41,6 +41,17 @@
             margin: 0 auto;
         }
 
+        /* Bismillah style */
+        .bismillah {
+            text-align: center;
+            font-family: 'Traditional Arabic', 'Simplified Arabic', serif;
+            font-size: 1.6rem;
+            color: #FFE2A4;
+            opacity: 0.85;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
         /* header */
         .brand {
             text-align: center;
@@ -172,9 +183,88 @@
             border-color: #2a3748;
             margin: 15px 0;
         }
+        
+        /* Article & Intro Section */
+        .article-card {
+            background: rgba(13, 22, 33, 0.75);
+            border: 1px solid rgba(43, 108, 176, 0.3);
+            border-radius: 2rem;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+        .article-card h3 {
+            color: #FFE79E;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .article-card p {
+            color: #cbd5e1;
+            font-size: 1.05rem;
+            margin-bottom: 1.2rem;
+            text-align: justify;
+        }
+        .book-link-btn {
+            display: inline-block;
+            background: rgba(255, 213, 79, 0.1);
+            border: 1px dashed #ffd966;
+            color: #ffd966;
+            padding: 10px 20px;
+            border-radius: 1.5rem;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+        .book-link-btn:hover {
+            background: #ffd966;
+            color: #0a0f16;
+            transform: translateY(-1px);
+        }
+
+        /* Social Developer Links */
+        .developer-section {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding: 1rem;
+        }
+        .developer-section p {
+            font-size: 0.95rem;
+            color: #b9c7db;
+            margin-bottom: 10px;
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            border-radius: 1.2rem;
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        .social-btn.linkedin { background-color: #0077b5; }
+        .social-btn.facebook { background-color: #1877f2; }
+        .social-btn.twitter { background-color: #1da1f2; }
+        .social-btn:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
         footer {
             text-align: center;
-            padding: 2rem 0.5rem;
+            padding: 1.5rem 0.5rem;
             color: #6e7f92;
             border-top: 1px solid #1f2a36;
             margin-top: 1rem;
@@ -183,6 +273,7 @@
             body { padding: 1rem; }
             .grid { grid-template-columns: 1fr; }
             .card { padding: 1.2rem; }
+            .brand h1 { font-size: 2.2rem; }
         }
         .small-note {
             font-size: 0.8rem;
@@ -201,6 +292,10 @@
 </head>
 <body>
 <div class="container">
+    
+    <!-- البسملة المباركة في الأعلى -->
+    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+
     <div class="brand">
         <h1>📅 رُزمانة جُمُعَة</h1>
         <p>منصة الحساب الزمني المزدوج • التقويم الشمسي (الغريغوري) و القمري (الهجري) الدقيق</p>
@@ -209,6 +304,20 @@
     <!-- شريط التاريخ الحالي -->
     <div class="current-date-bar" id="currentDateBar">
         جاري تحميل التقويم الحي...
+    </div>
+
+    <!-- مقال تعريفي ومقارنة تاريخية -->
+    <div class="article-card">
+        <h3>📖 فلسفة رزمانة جمعة والكتاب الخالد "التوفيقات الإلهامية"</h3>
+        <p>
+            على مر العصور، ظل ربط الزمن الشمسي بالدورة القمرية تحديًا واجه الفلكيين والمؤرخين لتسجيل الأحداث بدقة. وفي القرن التاسع عشر، أهدى إلينا العالم الفلكي والمؤرخ الكبير <strong>محمد مختار باشا</strong> عمله الموسوعي الفذ الفارق: كتاب <strong>"التوفيقات الإلهامية في مقارنة السنين الهجرية بالسنين الإفرنجية"</strong>. هذا الكتاب يُعد "الأب الروحي للتقاويم المقارنة"، حيث صاغ فيه جداول رياضية مبهرة تمتد لقرون لتربط اليوم الهجري بيومه الميلادي بدقة لامتناهية معتمداً على الأنظمة الحسابية الحكيمة.
+        </p>
+        <p>
+            تأتي <strong>"رُزمانة جُمُعَة الرقمية"</strong> كامتداد عصري لهذه الفلسفة التاريخية العريقة. بينما كان الباحث قديماً يتصفح مئات الصفحات في كتاب "التوفيقات الإلهامية" للبحث عن يومٍ معين أو لحساب الفارق بين السنوات عبر خوارزميات الجمع والطرح اليدوية، تقوم هذه المنصة باختصار كل ذلك في جزء من الثانية! نستخدم هنا <i>نظام اليوم اليولياني (JDN) الحسابي</i> مدمجاً بـ <i>التقويم الهجري الاصطلاحي التعديلي</i> (دورة الـ 30 سنة) لنوفر لك أدق تحويل مرن يطابق القواعد الفلكية التأسيسية التي قام عليها كتاب التوفيقات، مع ميزة فريدة وهي تعقّب وإبراز بركة "أيام الجمعة" عبر التاريخ.
+        </p>
+        <a href="https://archive.org/details/al-tawfiqat-al-ilhamiya" target="_blank" class="book-link-btn">
+            📚 تصفح وتحميل كتاب التوفيقات الإلهامية من أرشيف الإنترنت
+        </a>
     </div>
 
     <div class="grid">
@@ -270,6 +379,17 @@
     <div style="background: #111b24aa; border-radius: 1.5rem; padding: 1rem 1.5rem; margin-top: 0.5rem; text-align: center; border:1px solid #ffd96630;">
         <span style="color:#ffdb7e;">⭐ رُزمانة جُمُعَة | دمج الزمن الشمسي بالقمرى مع إبراز أيام الجمعة المباركة ⭐</span>
     </div>
+
+    <!-- تواصل مع المطور -->
+    <div class="developer-section">
+        <p>👨‍💻 تواصل مع مطور الرزمانة:</p>
+        <div class="social-links">
+            <a href="https://linkedin.com" target="_blank" class="social-btn linkedin">💼 لينكد إن</a>
+            <a href="https://facebook.com" target="_blank" class="social-btn facebook">🔵 فيسبوك</a>
+            <a href="https://twitter.com" target="_blank" class="social-btn twitter">🐦 إكس / تويتر</a>
+        </div>
+    </div>
+
     <footer>
         Djomoa Dual Calendar © 2026 • حِسابات دقيقة تعتمد على التقويم الهجري التعديلي (جدول 30 سنة) والتقويم الغريغوري. يدعم حتى 50,000 سنة.
     </footer>
@@ -395,6 +515,7 @@
         return { gregorian: greg, jdn, dayName };
     }
 
+    // التحقق من صحة المدخلات
     function isValidGregorian(y, m, d) {
         if (y < 1 || m < 1 || m > 12 || d < 1) return false;
         let daysInMonth = new Date(y, m, 0).getDate();

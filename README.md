@@ -73,17 +73,7 @@ footer h3{ color:#facc15; margin-bottom:15px; }
     <h2 class="section-title">الخط الزمني طويل المدى</h2>
     <p class="section-text">تم تصميم المشروع ليغطي نطاقًا زمنيًا واسعًا يبدأ من السنة الأولى ويمتد إلى عشرات الآلاف من السنين ضمن بنية زمنية قابلة للتطوير.</p>
     
-    <div class="timeline">
-        <div class="timeline-bar"></div>
-        <div class="timeline-points">
-            <span>1</span>
-            <span>100</span>
-            <span>1000</span>
-            <span>10000</span>
-            <span>50000</span>
-        </div>
-    </div>
-</section>
+    <div class="timeline"> 
 
 <section>
     <h2 class="section-title">الرؤية المستقبلية</h2>

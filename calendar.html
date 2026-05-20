@@ -3,19 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة DJOMOA — الرزمانة المزدوجة</title>
-    
+    <title>DJOMOA — الرزمانة المزدوجة | حتى 50,000 سنة</title>
+    <meta name="description" content="منصة رقمية لدمج الحساب الشمسي والقمري ضمن نظام زمني واحد يصل إلى خمسين ألف سنة بواجهة مستقبلية.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
-        /* إعدادات عامة وتصفير الهوامش */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
         body {
             color: white;
             background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)),
@@ -23,14 +20,11 @@
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            background-repeat: no-repeat;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
         }
-
-        /* شريط التنقل العلوي */
         header {
             width: 100%;
             padding: 20px 30px;
@@ -39,20 +33,15 @@
             align-items: center;
             background: rgba(255, 255, 255, 0.02);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             z-index: 10;
         }
-
         .logo {
             font-size: 24px;
             font-weight: bold;
             color: #ffd54f;
             text-shadow: 0 0 10px rgba(255, 213, 79, 0.3);
-            letter-spacing: 1px;
         }
-
-        /* حاوية المحتوى الرئيسية */
         .main-container {
             flex: 1;
             display: flex;
@@ -65,84 +54,65 @@
             margin: 0 auto;
             z-index: 2;
         }
-
-        /* البنية التعريفية الترحيبية */
         .hero-section {
             text-align: center;
             margin-bottom: 50px;
             max-width: 700px;
         }
-
         .hero-section h1 {
             font-size: 2.5rem;
             color: #ffffff;
             line-height: 1.4;
             margin-bottom: 15px;
         }
-
         .hero-section h1 span {
             color: #ffd54f;
         }
-
         .hero-section p {
             font-size: 1.1rem;
             color: rgba(255, 255, 255, 0.7);
             line-height: 1.8;
             margin-bottom: 30px;
         }
-
-        /* أزرار التشغيل الرئيسية */
         .cta-buttons {
             display: flex;
             gap: 15px;
             justify-content: center;
             flex-wrap: wrap;
         }
-
-        .btn-primary {
+        .btn-primary, .btn-secondary {
             padding: 14px 35px;
-            border: none;
             border-radius: 50px;
-            background: #ffd54f;
-            color: #111;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
+        }
+        .btn-primary {
+            background: #ffd54f;
+            color: #111;
+            border: none;
             box-shadow: 0 4px 15px rgba(255, 213, 79, 0.3);
         }
-
         .btn-primary:hover {
             background: #ffe082;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 213, 79, 0.4);
         }
-
         .btn-secondary {
-            padding: 14px 35px;
-            border: 2px solid #ffd54f;
-            border-radius: 50px;
             background: transparent;
+            border: 2px solid #ffd54f;
             color: #ffd54f;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
         }
-
         .btn-secondary:hover {
             background: rgba(255, 213, 79, 0.1);
             transform: translateY(-2px);
         }
-
-        /* قسم مميزات المنصة (البطاقات) */
         .features-title {
             font-size: 1.8rem;
             color: #ffd54f;
             margin-bottom: 30px;
             text-align: center;
         }
-
         .panel-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -150,55 +120,43 @@
             width: 100%;
             margin-bottom: 40px;
         }
-
         .card {
             padding: 35px 25px;
             border-radius: 24px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
             text-align: center;
             transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             box-shadow: 0 15px 35px rgba(0,0,0,0.3);
         }
-
         .card:hover {
             transform: translateY(-8px);
             background: rgba(255, 255, 255, 0.06);
             border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
         }
-
         .card i {
             font-size: 40px;
             margin-bottom: 20px;
-            display: inline-block;
         }
-
-        .fa-calendar-days { color: #a7ffeb; text-shadow: 0 0 15px rgba(167,255,235,0.4); }
-        .fa-sun { color: #ffb300; text-shadow: 0 0 15px rgba(255,179,0,0.4); }
-        .fa-moon { color: #9ecbff; text-shadow: 0 0 15px rgba(158,203,255,0.4); }
-
+        .fa-calendar-days { color: #a7ffeb; }
+        .fa-sun { color: #ffb300; }
+        .fa-moon { color: #9ecbff; }
         .title {
             font-size: 1.2rem;
             color: #ffffff;
             margin-bottom: 12px;
             font-weight: 600;
         }
-
         .value {
             font-size: 0.95rem;
             line-height: 1.7;
             color: rgba(255, 255, 255, 0.65);
         }
-
-        /* تنسيق صندوق المحرك الزمني الجديد */
         .searchBox {
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             padding: 40px;
             border-radius: 24px;
             text-align: center;
@@ -206,13 +164,11 @@
             max-width: 600px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
         }
-
         .searchBox h2 {
             color: #ffd54f;
             margin-bottom: 15px;
             font-size: 22px;
         }
-
         .searchBox input {
             width: 100%;
             padding: 14px;
@@ -224,14 +180,11 @@
             font-size: 16px;
             text-align: center;
             outline: none;
-            transition: 0.3s;
         }
-
         .searchBox input:focus {
             border-color: #ffd54f;
             box-shadow: 0 0 12px rgba(255, 213, 79, 0.3);
         }
-
         .searchBox button {
             width: 100%;
             padding: 14px;
@@ -244,18 +197,24 @@
             cursor: pointer;
             transition: 0.3s;
         }
-
         .searchBox button:hover {
             background: #ffe082;
             transform: translateY(-2px);
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.98); }
-            to { opacity: 1; transform: scale(1); }
+        #resultDisplay {
+            margin-top: 25px;
+            padding: 15px;
+            background: rgba(255,213,79,0.1);
+            border: 1px dashed #ffd54f;
+            border-radius: 12px;
+            text-align: right;
+            line-height: 1.8;
         }
-
-        /* تذييل الصفحة */
+        .info-note {
+            font-size: 12px;
+            margin-top: 10px;
+            color: #ffd54f;
+        }
         footer {
             width: 100%;
             padding: 25px;
@@ -264,74 +223,166 @@
             border-top: 1px solid rgba(255, 255, 255, 0.03);
             font-size: 14px;
             color: rgba(255, 255, 255, 0.4);
-            z-index: 2;
             margin-top: 40px;
         }
     </style>
 </head>
 <body>
+<header>
+    <div class="logo">DJOMOA</div>
+</header>
+<div class="main-container">
+    <section class="hero-section">
+        <h1>الرزمانة المزدوجة <br><span>للحساب الزمني والفلكي</span></h1>
+        <p>منصة رقمية متقدمة لدمج الحساب الشمسي والقمري داخل نظام زمني احترافي واحد يصل إلى <strong>خمسين ألف سنة</strong> مع واجهة مستقبلية حديثة وسريعة.</p>
+        <div class="cta-buttons">
+            <button class="btn-primary" id="startBtn">ابدأ الاستكشاف</button>
+            <button class="btn-secondary" id="viewBtn">عرض الرزمانة</button>
+        </div>
+    </section>
+    <h2 class="features-title">مميزات المنصة</h2>
+    <section class="panel-grid">
+        <div class="card">
+            <i class="fa-solid fa-calendar-days"></i>
+            <div class="title">الحساب المزدوج</div>
+            <div class="value">دمج التقويم القمري والشمسي داخل نظام واحد بدقة حسابية متقدمة ولحظية.</div>
+        </div>
+        <div class="card">
+            <i class="fa-solid fa-sun"></i>
+            <div class="title">واجهة مستقبلية</div>
+            <div class="value">تصميم احترافي متجاوب يعتمد الأسلوب الزجاجي ليعمل بسلاسة على الهاتف والحاسوب.</div>
+        </div>
+        <div class="card">
+            <i class="fa-solid fa-moon"></i>
+            <div class="title">محرك زمني</div>
+            <div class="value">إمكانية التنقل التراكمي بين السنوات والأزمنة الطويلة بطريقة ديناميكية حديثة حتى 50,000 سنة.</div>
+        </div>
+    </section>
+    <section class="searchBox" id="calculatorSection">
+        <h2>محرك الحساب الزمني التراكمي</h2>
+        <p>أدخل عدد السنوات المراد حساب تراكم الفروق الزمنية لها (حتى 50,000 سنة)</p>
+        <input type="number" id="yearsInput" placeholder="مثال: 1000 أو 50000" min="1" max="50000">
+        <button id="calculateBtn">احسب الفروق الفلكية</button>
+        <div class="info-note">🔭 يدعم المحرك حتى <strong>50,000 سنة</strong> (خمسون ألف سنة)</div>
+        <div id="resultDisplay" style="display: none;">
+            <p style="color: #ffd54f; font-weight: bold; font-size: 18px; text-align: center; margin-bottom: 10px;">نتائج الحساب التراكمي:</p>
+            <div id="solarResult"></div>
+            <div id="lunarResult"></div>
+            <div id="diffResult" style="font-weight: bold; margin-top: 8px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 8px;"></div>
+        </div>
+    </section>
+</div>
+<footer>
+    © DJOMOA 2026 — جميع الحقوق محفوظة
+</footer>
 
-    <header>
-        <div class="logo">DJOMOA</div>
-    </header>
-
-    <div class="main-container">
+<script>
+    // الحد الأقصى للسنوات
+    const MAX_YEARS = 50000;
+    
+    // الثوابت الفلكية
+    const SOLAR_YEAR_DAYS = 365.2422;
+    const LUNAR_YEAR_DAYS = 354.36708;
+    
+    // عناصر DOM
+    const startBtn = document.getElementById('startBtn');
+    const viewBtn = document.getElementById('viewBtn');
+    const calculateBtn = document.getElementById('calculateBtn');
+    const yearsInput = document.getElementById('yearsInput');
+    const resultDisplay = document.getElementById('resultDisplay');
+    const solarResult = document.getElementById('solarResult');
+    const lunarResult = document.getElementById('lunarResult');
+    const diffResult = document.getElementById('diffResult');
+    
+    // ضبط خاصية max للحقل
+    yearsInput.max = MAX_YEARS;
+    
+    function calculateDifferences(years) {
+        const totalSolarDays = years * SOLAR_YEAR_DAYS;
+        const totalLunarDays = years * LUNAR_YEAR_DAYS;
+        const diffDays = totalSolarDays - totalLunarDays;
         
-        <section class="hero-section">
-            <h1>الرزمانة المزدوجة <br><span>للحساب الزمني والفلكي</span></h1>
-            <p>منصة رقمية متقدمة لدمج الحساب الشمسي والقمري داخل نظام زمني احترافي واحد يصل إلى خمسين ألف سنة مع واجهة مستقبلية حديثة وسريعة.</p>
-            
-            <div class="cta-buttons">
-                <button class="btn-primary" id="startBtn">ابدأ الاستكشاف</button>
-                <button class="btn-secondary" id="viewBtn">عرض الرزمانة</button>
-            </div>
-        </section>
-
-        <h2 class="features-title">مميزات المنصة</h2>
-
-        <section class="panel-grid">
-            
-            <div class="card">
-                <i class="fa-solid fa-calendar-days"></i>
-                <div class="title">الحساب المزدوج</div>
-                <div class="value">دمج التقويم القمري والشمسي داخل نظام واحد بدقة حسابية متقدمة ولحظية.</div>
-            </div>
-
-            <div class="card">
-                <i class="fa-solid fa-sun"></i>
-                <div class="title">واجهة مستقبلية</div>
-                <div class="value">تصميم احترافي متجاوب يعتمد الأسلوب الزجاجي ليعمل بسلاسة على الهاتف والحاسوب.</div>
-            </div>
-
-            <div class="card">
-                <i class="fa-solid fa-moon"></i>
-                <div class="title">محرك زمني</div>
-                <div class="value">إمكانية التنقل التراكمي بين السنوات والأزمنة الطويلة بطريقة ديناميكية حديثة.</div>
-            </div>
-
-        </section>
-
-        <section class="searchBox" id="calculatorSection">
-            <h2>محرك الحساب الزمني التراكمي</h2>
-            <p style="margin-bottom: 20px; color: rgba(255,255,255,0.7); font-size: 14px;">أدخل عدد السنوات المراد حساب تراكم الفروق الزمنية لها</p>
-            
-            <input type="number" id="yearsInput" placeholder="أدخل عدد السنوات (مثلاً: 1000)" min="1">
-            <button id="calculateBtn">احسب الفروق الفلكية</button>
-            
-            <div id="resultDisplay" style="display: none; margin-top: 25px; padding: 15px; background: rgba(255,213,79,0.1); border: 1px dashed #ffd54f; border-radius: 12px; text-align: right; line-height: 1.8;">
-                <p style="color: #ffd54f; font-weight: bold; font-size: 18px; text-align: center; margin-bottom: 10px;">نتائج الحساب التراكمي:</p>
-                <div id="solarResult" style="font-size: 15px;"></div>
-                <div id="lunarResult" style="font-size: 15px;"></div>
-                <div id="diffResult" style="font-size: 16px; font-weight: bold; margin-top: 8px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 8px;"></div>
-            </div>
-        </section>
-
-    </div>
-
-    <footer>
-        © DJOMOA 2026 — جميع الحقوق محفوظة
-    </footer>
-
-    <script src="script.js"></script>
+        const diffYears = Math.floor(diffDays / SOLAR_YEAR_DAYS);
+        const remainingDays = diffDays % SOLAR_YEAR_DAYS;
+        const diffMonths = Math.floor(remainingDays / 30.44);
+        const diffDaysOnly = Math.floor(remainingDays % 30.44);
+        const centuries = Math.floor(diffYears / 100);
+        const millennia = Math.floor(diffYears / 1000);
+        
+        return {
+            solarDays: totalSolarDays,
+            lunarDays: totalLunarDays,
+            diffDays: diffDays,
+            diffYears,
+            diffMonths,
+            diffDaysOnly,
+            centuries,
+            millennia
+        };
+    }
+    
+    function displayResults(years) {
+        if (!years || isNaN(years) || years <= 0) {
+            alert("⚠️ الرجاء إدخال عدد سنوات صحيح أكبر من 0");
+            return false;
+        }
+        if (years > MAX_YEARS) {
+            alert(`⚠️ الحد الأقصى للسنوات هو ${MAX_YEARS.toLocaleString()} سنة. الرجاء إدخال قيمة أقل.`);
+            return false;
+        }
+        
+        const res = calculateDifferences(years);
+        
+        solarResult.innerHTML = `<i class="fa-regular fa-sun"></i> <strong>الأيام الشمسية:</strong> ${res.solarDays.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2})} يوم`;
+        lunarResult.innerHTML = `<i class="fa-regular fa-moon"></i> <strong>الأيام القمرية:</strong> ${res.lunarDays.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2})} يوم`;
+        
+        let diffText = `<i class="fa-solid fa-chart-line"></i> <strong>الفرق التراكمي:</strong> ${res.diffDays.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2})} يوم`;
+        diffText += `<br>≈ ${res.diffYears.toLocaleString()} سنة شمسية (${res.diffMonths} شهر و ${res.diffDaysOnly} يوم)`;
+        
+        if (res.centuries > 0) {
+            diffText += `<br>≈ ${res.centuries.toLocaleString()} قرن`;
+        }
+        if (res.millennia > 0) {
+            diffText += `<br>≈ ${res.millennia.toLocaleString()} ألف سنة`;
+        }
+        
+        diffResult.innerHTML = diffText;
+        
+        if (years >= MAX_YEARS * 0.9) {
+            diffResult.innerHTML += `<p style="color: #ffaa00; margin-top: 10px;">⚠️ لقد وصلت إلى أقصى مدى زمني مدعوم (${MAX_YEARS.toLocaleString()} سنة).</p>`;
+        }
+        
+        resultDisplay.style.display = 'block';
+        return true;
+    }
+    
+    startBtn.addEventListener('click', () => {
+        document.getElementById('calculatorSection').scrollIntoView({ behavior: 'smooth' });
+    });
+    
+    viewBtn.addEventListener('click', () => {
+        let years = prompt(`🔭 أدخل عدد السنوات لعرض الرزمانة (1 - ${MAX_YEARS.toLocaleString()}):`, "1000");
+        if (years !== null) {
+            years = parseFloat(years);
+            if (!isNaN(years) && years > 0 && years <= MAX_YEARS) {
+                yearsInput.value = years;
+                displayResults(years);
+            } else if (years > MAX_YEARS) {
+                alert(`الحد الأقصى هو ${MAX_YEARS.toLocaleString()} سنة.`);
+            } else if (years <= 0) {
+                alert("الرجاء إدخال عدد سنوات موجب.");
+            }
+        }
+    });
+    
+    calculateBtn.addEventListener('click', () => {
+        const years = parseFloat(yearsInput.value);
+        displayResults(years);
+    });
+    
+    yearsInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') calculateBtn.click();
+    });
+</script>
 </body>
 </html>

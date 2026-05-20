@@ -173,9 +173,9 @@ header {
     box-shadow: 0 20px 40px rgba(0,0,0,0.5);
 }
 
-/* تحديث وتطوير صندوق عن المشروع ليتحمل المقال والجدول */
+/* صندوق عن المشروع ليتحمل المقال والجدول */
 .aboutBox {
-    background: rgba(15, 15, 25, 0.65); /* تظليل أعمق قليلاً لزيادة وضوح المقال البصري */
+    background: rgba(15, 15, 25, 0.75); /* تظليل أعمق قليلاً لزيادة وضوح المقال البصري */
     border: 1px solid rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
@@ -183,14 +183,16 @@ header {
     border-radius: 24px;
     max-width: 800px; /* تم تكبير العرض ليناسب الجدول والمقارنة */
     width: 100%;
-    max-height: 85vh; /* يمنع الصندوق من الخروج عن حدود الشاشة الثابتة */
+    max-height: 80vh; /* يمنع الصندوق من الخروج عن حدود الشاشة الثابتة */
     overflow-y: auto; /* يسمح بالتمرير داخل الصندوق بنعومة */
     box-shadow: 0 30px 60px rgba(0,0,0,0.6);
     direction: rtl; /* اتجاه الكتابة من اليمين لليسار */
     text-align: right; /* محاذاة النص لليمين لتناسب المقال العربي */
+    scrollbar-width: thin; /* دعم شريط التمرير لمتصفح فايرفوكس */
+    scrollbar-color: rgba(255, 213, 79, 0.3) rgba(255, 255, 255, 0.02); /* ألوان فايرفوكس */
 }
 
-/* تحسين شكل شريط التمرير الداخلي في الـ aboutBox */
+/* تحسين شكل شريط التمرير الداخلي في الـ aboutBox لمتصفحات كيج/كروم/سفاري */
 .aboutBox::-webkit-scrollbar {
     width: 6px;
 }
@@ -272,7 +274,7 @@ h3 {
 /* زر رابط كتاب التوفيقات الإلهامية */
 .book-action {
     text-align: center;
-    margin-top: 25px;
+    margin: 25px 0;
 }
 
 .btn-book {
@@ -292,6 +294,66 @@ h3 {
     background-color: #ffe082;
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(255, 213, 79, 0.3);
+}
+
+/* قسم مواقع التواصل الاجتماعي للمطور */
+.social-developer-box {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    text-align: center;
+}
+
+.social-developer-box span {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.5);
+    display: block;
+    margin-bottom: 12px;
+}
+
+.developer-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.dev-social-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    transition: 0.25s ease-in-out;
+}
+
+.dev-social-item i {
+    font-size: 15px;
+}
+
+.dev-social-item.linkedin:hover {
+    background: #0077b5;
+    border-color: #0077b5;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 119, 181, 0.3);
+}
+
+.dev-social-item.facebook:hover {
+    background: #1877f2;
+    border-color: #1877f2;
+    color: white;
+    box-shadow: 0 4px 12px rgba(24, 119, 242, 0.3);
+}
+
+.dev-social-item.twitter:hover {
+    background: #1da1f2;
+    border-color: #1da1f2;
+    color: white;
+    box-shadow: 0 4px 12px rgba(29, 161, 242, 0.3);
 }
 
 /* بقية عناصر المدخلات والماتشات القديمة */
@@ -330,4 +392,30 @@ h3 {
 .searchBox button:hover {
     background: #ffe082;
     transform: translateY(-2px);
+}
+
+/* شاشات الهواتف والأجهزة اللوحية لضمان عدم اختفاء المحتويات */
+@media (max-width: 768px) {
+    body {
+        overflow-y: auto; /* السماح بالتمرير الكلي على الهواتف إذا زاد المحتوى */
+        height: auto;
+        min-height: 100vh;
+    }
+    header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+    }
+    .page {
+        position: relative;
+        height: auto;
+        padding: 40px 15px;
+    }
+    .aboutBox {
+        max-height: none; /* إلغاء تحديد الارتفاع الأقصى على الشاشات الصغيرة لتسهيل القراءة */
+    }
+    .developer-links {
+        flex-direction: column;
+        gap: 10px;
+    }
 }

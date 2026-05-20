@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-
         *{
             margin:0;
             padding:0;
@@ -22,7 +21,6 @@
             overflow-x:hidden;
         }
 
-        /* خلفية متحركة */
         body::before{
             content:'';
             position:fixed;
@@ -33,7 +31,6 @@
             z-index:-1;
         }
 
-        /* البسملة */
         .basmala{
             width:100%;
             text-align:center;
@@ -48,7 +45,6 @@
             backdrop-filter:blur(6px);
         }
 
-        /* الهيدر */
         header{
             display:flex;
             justify-content:space-between;
@@ -122,7 +118,6 @@
             to{opacity:1;}
         }
 
-        /* بطاقات */
         #panel{
             display:grid;
             grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
@@ -160,7 +155,6 @@
             font-weight:bold;
         }
 
-        /* البحث */
         .searchBox,
         .timelineBox,
         .aboutBox{
@@ -204,7 +198,6 @@
             transform:scale(1.05);
         }
 
-        /* الجدول */
         .table-responsive{
             overflow-x:auto;
             margin-top:20px;
@@ -228,7 +221,6 @@
             color:#111;
         }
 
-        /* الاقتباس */
         .project-quote{
             margin-top:25px;
             padding:20px;
@@ -238,7 +230,6 @@
             font-style:italic;
         }
 
-        /* روابط التواصل */
         .social-developer-box{
             margin-top:35px;
             text-align:center;
@@ -266,7 +257,6 @@
             color:#111;
         }
 
-        /* الفوتر */
         footer{
             margin-top:60px;
             text-align:center;
@@ -280,255 +270,259 @@
             margin-bottom:10px;
         }
 
-        @media(max-width:768px){
+        /* نافذة النتائج */
+        .result-area{
+            margin-top:25px;
+            background:rgba(0,0,0,0.5);
+            border-radius:16px;
+            padding:15px;
+            border:1px solid rgba(230,184,0,0.3);
+        }
 
+        .result-item{
+            background:#0f172a;
+            margin:10px 0;
+            padding:12px;
+            border-radius:12px;
+            transition:0.2s;
+        }
+
+        .result-item strong{
+            color:#e6b800;
+        }
+
+        @media(max-width:768px){
             header{
                 flex-direction:column;
                 gap:15px;
             }
-
             .basmala{
                 font-size:24px;
             }
-
             .logo{
                 font-size:1.2rem;
             }
-
         }
-
     </style>
 </head>
-
 <body>
 
-    <!-- البسملة -->
     <div class="basmala">
         ﷽ بسم الله الرحمن الرحيم
     </div>
 
     <header>
-
         <div class="logo">
             الرّزمانة المزدوجة
             <span class="demo-badge">صفحة تجريبية</span>
         </div>
-
         <nav class="menu">
             <button class="menu-btn active-btn" onclick="switchPage('home', event)">الرئيسية</button>
             <button class="menu-btn" onclick="switchPage('search', event)">البحث</button>
             <button class="menu-btn" onclick="switchPage('timeline', event)">الخط الزمني</button>
             <button class="menu-btn" onclick="switchPage('about', event)">عن المشروع</button>
         </nav>
-
     </header>
 
     <main class="main-container">
 
         <!-- الصفحة الرئيسية -->
         <section id="home-page" class="page active">
-
             <div style="text-align:center; margin-bottom:20px; color:#e6b800;">
                 <i class="fa-solid fa-flask"></i>
                 هذه <strong>نسخة تجريبية</strong> للمشروع تحت التطوير والاختبار.
             </div>
-
             <div id="panel">
-
                 <div class="card">
                     <i class="fa-solid fa-sun"></i>
                     <div class="title">التوقيت الشمسي</div>
                     <div class="value" id="solar-time">00:00</div>
                 </div>
-
                 <div class="card">
                     <i class="fa-solid fa-moon"></i>
                     <div class="title">التوقيت القمري</div>
                     <div class="value" id="lunar-time">00:00</div>
                 </div>
-
                 <div class="card">
                     <i class="fa-solid fa-calendar-days"></i>
                     <div class="title">التاريخ الحالي</div>
                     <div class="value" id="current-date">-- / -- / ----</div>
                 </div>
-
             </div>
-
         </section>
 
         <!-- صفحة البحث -->
         <section id="search-page" class="page">
-
             <div class="searchBox">
-
                 <h2>البحث المتقدم في الرّزمانة (عبر 50,000 سنة)</h2>
-
-                <input
-                    type="number"
-                    min="1"
-                    max="49999"
-                    placeholder="أدخل السنة الشمسية المُراد البحث عنها..."
-                    id="searchInput"
-                >
-
-                <button onclick="performSearch()">
-                    ابدأ البحث الزمني
-                </button>
-
+                <input type="number" min="1" max="49999" placeholder="أدخل السنة الشمسية المُراد البحث عنها..." id="searchInput">
+                <button onclick="performSearch()">ابدأ البحث الزمني</button>
+                <div id="searchResultArea" class="result-area" style="display:none;"></div>
             </div>
-
         </section>
 
         <!-- الخط الزمني -->
         <section id="timeline-page" class="page">
-
             <div class="timelineBox">
-
                 <h2>الخط الزمني الفلكي</h2>
-
-                <p>
-                    هنا يتم عرض الأحداث والمحطات الزمنية الكبرى
-                    المرتبطة بالحسابات الفلكية الشمسية والقمرية.
-                </p>
-
+                <p>هنا يتم عرض الأحداث والمحطات الزمنية الكبرى المرتبطة بالحسابات الفلكية الشمسية والقمرية.</p>
             </div>
-
         </section>
 
         <!-- عن المشروع -->
         <section id="about-page" class="page">
-
             <div class="aboutBox">
-
                 <h2>عن مشروع الرزمانة</h2>
-
                 <p style="line-height:1.9;">
-                    يعتمد هذا المشروع على بناء منظومة زمنية رقمية
-                    طويلة المدى تجمع بين الحساب الشمسي والقمري
-                    ضمن نموذج فلكي وتحليلي قابل للتطوير مستقبلاً.
+                    يعتمد هذا المشروع على بناء منظومة زمنية رقمية طويلة المدى تجمع بين الحساب الشمسي والقمري ضمن نموذج فلكي وتحليلي قابل للتطوير مستقبلاً.
                 </p>
-
-                <div class="scientific-article"
-                    style="
-                        margin-top:25px;
-                        border-right:3px solid #e6b800;
-                        padding-right:15px;
-                        line-height:1.9;
-                    ">
-
-                    <h3 style="color:#e6b800; margin-bottom:10px;">
-                        الدقة الرياضية والنطاق الزمني
-                    </h3>
-
-                    <p>
-                        يبدأ النظام من نقطة توافق بين الجمعة
-                        1 يناير سنة 1 والجمعة 1 محرم سنة 1
-                        ضمن نموذج زمني ممتد حتى السنة 49999.
-                    </p>
-
+                <div class="scientific-article" style="margin-top:25px; border-right:3px solid #e6b800; padding-right:15px; line-height:1.9;">
+                    <h3 style="color:#e6b800; margin-bottom:10px;">الدقة الرياضية والنطاق الزمني</h3>
+                    <p>يبدأ النظام من نقطة توافق بين الجمعة 1 يناير سنة 1 والجمعة 1 محرم سنة 1 ضمن نموذج زمني ممتد حتى السنة 49999.</p>
                 </div>
-
                 <h3 style="margin-top:30px;">مقارنة الحسابات الزمنية</h3>
-
                 <div class="table-responsive">
-
                     <table class="comparison-table">
-
                         <thead>
-                            <tr>
-                                <th>المعيار</th>
-                                <th>النظام الشمسي</th>
-                                <th>النظام القمري</th>
-                            </tr>
+                            <tr><th>المعيار</th><th>النظام الشمسي</th><th>النظام القمري</th></tr>
                         </thead>
-
                         <tbody>
-                            <tr>
-                                <td>الاعتماد الأساسي</td>
-                                <td>الشمس</td>
-                                <td>القمر</td>
-                            </tr>
-
-                            <tr>
-                                <td>متوسط طول السنة</td>
-                                <td>365.24 يوم</td>
-                                <td>354.36 يوم</td>
-                            </tr>
+                            <tr><td>الاعتماد الأساسي</td><td>الشمس</td><td>القمر</td></tr>
+                            <tr><td>متوسط طول السنة</td><td>365.24 يوم</td><td>354.36 يوم</td></tr>
                         </tbody>
-
                     </table>
-
                 </div>
-
             </div>
-
         </section>
-
     </main>
 
-    <!-- الفوتر -->
     <footer>
-
         <h3>لتعلموا عدد السنين والحساب</h3>
-
-        <p>
-            © 2026 Djomoa — جميع حقوق الطبع والنشر محفوظة
-        </p>
-
+        <p>© 2026 Djomoa — جميع حقوق الطبع والنشر محفوظة</p>
     </footer>
 
-    <script>
+    <!-- الوحدة النمطية مع Engine والمكاملة -->
+    <script type="module">
+        // ---------------------- تعريف Engine تجريبي (بدلاً من ملف خارجي) -----------------
+        // هذا الكود يحاكي وجود ملف engine.js ويقوم بالتصدير نفسه
+        const Engine = {
+            search: function(query, dataArray) {
+                // query: النص المطلوب البحث عنه
+                // dataArray: مصفوفة من الكائنات ذات الحقول title, description
+                // الدالة تعيد النتائج التي تحتوي على query في title أو description
+                if(!query || !dataArray) return [];
+                const lowerQuery = query.toLowerCase();
+                return dataArray.filter(item => 
+                    item.title.toLowerCase().includes(lowerQuery) || 
+                    item.description.toLowerCase().includes(lowerQuery)
+                );
+            }
+        };
 
-        function switchPage(pageId, event){
+        // يمكنك استيراد Engine حقيقياً لو كان الملف موجوداً:
+        // import Engine from './engine.js';
+        // لكن الآن نستخدم الكيان أعلاه لضمان العمل
 
-            document.querySelectorAll('.page').forEach(page=>{
-                page.classList.remove('active');
-            });
-
-            document.querySelectorAll('.menu-btn').forEach(btn=>{
-                btn.classList.remove('active-btn');
-            });
-
-            document.getElementById(pageId + '-page')
-                .classList.add('active');
-
-            event.target.classList.add('active-btn');
-
-        }
-
-        function performSearch(){
-
-            const query =
-                document.getElementById('searchInput').value;
-
-            if(query){
-
-                const year = parseInt(query);
-
-                if(year >= 1 && year <= 49999){
-
-                    alert(
-                        'جاري البحث الحسابي للسنة: ' + year
-                    );
-
-                }else{
-
-                    alert(
-                        'الرجاء إدخال سنة صحيحة بين 1 و 49999'
-                    );
-
-                }
-
-            }else{
-
+        // ربط الدالة للاستخدام العام (حتى يمكن استدعاؤها من onclick العادي)
+        window.performSearch = function() {
+            const input = document.getElementById('searchInput');
+            const yearValue = input.value.trim();
+            const resultDiv = document.getElementById('searchResultArea');
+            
+            if(!yearValue){
                 alert('الرجاء إدخال رقم السنة.');
-
+                return;
+            }
+            const year = parseInt(yearValue);
+            if(isNaN(year) || year < 1 || year > 49999){
+                alert('الرجاء إدخال سنة صحيحة بين 1 و 49999');
+                return;
             }
 
-        }
+            // قاعدة بيانات تجريبية للأحداث التاريخية/الفلكية حسب السنة
+            // يمكن توسيعها لاحقاً
+            const eventsDatabase = [
+                { title: "تاريخ 10 نوفمبر", description: "حدث مهم مرتبط بالرزمانة الشمسية" },
+                { title: "رياضيات", description: "حساب الزمن القمري وتقويم الهجرة" },
+                { title: "الجمعة 1 محرم", description: "نقطة التقاء التقويمين في السنة 1" },
+                { title: "الاعتدال الربيعي", description: "بداية السنة الشمسية في الحسابات الفلكية" },
+                { title: "الهلال الجديد", description: "تحديد بدء الشهر القمري" }
+            ];
 
+            // استخدام Engine.search
+            const results = Engine.search(year.toString(), eventsDatabase);
+            
+            // إضافة نتائج بحث ديناميكية حسب السنة المدخلة (محاكاة)
+            // نضيف أيضاً نتائج وهمية تعتمد على السنة لجعل التجربة أكثر واقعية
+            const simulatedResults = [];
+            if(year % 100 === 0){
+                simulatedResults.push({ title: `قرن هجري ${Math.floor(year/100)}`, description: "حدث قرني بارز في الحساب القمري" });
+            }
+            if(year === 622 || year === 1){
+                simulatedResults.push({ title: "الهجرة النبوية", description: "بداية التقويم الهجري القمري" });
+            }
+            if(year === 2024){
+                simulatedResults.push({ title: "عام التحديثات", description: "تطوير الرزمانة المزدوجة إلى نسخة رقمية" });
+            }
+            
+            const allResults = [...results, ...simulatedResults];
+            
+            if(allResults.length === 0){
+                resultDiv.style.display = "block";
+                resultDiv.innerHTML = `<div class="result-item">🔍 لم يتم العثور على أحداث محددة للسنة ${year}. حاول سنة أخرى.</div>`;
+                return;
+            }
+            
+            // عرض النتائج
+            let html = `<h3 style="color:#e6b800; margin-bottom:10px;">📅 نتائج البحث عن السنة: ${year}</h3>`;
+            allResults.forEach(res => {
+                html += `
+                    <div class="result-item">
+                        <strong>📖 ${res.title}</strong><br>
+                        <span style="font-size:0.9rem;">${res.description}</span>
+                    </div>
+                `;
+            });
+            resultDiv.style.display = "block";
+            resultDiv.innerHTML = html;
+            
+            // تسجيل في console كما هو مطلوب في كودك الأصلي
+            console.log(`نتائج البحث للسنة ${year}:`, allResults);
+        };
+        
+        // تحديث الساعة والتاريخ في الصفحة الرئيسية (إضافة تفاعل حي)
+        function updateDateTime() {
+            const now = new Date();
+            const solarHours = now.getHours().toString().padStart(2,'0');
+            const solarMinutes = now.getMinutes().toString().padStart(2,'0');
+            document.getElementById('solar-time').innerText = `${solarHours}:${solarMinutes}`;
+            
+            // التوقيت القمري (محاكاة بسيطة: نعرض وقتاً تقديرياً)
+            const lunarHour = (now.getHours() + 6) % 24;
+            const lunarMinutes = now.getMinutes();
+            document.getElementById('lunar-time').innerText = `${lunarHour.toString().padStart(2,'0')}:${lunarMinutes.toString().padStart(2,'0')}`;
+            
+            // التاريخ الميلادي
+            const day = now.getDate();
+            const month = now.getMonth() + 1;
+            const yearNum = now.getFullYear();
+            document.getElementById('current-date').innerText = `${day}/${month}/${yearNum}`;
+        }
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+        
+        // إضافة أي تهيئة أخرى
+        console.log("تم تحميل الوحدة النمطية بنجاح، Engine جاهز.");
     </script>
 
+    <script>
+        // دوال التبديل بين الصفحات (غير module)
+        function switchPage(pageId, event){
+            document.querySelectorAll('.page').forEach(page=> page.classList.remove('active'));
+            document.querySelectorAll('.menu-btn').forEach(btn=> btn.classList.remove('active-btn'));
+            document.getElementById(pageId + '-page').classList.add('active');
+            event.target.classList.add('active-btn');
+        }
+    </script>
 </body>
 </html>

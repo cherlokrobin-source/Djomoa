@@ -20,6 +20,16 @@ body {
     flex-direction: column;
 }
 
+body::before {
+    content: '';
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: url('https://www.transparenttextures.com/patterns/stardust.png');
+    opacity: 0.15;
+    z-index: -1;
+}
+
 /* شريط التنقل العلوي */
 header {
     width: 100%;
@@ -168,7 +178,7 @@ header {
     padding: 40px;
     border-radius: 24px;
     text-align: center;
-    max-width: 550px; /* تم تكبيره قليلاً ليستوعب التلميحات الجديدة */
+    max-width: 650px; /* تم تكبيرها بشكل مثالي لتتحمل الخط الزمني ثلاثي الأبعاد */
     width: 100%;
     box-shadow: 0 20px 40px rgba(0,0,0,0.5);
 }
@@ -220,7 +230,7 @@ header {
     scrollbar-color: rgba(255, 213, 79, 0.3) rgba(255, 255, 255, 0.02);
 }
 
-/* تحسين شكل شريط التمرير الداخلي في الـ aboutBox لمتصفحات كيج/كروم/سفاري */
+/* تحسين شكل شريط التمرير الداخلي */
 .aboutBox::-webkit-scrollbar {
     width: 6px;
 }
@@ -255,7 +265,7 @@ h3 {
     margin-bottom: 15px;
 }
 
-/* تنسيق المقال العلمي الرياضي داخل صفحة عن المشروع */
+/* تنسيق المقال العلمي الرياضي */
 .scientific-article {
     margin-top: 25px;
     margin-bottom: 25px;
@@ -279,7 +289,7 @@ h3 {
     font-weight: 600;
 }
 
-/* تنسيق جدول المقارنة المتجاوب داخل المقال */
+/* تنسيق جدول المقارنة المتجاوب */
 .table-responsive {
     overflow-x: auto;
     margin: 20px 0;
@@ -446,6 +456,143 @@ h3 {
     transform: translateY(-2px);
 }
 
+/* ==================== تنسيقات الخط الزمني الفلكي المطور 3D ==================== */
+.perspective-container {
+    perspective: 1200px;
+    margin-top: 35px;
+    padding: 10px;
+    width: 100%;
+}
+
+.timeline-container-3d {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 213, 79, 0.15);
+    padding: 45px 20px;
+    position: relative;
+    transform: rotateX(15deg) rotateY(-4deg);
+    transform-style: preserve-3d;
+    box-shadow: -10px 20px 30px rgba(0, 0, 0, 0.5), 
+                inset 0 0 15px rgba(255, 213, 79, 0.02);
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.timeline-container-3d:hover {
+    transform: rotateX(10deg) rotateY(-2deg);
+}
+
+.timeline-scale {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 45px;
+    text-align: center;
+    transform: translateZ(20px);
+}
+
+.axis-wrapper-3d {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 75px;
+    transform: translateZ(30px);
+}
+
+.axis-wrapper-3d.lunar-3d {
+    margin-bottom: 15px;
+}
+
+.axis-label-3d {
+    font-size: 14px;
+    color: #ffd54f;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-align: right;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+.axis-line-container {
+    width: 100%;
+    position: relative;
+    padding: 0 15px;
+}
+
+.axis-line-3d {
+    height: 6px;
+    background: #ffd54f;
+    width: 100%;
+    position: relative;
+    border-radius: 3px;
+    box-shadow: 0 4px 12px rgba(255, 213, 79, 0.3);
+}
+
+.lunar-line-3d {
+    background: #e2e8f0;
+    width: 96.9%; /* الإزاحة الحسابية الدقيقة للفارق التراكمي */
+    box-shadow: 0 4px 12px rgba(226, 232, 240, 0.2);
+}
+
+.time-pointer-3d {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: radial-gradient(circle at 30% 30%, #ffffff, #ffd54f);
+    border-radius: 50%;
+    top: -5px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.6);
+    transform: translateZ(15px);
+}
+
+.lunar-line-3d .time-pointer-3d {
+    background: radial-gradient(circle at 30% 30%, #ffffff, #a0aec0);
+}
+
+/* نصوص البيانات المنبثقة من النقاط الزمنية */
+.time-pointer-3d::before {
+    content: attr(data-top);
+    position: absolute;
+    bottom: 24px;
+    transform: translateX(50%) translateZ(10px);
+    right: 50%;
+    white-space: nowrap;
+    font-size: 12px;
+    color: #ffffff;
+    font-weight: bold;
+    text-shadow: 0 2px 5px rgba(0,0,0,1);
+}
+
+.time-pointer-3d::after {
+    content: attr(data-bottom);
+    position: absolute;
+    top: 24px;
+    transform: translateX(50%) translateZ(10px);
+    right: 50%;
+    white-space: nowrap;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
+    text-shadow: 0 2px 5px rgba(0,0,0,1);
+}
+
+/* محاذاة اتجاهات النقاط (البداية من اليمين في التقويم العربي) */
+.pointer-start { right: 0; }
+.pointer-sync { }
+.pointer-sync::before { color: #ffd54f; }
+.pointer-end { left: 0; }
+.pointer-lunar-start { right: 0; }
+
+/* قوس التزامن الهابط ثلاثي الأبعاد */
+.synchronization-bracket-3d {
+    position: absolute;
+    left: 3.1%; /* محاذاة تامة مع نقطة التزامن الحسابية للشاشة */
+    top: 110px;
+    bottom: 55px;
+    width: 25px;
+    border-left: 2px dashed rgba(255, 213, 79, 0.6);
+    border-top: 2px dashed rgba(255, 213, 79, 0.6);
+    border-bottom: 2px dashed rgba(255, 213, 79, 0.6);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    transform: translateZ(10px);
+}
+
 /* شاشات الهواتف والأجهزة اللوحية لضمان عدم اختفاء المحتويات */
 @media (max-width: 768px) {
     body {
@@ -470,4 +617,13 @@ h3 {
         flex-direction: column;
         gap: 10px;
     }
+    
+    /* ضبط تفاصيل الـ 3D لتلائم الشاشات الصغيرة وتمنع التداخل */
+    .timeline-container-3d { 
+        transform: rotateX(8deg) rotateY(-2deg); 
+        padding: 35px 10px; 
+    }
+    .time-pointer-3d::before { font-size: 10px; bottom: 20px; }
+    .time-pointer-3d::after { font-size: 9px; top: 20px; }
+    .synchronization-bracket-3d { top: 115px; bottom: 50px; }
 }

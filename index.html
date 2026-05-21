@@ -291,6 +291,138 @@
             color:#e6b800;
         }
 
+        /* ==================== تنسيقات الخط الزمني الفلكي 3D المضافة ==================== */
+        .perspective-container {
+            perspective: 1200px;
+            margin-top: 35px;
+            padding: 10px;
+        }
+
+        .timeline-container-3d {
+            background: linear-gradient(135deg, #0f172a 0%, #050816 100%);
+            border-radius: 16px;
+            border: 1px solid rgba(230, 184, 0, 0.2);
+            padding: 40px 20px;
+            position: relative;
+            transform: rotateX(15deg) rotateY(-5deg);
+            transform-style: preserve-3d;
+            box-shadow: -10px 20px 30px rgba(0, 0, 0, 0.6), 
+                        inset 0 0 15px rgba(230, 184, 0, 0.05);
+            transition: transform 0.4s ease;
+        }
+
+        .timeline-container-3d:hover {
+            transform: rotateX(10deg) rotateY(-2deg);
+        }
+
+        .timeline-scale {
+            font-size: 0.85rem;
+            color: #8892b0;
+            margin-bottom: 45px;
+            text-align: center;
+            transform: translateZ(20px);
+        }
+
+        .axis-wrapper-3d {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 75px;
+            transform: translateZ(30px);
+        }
+
+        .axis-wrapper-3d.lunar-3d {
+            margin-bottom: 20px;
+        }
+
+        .axis-label-3d {
+            font-size: 1rem;
+            color: #e6b800;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .axis-line-container {
+            width: 100%;
+            position: relative;
+            padding: 0 15px;
+        }
+
+        .axis-line-3d {
+            height: 6px;
+            background: #e6b800;
+            width: 100%;
+            position: relative;
+            border-radius: 3px;
+            box-shadow: 0 4px 12px rgba(230, 184, 0, 0.35);
+        }
+
+        .lunar-line-3d {
+            background: #e2e8f0;
+            width: 96.9%;
+            box-shadow: 0 4px 12px rgba(226, 232, 240, 0.25);
+        }
+
+        .time-pointer-3d {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: radial-gradient(circle at 30% 30%, #fff, #e6b800);
+            border-radius: 50%;
+            top: -5px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.6);
+            transform: translateZ(15px);
+        }
+
+        .lunar-line-3d .time-pointer-3d {
+            background: radial-gradient(circle at 30% 30%, #fff, #a0aec0);
+        }
+
+        .time-pointer-3d::before {
+            content: attr(data-top);
+            position: absolute;
+            bottom: 24px;
+            transform: translateX(50%) translateZ(10px);
+            right: 50%;
+            white-space: nowrap;
+            font-size: 0.8rem;
+            color: #fff;
+            font-weight: bold;
+            text-shadow: 0 2px 5px rgba(0,0,0,1);
+        }
+
+        .time-pointer-3d::after {
+            content: attr(data-bottom);
+            position: absolute;
+            top: 24px;
+            transform: translateX(50%) translateZ(10px);
+            right: 50%;
+            white-space: nowrap;
+            font-size: 0.75rem;
+            color: #a0aec0;
+            text-shadow: 0 2px 5px rgba(0,0,0,1);
+        }
+
+        .pointer-start { right: 0; }
+        .pointer-sync { }
+        .pointer-sync::before { color: #e6b800; }
+        .pointer-end { left: 0; }
+        .pointer-lunar-start { right: 0; }
+
+        .synchronization-bracket-3d {
+            position: absolute;
+            left: 3.1%;
+            top: 110px;
+            bottom: 60px;
+            width: 25px;
+            border-left: 2px dashed rgba(230, 184, 0, 0.6);
+            border-top: 2px dashed rgba(230, 184, 0, 0.6);
+            border-bottom: 2px dashed rgba(230, 184, 0, 0.6);
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            transform: translateZ(10px);
+        }
+
         @media(max-width:768px){
             header{
                 flex-direction:column;
@@ -302,6 +434,11 @@
             .logo{
                 font-size:1.2rem;
             }
+            /* تسهيل قراءة النصوص على شاشات الموبايل في الـ 3D */
+            .time-pointer-3d::before { font-size: 0.7rem; bottom: 20px; }
+            .time-pointer-3d::after { font-size: 0.65rem; top: 20px; }
+            .timeline-container-3d { transform: rotateX(10deg) rotateY(-3deg); padding: 30px 10px; }
+            .synchronization-bracket-3d { top: 115px; bottom: 55px; }
         }
     </style>
 </head>
@@ -326,7 +463,6 @@
 
     <main class="main-container">
 
-        <!-- الصفحة الرئيسية -->
         <section id="home-page" class="page active">
             <div style="text-align:center; margin-bottom:20px; color:#e6b800;">
                 <i class="fa-solid fa-flask"></i>
@@ -351,7 +487,6 @@
             </div>
         </section>
 
-        <!-- صفحة البحث -->
         <section id="search-page" class="page">
             <div class="searchBox">
                 <h2>البحث المتقدم في الرّزمانة (عبر 50,000 سنة)</h2>
@@ -361,15 +496,44 @@
             </div>
         </section>
 
-        <!-- الخط الزمني -->
         <section id="timeline-page" class="page">
             <div class="timelineBox">
                 <h2>الخط الزمني الفلكي</h2>
                 <p>هنا يتم عرض الأحداث والمحطات الزمنية الكبرى المرتبطة بالحسابات الفلكية الشمسية والقمرية.</p>
+                
+                <div class="perspective-container" dir="rtl">
+                    <div class="timeline-container-3d">
+                        <div class="timeline-scale">مقياس الرسم الهندي الافتراضي: طول 50سم (كل 1سم = 1000 سنة شمسية)</div>
+
+                        <div class="axis-wrapper-3d solar-3d">
+                            <div class="axis-label-3d">العد الشمسي (طول 50سم)</div>
+                            <div class="axis-line-container">
+                                <div class="axis-line-3d">
+                                    <div class="time-pointer-3d pointer-start" data-top="1 جمعة 1" data-bottom="الموافق لـ 1/1"></div>
+                                    
+                                    <div class="time-pointer-3d pointer-sync" style="right: 96.9%;" data-top="48482 شمسية" data-bottom="31 ذو الحجة 49999"></div>
+                                    
+                                    <div class="time-pointer-3d pointer-end" data-top="31 ديسمبر 49999" data-bottom="نهاية النطاق"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="axis-wrapper-3d lunar-3d">
+                            <div class="axis-label-3d">العد القمري</div>
+                            <div class="axis-line-container">
+                                <div class="axis-line-3d lunar-line-3d">
+                                    <div class="time-pointer-3d pointer-lunar-start" data-bottom="بداية التراكم القمري"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="synchronization-bracket-3d"></div>
+                    </div>
+                </div>
+
             </div>
         </section>
 
-        <!-- عن المشروع -->
         <section id="about-page" class="page">
             <div class="aboutBox">
                 <h2>عن مشروع الرزمانة</h2>
@@ -401,15 +565,9 @@
         <p>© 2026 Djomoa — جميع حقوق الطبع والنشر محفوظة</p>
     </footer>
 
-    <!-- الوحدة النمطية مع Engine والمكاملة -->
     <script type="module">
-        // ---------------------- تعريف Engine تجريبي (بدلاً من ملف خارجي) -----------------
-        // هذا الكود يحاكي وجود ملف engine.js ويقوم بالتصدير نفسه
         const Engine = {
             search: function(query, dataArray) {
-                // query: النص المطلوب البحث عنه
-                // dataArray: مصفوفة من الكائنات ذات الحقول title, description
-                // الدالة تعيد النتائج التي تحتوي على query في title أو description
                 if(!query || !dataArray) return [];
                 const lowerQuery = query.toLowerCase();
                 return dataArray.filter(item => 
@@ -419,11 +577,6 @@
             }
         };
 
-        // يمكنك استيراد Engine حقيقياً لو كان الملف موجوداً:
-        // import Engine from './engine.js';
-        // لكن الآن نستخدم الكيان أعلاه لضمان العمل
-
-        // ربط الدالة للاستخدام العام (حتى يمكن استدعاؤها من onclick العادي)
         window.performSearch = function() {
             const input = document.getElementById('searchInput');
             const yearValue = input.value.trim();
@@ -439,8 +592,6 @@
                 return;
             }
 
-            // قاعدة بيانات تجريبية للأحداث التاريخية/الفلكية حسب السنة
-            // يمكن توسيعها لاحقاً
             const eventsDatabase = [
                 { title: "تاريخ 10 نوفمبر", description: "حدث مهم مرتبط بالرزمانة الشمسية" },
                 { title: "رياضيات", description: "حساب الزمن القمري وتقويم الهجرة" },
@@ -449,11 +600,7 @@
                 { title: "الهلال الجديد", description: "تحديد بدء الشهر القمري" }
             ];
 
-            // استخدام Engine.search
             const results = Engine.search(year.toString(), eventsDatabase);
-            
-            // إضافة نتائج بحث ديناميكية حسب السنة المدخلة (محاكاة)
-            // نضيف أيضاً نتائج وهمية تعتمد على السنة لجعل التجربة أكثر واقعية
             const simulatedResults = [];
             if(year % 100 === 0){
                 simulatedResults.push({ title: `قرن هجري ${Math.floor(year/100)}`, description: "حدث قرني بارز في الحساب القمري" });
@@ -473,7 +620,6 @@
                 return;
             }
             
-            // عرض النتائج
             let html = `<h3 style="color:#e6b800; margin-bottom:10px;">📅 نتائج البحث عن السنة: ${year}</h3>`;
             allResults.forEach(res => {
                 html += `
@@ -486,23 +632,19 @@
             resultDiv.style.display = "block";
             resultDiv.innerHTML = html;
             
-            // تسجيل في console كما هو مطلوب في كودك الأصلي
             console.log(`نتائج البحث للسنة ${year}:`, allResults);
         };
         
-        // تحديث الساعة والتاريخ في الصفحة الرئيسية (إضافة تفاعل حي)
         function updateDateTime() {
             const now = new Date();
             const solarHours = now.getHours().toString().padStart(2,'0');
             const solarMinutes = now.getMinutes().toString().padStart(2,'0');
             document.getElementById('solar-time').innerText = `${solarHours}:${solarMinutes}`;
             
-            // التوقيت القمري (محاكاة بسيطة: نعرض وقتاً تقديرياً)
             const lunarHour = (now.getHours() + 6) % 24;
             const lunarMinutes = now.getMinutes();
             document.getElementById('lunar-time').innerText = `${lunarHour.toString().padStart(2,'0')}:${lunarMinutes.toString().padStart(2,'0')}`;
             
-            // التاريخ الميلادي
             const day = now.getDate();
             const month = now.getMonth() + 1;
             const yearNum = now.getFullYear();
@@ -511,12 +653,10 @@
         updateDateTime();
         setInterval(updateDateTime, 1000);
         
-        // إضافة أي تهيئة أخرى
         console.log("تم تحميل الوحدة النمطية بنجاح، Engine جاهز.");
     </script>
 
     <script>
-        // دوال التبديل بين الصفحات (غير module)
         function switchPage(pageId, event){
             document.querySelectorAll('.page').forEach(page=> page.classList.remove('active'));
             document.querySelectorAll('.menu-btn').forEach(btn=> btn.classList.remove('active-btn'));

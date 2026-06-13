@@ -1,18 +1,19 @@
-الرزنامة الذهبية (The Golden Timeline)
-​نظام زمني فريد لتزامن 50,000 سنة من التاريخ البشري.
-​نظرة عامة
-​تعد منصة "الرزنامة الذهبية" محركاً زمنياً متطوراً مصمماً لإدارة وتزامن الحسابات الشمسية والقمرية عبر نطاق زمني يمتد لـ 50,000 عام. يعتمد النظام على خوارزمية دقيقة تضمن التوافق التام بين التقويمين، مع معالجة تراكمات الانحراف الزمني عبر آلاف السنين.
-​المفهوم التقني
-​ينطلق المحرك من "نقطة الصفر التاريخية" التي توحد المسارين الشمسي والقمري في لحظة انطلاق واحدة:
-​نقطة البداية: 1 جانفي السنة 1 (ميلادي) الموافق لـ 1 محرم السنة 1 (هجري).
-​المدى الزمني: * المسار الشمسي: يمتد بالتوازي وبدقة متناهية وصولاً إلى 31 ديسمبر من السنة 49,999.
-​المسار القمري: يتزامن مع المسار الشمسي في تراكمه الزمني، وصولاً إلى 30 ذو الحجة من السنة 49,999، مع مراعاة دقيقة للفروقات الحسابية التراكمية عبر العصور.
-​ميزات المحرك (Djomoa Engine)
-​الدقة التراكمية: يعتمد النظام على Drift Correction Table لمعالجة الانحرافات الزمنية التي قد تطرأ عبر الـ 50 ألف سنة.
-​الفهرسة الذكية: بفضل نظام Index-based retrieval، يستطيع المحرك استرجاع أي تاريخ في أجزاء من الثانية من بين ملايين السجلات الموزعة على 24 حقبة زمنية.
-​الأداء العالي: صُمم المحرك ليعمل بكفاءة عالية على مختلف بيئات التشغيل، مع استهلاك أمثل للذاكرة، مما يجعله قادراً على التعامل مع البيانات الضخمة (18 مليون يوم) بسلاسة.
-​هيكلية البيانات
-​تعتمد الرزنامة على تقسيم زمني محكم يُعرف بـ "الحقبات" (Epochs)، حيث يتم تخزين البيانات بشكل مفهرس يضمن الوصول اللحظي للقيم المطلوبة، مما يجعله مرجعاً زمنياً لا يضاهى في الدقة والشمولية.
-​الحقوق (Copyright)
-​جميع الحقوق محفوظة © 2026. طُوّر بواسطة: نميميش بن عيسى.
-All rights reserved © 2026. Developed by: Nemimeche Benaissa.
+# Djomoa: The Global Chronology Engine
+
+Djomoa is an algorithmic time-calculation engine designed for absolute, non-accumulative temporal tracking across 50,000 years.
+
+### The Core Philosophy
+Unlike standard calendars that rely on OS-dependent time APIs, Djomoa is anchored to a **mathematically fixed epoch**. We established **Friday, January 1st, Year 1** as the absolute reference point (Year 0) for all chronological calculations.
+
+### Why Djomoa?
+- **Absolute Precision:** By anchoring time to a fixed Friday epoch, we eliminate the drift found in standard Gregorian implementations.
+- **Pure Logic:** The engine uses direct algorithmic computation rather than system-time queries, ensuring consistent results for historical and future dates.
+- **Scalability:** Designed to handle long-range chronology (up to 50,000 years) without database overhead.
+
+### Usage
+Run the engine to generate specific annual chronologies:
+`node calendar.js`
+
+Built for researchers, historians, and developers who require a stable, verifiable temporal foundation.
+
+All rights reserved © 2026. Developed by: [nemimeche benaissa]

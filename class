@@ -1,0 +1,32 @@
+// epoch_engine.js
+
+export class PashaEngine {
+    constructor(epochNumber) {
+        this.epochNumber = epochNumber;
+        this.baseYear = (epochNumber - 1) * 2083;
+        this.driftConstant = 0.0000125; // معامل مصفى باشا
+    }
+
+    // دالة التزامن الحسابي
+    calculateAlignment(currentYear) {
+        let yearsElapsed = currentYear - this.baseYear;
+        // تطبيق معادلة مصفى باشا لتسوية الخطين الزمانيين
+        let correction = yearsElapsed * this.driftConstant;
+        return {
+            status: "Aligned",
+            correction: correction,
+            message: "تم تسطير المسار الزمني وفق التوفيقات الإلهامية"
+        };
+    }
+}
+
+// الدالة الأصلية مع ربطها بالنواة الجديدة
+export async function loadEpoch(epochNumber) {
+    const engine = new PashaEngine(epochNumber);
+    // ... بقية منطق تحميل الملف ...
+    return {
+        data: await loadData(epochNumber), // دالة تحميل البيانات الأصلية
+        alignment: engine.calculateAlignment(epochNumber * 2083)
+    };
+}
+

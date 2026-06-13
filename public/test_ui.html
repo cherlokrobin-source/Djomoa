@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>مختبر الرزنامة</h1>
+    <input id="ticks" placeholder="التيك">
+    <button onclick="run()">تحويل</button>
+    <div id="out"></div>
+    <script>
+        async function run() {
+            const ticks = document.getElementById('ticks').value;
+            const res = await fetch('/api/search?ticks=' + ticks);
+            const data = await res.json();
+            document.getElementById('out').innerText = JSON.stringify(data);
+        }
+    </script>
+</body>
+</html>

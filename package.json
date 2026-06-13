@@ -1,0 +1,29 @@
+{
+  "name": "djomoa-engine",
+  "version": "1.0.0",
+  "description": "The Global Chronology Engine for the Djomoa project",
+  "main": "monitor.js",
+  "type": "module",
+  "scripts": {
+    "start": "node monitor.js",
+    "test": "node test_engine.js"
+  },
+  "keywords": [
+    "chronology",
+    "engine",
+    "calendar",
+    "sync"
+  ],
+  "author": "Engineer",
+  "license": "ISC",
+<<<<<<< HEAD
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
+  }
+}
+=======
+  "dependencies": {}
+}
+
+>>>>>>> 5f9e08e94bd628f6fca5dfd7174648938da9334d

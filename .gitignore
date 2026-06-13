@@ -1,0 +1,4 @@
+node_modules
+system_log.txt
+data/master_origin.json
+data/full_epoch_1_archive.json

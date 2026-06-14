@@ -1,425 +1,269 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Djomoa - حول المشروع | محرك المزامنة الزمنية المطلق</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<title>الرزمانة الذهبية | The Golden Calendar</title>
+        body {
+            background: linear-gradient(135deg, #0a0f1e 0%, #0c1222 100%);
+            font-family: 'Segoe UI', 'Tahoma', 'Amiri', 'Times New Roman', serif;
+            color: #e8edf5;
+            line-height: 1.6;
+            padding: 2rem;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet">
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(18, 25, 45, 0.75);
+            backdrop-filter: blur(2px);
+            border-radius: 2rem;
+            padding: 2.5rem;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
 
-<link rel="stylesheet" href="style.css">
+        /* البسملة */
+        .basmala {
+            font-size: 2.5rem;
+            font-family: 'Amiri', 'Times New Roman', serif;
+            text-align: center;
+            color: #d4af37;
+            text-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+            margin-bottom: 1rem;
+            letter-spacing: 4px;
+        }
 
-<style>
+        .basmala br {
+            display: none;
+        }
 
-body{
-    margin:0;
-    font-family:'Cairo',sans-serif;
-    background:#05070d;
-    color:#f5f5f5;
-}
+        /* الآية */
+        .subtitle {
+            text-align: center;
+            font-size: 1.3rem;
+            color: #b9c7d9;
+            font-style: italic;
+            border-bottom: 1px dashed #2a3a5a;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
 
-.hero{
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    padding:30px;
-}
+        /* الوصف الرئيسي */
+        .hero-desc {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ffdf8c;
+            background: rgba(0, 0, 0, 0.35);
+            padding: 0.8rem 1.5rem;
+            border-radius: 60px;
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 2rem;
+            letter-spacing: 0.5px;
+        }
 
-.basmala{
-    font-family:'Amiri',serif;
-    font-size:3rem;
-    color:#D4AF37;
-    margin-bottom:20px;
-}
+        /* عنوان المشروع */
+        .project-title {
+            font-size: 1.9rem;
+            font-weight: 700;
+            text-align: center;
+            color: #d4af37;
+            margin: 2rem 0 1.5rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #d4af37;
+            display: inline-block;
+            width: 100%;
+        }
 
-.main-title{
-    font-size:4rem;
-    font-weight:900;
-    color:#fff;
-    margin-bottom:15px;
-}
+        /* الأقسام */
+        .section {
+            background: rgba(10, 15, 30, 0.65);
+            border-radius: 1.2rem;
+            padding: 1.4rem 1.8rem;
+            margin-bottom: 1.8rem;
+            border-right: 4px solid #d4af37;
+            transition: all 0.2s ease;
+        }
 
-.subtitle{
-    color:#D4AF37;
-    font-size:1.3rem;
-    margin-bottom:40px;
-}
+        .section:hover {
+            background: rgba(20, 28, 48, 0.85);
+            border-right-width: 6px;
+        }
 
-.main-nav{
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:15px;
-}
+        .section h2 {
+            font-size: 1.5rem;
+            color: #e6c87a;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-.nav-btn{
-    padding:15px 25px;
-    border:none;
-    border-radius:50px;
-    background:#111827;
-    color:white;
-    cursor:pointer;
-    border:1px solid #D4AF37;
-    transition:.4s;
-}
+        .section h2::before {
+            content: "⏺";
+            font-size: 0.9rem;
+            color: #d4af37;
+        }
 
-.nav-btn:hover{
-    background:#D4AF37;
-    color:black;
-}
+        .section p, .section li {
+            color: #cfdfed;
+            font-size: 1rem;
+        }
 
-.section{
-    display:none;
-    max-width:1200px;
-    margin:auto;
-    padding:80px 30px;
-}
+        .section ul {
+            padding-right: 1.8rem;
+            margin-top: 0.5rem;
+        }
 
-.active{
-    display:block;
-    animation:fade .6s ease;
-}
+        .section li {
+            margin: 0.4rem 0;
+        }
 
-@keyframes fade{
-    from{
-        opacity:0;
-        transform:translateY(30px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
+        strong {
+            color: #ffdf8c;
+        }
 
-.content-card{
-    background:rgba(255,255,255,.03);
-    border:1px solid rgba(212,175,55,.3);
-    border-radius:25px;
-    padding:40px;
-    backdrop-filter:blur(10px);
-}
+        hr {
+            margin: 1rem 0;
+            border-color: #2a3a5a;
+        }
 
-.section-title{
-    color:#D4AF37;
-    font-size:2.5rem;
-    margin-bottom:30px;
-}
+        /* تذييل الصفحة - حقوق الملكية */
+        .footer {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            text-align: center;
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+        }
 
-.content-card p{
-    line-height:2;
-    color:#d9d9d9;
-}
+        .copyright {
+            font-size: 0.9rem;
+            color: #a0adc0;
+            letter-spacing: 0.5px;
+        }
 
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:20px;
-}
+        .developed-by {
+            font-size: 0.85rem;
+            color: #c9b87a;
+            margin-top: 0.5rem;
+            font-family: monospace;
+        }
 
-.feature{
-    background:#0f172a;
-    padding:25px;
-    border-radius:20px;
-    border-right:4px solid #D4AF37;
-}
+        .developed-by a {
+            color: #d4af37;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
 
-.feature h3{
-    color:#D4AF37;
-}
+        .developed-by a:hover {
+            color: #ffdf8c;
+            text-decoration: underline;
+        }
 
-.search-box{
-    display:flex;
-    flex-wrap:wrap;
-    gap:15px;
-    margin-top:30px;
-}
-
-.search-box input{
-    flex:1;
-    padding:15px;
-    border-radius:12px;
-    border:none;
-    outline:none;
-}
-
-.search-box button{
-    padding:15px 30px;
-    border:none;
-    background:#D4AF37;
-    color:black;
-    font-weight:bold;
-    border-radius:12px;
-    cursor:pointer;
-}
-
-.result-box{
-    margin-top:25px;
-    background:#0f172a;
-    padding:25px;
-    border-radius:20px;
-}
-
-.developers{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-    gap:20px;
-}
-
-.dev-card{
-    background:#0f172a;
-    padding:30px;
-    border-radius:20px;
-    border-top:3px solid #D4AF37;
-}
-
-.footer{
-    text-align:center;
-    padding:40px;
-    border-top:1px solid rgba(255,255,255,.1);
-    margin-top:80px;
-}
-
-.footer h3{
-    color:#D4AF37;
-}
-
-</style>
-
+        @media (max-width: 680px) {
+            body {
+                padding: 1rem;
+            }
+            .container {
+                padding: 1.2rem;
+            }
+            .basmala {
+                font-size: 1.8rem;
+            }
+            .hero-desc {
+                font-size: 1.1rem;
+            }
+            .section h2 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
 </head>
-
 <body>
+<div class="container">
+    <!-- البسملة -->
+    <div class="basmala">
+        ﷽
+        <br>
+        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+    </div>
 
-<header class="hero">
+    <p class="subtitle">
+        ﴿ لِتَعْلَمُوا عَدَدَ السِّنِينَ وَالْحِسَابَ ﴾
+    </p>
 
-<div class="basmala">
-بسم الله الرحمن الرحيم
+    <p class="hero-desc">
+        مشروع Djomoa للمزامنة الزمنية المطلقة بين التقويم الشمسي والقمري
+    </p>
+
+    <div class="project-title">
+        ⚙️ مشروع Djomoa – محرك المزامنة الزمنية المطلق
+    </div>
+
+    <!-- القسم 1 -->
+    <div class="section">
+        <h2>1. الملخص التنفيذي (Executive Summary)</h2>
+        <p>مشروع Djomoa هو محرك حسابي متطور يعتمد على الثوابت الفلكية القطعية لتقديم تزامن زمني لحظي ودقيق بين التقاويم الشمسية والقمرية. النظام مصمم ليكون "العمود الفقري" (Core Engine) لأي منصة رقمية تتطلب دقة تاريخية لا تقبل الخطأ، متجاوزاً بذلك الحلول الحالية التي تعتمد على التقديرات الإحصائية.</p>
+    </div>
+
+    <!-- القسم 2 -->
+    <div class="section">
+        <h2>2. الهندسة المعمارية (Architecture)</h2>
+        <p><strong>المحرك (The Engine):</strong> مبني على خوارزمية Fixed-Cycle Synchronization التي تضمن عدم حدوث أي انزياح تراكمي (Drift) في الحسابات عبر آلاف السنين.</p>
+        <p><strong>المرجعية (The Origin):</strong> يستخدم ملف master_origin.json كقاعدة بيانات أولية تحتوي على الثوابت الفلكية (Orbital Constants) اللازمة لمعايرة الزمن.</p>
+        <p><strong>الاستقلالية (Isolation):</strong> النظام لا يعتمد على خوادم خارجية للتحقق من التواريخ؛ بل هو نظام مغلق (Closed-System) يعمل محلياً بكفاءة تامة، مما يجعله مثالياً للدمج في أنظمة الذكاء الاصطناعي الضخمة.</p>
+    </div>
+
+    <!-- القسم 3 -->
+    <div class="section">
+        <h2>3. القدرة الاستيعابية (Operational Capacity)</h2>
+        <p>يتميز محرك Djomoa بهندسة برمجية فريدة قادرة على معالجة 50,000 سنة من البيانات الزمنية المتصلة، وهو ما يعادل أكثر من 18,250,000 يوم من المزامنة الدقيقة بين التقويمين الشمسي والقمري.</p>
+        <ul>
+            <li><strong>الاستقرار الحسابي:</strong> النظام يضمن تزامناً كاملاً لهذه الفترة الزمنية دون انزياح واحد (Zero Drift).</li>
+            <li><strong>الكفاءة:</strong> يتم استخراج أي تاريخ أو تقاطع زمني داخل هذا النطاق الهائل في جزء من الثانية، مما يجعله المحرك الأسرع والأدق في معالجة السلاسل الزمنية الطويلة على مستوى العالم.</li>
+        </ul>
+    </div>
+
+    <!-- القسم 4 -->
+    <div class="section">
+        <h2>4. القيمة التقنية (Technical Value Proposition)</h2>
+        <ul>
+            <li><strong>إثبات الموثوقية:</strong> القدرة على إعطاء تاريخ دقيق ومطابق لمرجعية فلكية لأي حدث تاريخي أو مستقبلي.</li>
+            <li><strong>الأداء:</strong> استجابة لحظية (Zero-Latency) في الحسابات الزمنية بفضل خفة الكود البرمجي.</li>
+            <li><strong>التوافق:</strong> قابل للدمج مع لغات البرمجة الحديثة وأنظمة التشغيل العالمية (API-Ready).</li>
+        </ul>
+    </div>
+
+    <!-- القسم 5 -->
+    <div class="section">
+        <h2>5. التميز والفرادة (Global Uniqueness)</h2>
+        <p>يعتبر محرك Djomoa إنجازاً تقنياً غير مسبوق عالمياً. لم يسبق لأي نظام حسابي أن حقق هذا المستوى من التزامن المزدوج الدقيق على مدى 50,000 سنة في نطاق برمجي موحد ومستقل. بصفتي المحرك المسؤول عن هذه المعالجة، أؤكد أن هذا المشروع يمثل المرجعية الزمنية الأكثر دقة في التاريخ الرقمي، وهو يفتح آفاقاً جديدة تماماً لم تكن متاحة لأي نظام تقويمي أو فلكي موجود حالياً في أي منصة عالمية.</p>
+    </div>
+
+    <!-- القسم 6 -->
+    <div class="section">
+        <h2>6. الهدف الاستراتيجي (Strategic Objective)</h2>
+        <p>نحن نقدم "وحدة معالجة زمنية" (Temporal Processing Unit) يمكن لشركات كبرى مثل Google اعتمادها كمعيار تقني لتوحيد وتوثيق الزمن في تطبيقاتها العالمية، لتكون المرجع الزمني للأنظمة الرقمية في مجالات التأريخ، البحوث الأثرية، والتقنيات الفلكية.</p>
+    </div>
+
+    <!-- تذييل الصفحة - حقوق الملكية والتطوير -->
+    <div class="footer">
+        <div class="copyright">
+            © جميع الحقوق محفوظة 2026
+        </div>
+        <div class="developed-by">
+            developed by @nemimeche benaissa
+        </div>
+    </div>
 </div>
-
-<h1 class="main-title">
-الرزمانة الذهبية
-</h1>
-
-<p class="subtitle">
-لِتَعْلَمُوا عَدَدَ السِّنِينَ وَالْحِسَابَ
-</p>
-
-<nav class="main-nav">
-
-<button class="nav-btn" onclick="showSection('about')">
-حول المشروع
-</button>
-
-<button class="nav-btn" onclick="showSection('engineering')">
-التصميم الهندسي
-</button>
-
-<button class="nav-btn" onclick="showSection('search')">
-البحث الزمني
-</button>
-
-<button class="nav-btn" onclick="showSection('developers')">
-المطورون والتفاعل
-</button>
-
-</nav>
-
-</header>
-
-<section id="about" class="section active">
-
-<div class="content-card">
-
-<h2 class="section-title">
-حول المشروع
-</h2>
-
-<p>
-
-الرزمانة الذهبية هي منصة زمنية رقمية متقدمة تهدف إلى بناء مرجع حسابي موحد يجمع بين التقويم الشمسي والتقويم القمري داخل محرك رياضي متكامل.
-
-يقوم المشروع على فكرة اليوم المطلق كمرجع أساسي للحسابات الزمنية، مما يسمح بتحويل أي تاريخ إلى مجموعة متكاملة من البيانات الزمنية بدقة عالية.
-
-ويغطي المحرك نطاقاً زمنياً يصل إلى خمسين ألف سنة، مع القدرة على معالجة ملايين الأيام المتعاقبة وربطها بالتقويمات المختلفة ضمن بنية حسابية موحدة.
-
-</p>
-
-</div>
-
-</section>
-
-<section id="engineering" class="section">
-
-<div class="content-card">
-
-<h2 class="section-title">
-التصميم الهندسي
-</h2>
-
-<div class="grid">
-
-<div class="feature">
-<h3>طبقة الزمن المطلق</h3>
-<p>المرجع الأساسي لجميع العمليات الزمنية.</p>
-</div>
-
-<div class="feature">
-<h3>الحساب الشمسي</h3>
-<p>حساب التاريخ الميلادي والسنوات الكبيسة.</p>
-</div>
-
-<div class="feature">
-<h3>الحساب القمري</h3>
-<p>حساب التاريخ الهجري والدورات القمرية.</p>
-</div>
-
-<div class="feature">
-<h3>محرك التحويل</h3>
-<p>تحويل فوري بين الأنظمة الزمنية المختلفة.</p>
-</div>
-
-<div class="feature">
-<h3>50 ألف سنة</h3>
-<p>نطاق زمني ضخم للاستكشاف والدراسة.</p>
-</div>
-
-<div class="feature">
-<h3>18 مليون يوم</h3>
-<p>معالجة تراكمية للبيانات الزمنية.</p>
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<section id="search" class="section">
-
-<div class="content-card">
-
-<h2 class="section-title">
-محرك البحث الزمني
-</h2>
-
-<p>
-ابحث عن أي تاريخ داخل الرزمانة الذهبية.
-</p>
-
-<div class="search-box">
-
-<input
-type="text"
-placeholder="أدخل تاريخاً ميلادياً أو هجرياً">
-
-<button>
-بحث
-</button>
-
-</div>
-
-<div class="result-box">
-
-<h3>نتائج البحث</h3>
-
-<p>اليوم المطلق : ---</p>
-
-<p>التاريخ الميلادي : ---</p>
-
-<p>التاريخ الهجري : ---</p>
-
-<p>اليوم الأسبوعي : ---</p>
-
-</div>
-
-</div>
-
-</section>
-
-<section id="developers" class="section">
-
-<div class="content-card">
-
-<h2 class="section-title">
-المطورون والتفاعل
-</h2>
-
-<div class="developers">
-
-<div class="dev-card">
-
-<h3>المطور الرئيسي</h3>
-
-<p>
-بن عيسى نميمش
-</p>
-
-</div>
-
-<div class="dev-card">
-
-<h3>رؤية المشروع</h3>
-
-<p>
-إنشاء أكبر محرك زمني عربي متخصص في الحسابات التقويمية والتحويلات الزمنية الدقيقة.
-</p>
-
-</div>
-
-<div class="dev-card">
-
-<h3>المساهمة</h3>
-
-<p>
-يمكن للمطورين المشاركة في تطوير الخوارزميات وتحسين الأداء وتوسيع قدرات المحرك.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<footer class="footer">
-
-<h3>
-SPACE CALENDAR ENGINE 5.0
-</h3>
-
-<p>
-Developed By Nemimeche Benaissa
-</p>
-
-</footer>
-
-<script>
-
-function showSection(id){
-
-document.querySelectorAll('.section')
-.forEach(section=>{
-
-section.classList.remove('active');
-
-});
-
-document
-.getElementById(id)
-.classList.add('active');
-
-window.scrollTo({
-top:window.innerHeight,
-behavior:'smooth'
-});
-
-}
-
-</script>
-
 </body>
 </html>

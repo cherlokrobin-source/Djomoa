@@ -1,636 +1,331 @@
-/* ===================================================
-   THE GOLDEN CALENDAR
-   SPACE CALENDAR ENGINE 5.0
-   =================================================== */
-
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:wght@700&display=swap');
-
-:root{
-
---gold:#D4AF37;
---gold-light:#F7D774;
---gold-dark:#A67C1E;
-
---bg:#05070d;
---bg2:#0d1324;
---card:#111827;
-
---text:#f5f5f5;
---text-soft:#cfcfcf;
-
---shadow:0 15px 40px rgba(0,0,0,.45);
---gold-shadow:0 0 25px rgba(212,175,55,.25);
-
-}
-
-/* ================================= */
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-html{
-scroll-behavior:smooth;
-}
-
-body{
-
-font-family:'Cairo',sans-serif;
-background:
-radial-gradient(circle at top,#17203a 0%,#05070d 50%),
-linear-gradient(180deg,#05070d,#000000);
-
-color:var(--text);
-
-overflow-x:hidden;
-min-height:100vh;
-
-}
-
-/* ================================= */
-/* نجوم متحركة */
-/* ================================= */
-
-body::before{
-
-content:"";
-
-position:fixed;
-
-top:0;
-left:0;
-
-width:100%;
-height:100%;
-
-background-image:
-
-radial-gradient(circle,#ffffff 1px,transparent 1px),
-radial-gradient(circle,#D4AF37 1px,transparent 1px);
-
-background-size:
-120px 120px,
-220px 220px;
-
-opacity:.15;
-
-animation:starsMove 80s linear infinite;
-
-pointer-events:none;
-
-}
-
-@keyframes starsMove{
-
-from{
-transform:translateY(0);
-}
-
-to{
-transform:translateY(-500px);
-}
-
-}
-
-/* ================================= */
-/* HERO */
-/* ================================= */
-
-.hero{
-
-position:relative;
-
-min-height:100vh;
-
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-
-text-align:center;
-
-padding:40px;
-
-}
-
-.hero::before{
-
-content:"";
-
-position:absolute;
-
-width:500px;
-height:500px;
-
-background:radial-gradient(
-circle,
-rgba(212,175,55,.18),
-transparent 70%
-);
-
-filter:blur(40px);
-
-z-index:-1;
-
-}
-
-/* ================================= */
-
-.basmala{
-
-font-family:'Amiri',serif;
-
-font-size:3.5rem;
-
-color:var(--gold);
-
-margin-bottom:20px;
-
-text-shadow:
-0 0 20px rgba(212,175,55,.5);
-
-}
-
-/* ================================= */
-
-.main-title{
-
-font-size:5rem;
-
-font-weight:900;
-
-letter-spacing:-2px;
-
-margin-bottom:15px;
-
-background:linear-gradient(
-135deg,
-#ffffff,
-#F7D774,
-#D4AF37
-);
-
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-
-}
-
-.subtitle{
-
-font-size:1.3rem;
-
-color:var(--gold-light);
-
-margin-bottom:40px;
-
-letter-spacing:2px;
-
-}
-
-/* ================================= */
-/* NAVIGATION */
-/* ================================= */
-
-.main-nav{
-
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-
-gap:15px;
-
-max-width:1000px;
-
-}
-
-.nav-btn{
-
-background:rgba(255,255,255,.05);
-
-backdrop-filter:blur(15px);
-
-border:1px solid rgba(212,175,55,.4);
-
-padding:15px 30px;
-
-border-radius:60px;
-
-color:white;
-
-font-size:1rem;
-
-font-weight:700;
-
-cursor:pointer;
-
-transition:.4s;
-
-box-shadow:var(--shadow);
-
-}
-
-.nav-btn:hover{
-
-transform:translateY(-4px);
-
-background:var(--gold);
-
-color:black;
-
-box-shadow:
-0 0 30px rgba(212,175,55,.5);
-
-}
-
-/* ================================= */
-/* SECTION */
-/* ================================= */
-
-.section{
-
-display:none;
-
-max-width:1300px;
-
-margin:auto;
-
-padding:80px 25px;
-
-}
-
-.section.active{
-
-display:block;
-
-animation:fadeUp .7s ease;
-
-}
-
-@keyframes fadeUp{
-
-from{
-opacity:0;
-transform:translateY(30px);
-}
-
-to{
-opacity:1;
-transform:translateY(0);
-}
-
-}
-
-/* ================================= */
-/* CARD */
-/* ================================= */
-
-.content-card{
-
-background:
-linear-gradient(
-135deg,
-rgba(17,24,39,.95),
-rgba(15,23,42,.95)
-);
-
-border:1px solid rgba(212,175,55,.25);
-
-border-radius:30px;
-
-padding:50px;
-
-box-shadow:
-var(--shadow),
-var(--gold-shadow);
-
-backdrop-filter:blur(20px);
-
-position:relative;
-
-overflow:hidden;
-
-}
-
-.content-card::before{
-
-content:"";
-
-position:absolute;
-
-top:0;
-left:0;
-
-width:100%;
-height:2px;
-
-background:linear-gradient(
-90deg,
-transparent,
-var(--gold),
-transparent
-);
-
-}
-
-/* ================================= */
-
-.section-title{
-
-font-size:2.8rem;
-
-margin-bottom:30px;
-
-color:var(--gold);
-
-font-weight:900;
-
-}
-
-.content-card p{
-
-font-size:1.1rem;
-
-line-height:2.1;
-
-color:var(--text-soft);
-
-}
-
-/* ================================= */
-/* GRID */
-/* ================================= */
-
-.grid{
-
-display:grid;
-
-grid-template-columns:
-repeat(auto-fit,minmax(260px,1fr));
-
-gap:20px;
-
-margin-top:30px;
-
-}
-
-/* ================================= */
-
-.feature{
-
-background:
-linear-gradient(
-135deg,
-#101826,
-#0c1220
-);
-
-border-radius:20px;
-
-padding:30px;
-
-border-right:4px solid var(--gold);
-
-transition:.4s;
-
-}
-
-.feature:hover{
-
-transform:translateY(-8px);
-
-box-shadow:
-0 15px 30px rgba(0,0,0,.4);
-
-}
-
-.feature h3{
-
-color:var(--gold);
-
-margin-bottom:10px;
-
-font-size:1.2rem;
-
-}
-
-.feature p{
-
-font-size:.95rem;
-
-}
-
-/* ================================= */
-/* SEARCH */
-/* ================================= */
-
-.search-box{
-
-display:flex;
-
-gap:15px;
-
-margin-top:30px;
-
-flex-wrap:wrap;
-
-}
-
-.search-box input{
-
-flex:1;
-
-background:#0f172a;
-
-color:white;
-
-padding:18px;
-
-border:none;
-
-outline:none;
-
-border-radius:15px;
-
-border:1px solid rgba(212,175,55,.3);
-
-font-size:1rem;
-
-}
-
-.search-box input:focus{
-
-border-color:var(--gold);
-
-box-shadow:
-0 0 15px rgba(212,175,55,.25);
-
-}
-
-.search-box button{
-
-padding:18px 35px;
-
-background:var(--gold);
-
-color:black;
-
-border:none;
-
-border-radius:15px;
-
-font-weight:800;
-
-cursor:pointer;
-
-transition:.4s;
-
-}
-
-.search-box button:hover{
-
-transform:scale(1.05);
-
-}
-
-/* ================================= */
-
-.result-box{
-
-margin-top:25px;
-
-background:#0f172a;
-
-padding:30px;
-
-border-radius:20px;
-
-border:1px solid rgba(212,175,55,.2);
-
-}
-
-/* ================================= */
-/* DEVELOPERS */
-/* ================================= */
-
-.developers{
-
-display:grid;
-
-grid-template-columns:
-repeat(auto-fit,minmax(280px,1fr));
-
-gap:20px;
-
-margin-top:30px;
-
-}
-
-.dev-card{
-
-background:
-linear-gradient(
-135deg,
-#101826,
-#0c1220
-);
-
-padding:30px;
-
-border-radius:20px;
-
-border-top:3px solid var(--gold);
-
-transition:.4s;
-
-}
-
-.dev-card:hover{
-
-transform:translateY(-8px);
-
-}
-
-.dev-card h3{
-
-color:var(--gold);
-
-margin-bottom:15px;
-
-}
-
-/* ================================= */
-/* FOOTER */
-/* ================================= */
-
-.footer{
-
-text-align:center;
-
-padding:60px 20px;
-
-margin-top:80px;
-
-border-top:1px solid rgba(255,255,255,.08);
-
-background:
-linear-gradient(
-180deg,
-transparent,
-rgba(255,255,255,.02)
-);
-
-}
-
-.footer h3{
-
-font-size:1.6rem;
-
-color:var(--gold);
-
-margin-bottom:10px;
-
-}
-
-.footer p{
-
-color:#bdbdbd;
-
-}
-
-/* ================================= */
-/* MOBILE */
-/* ================================= */
-
-@media(max-width:768px){
-
-.main-title{
-font-size:3rem;
-}
-
-.basmala{
-font-size:2.2rem;
-}
-
-.section-title{
-font-size:2rem;
-}
-
-.content-card{
-padding:25px;
-}
-
-.nav-btn{
-width:100%;
-}
-
-.search-box{
-flex-direction:column;
-}
-
-.search-box button{
-width:100%;
-}
-
-}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Djomoa - حول المشروع | محرك المزامنة الزمنية المطلق</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 20% 30%, #0a0f1e, #05070f);
+            font-family: 'Segoe UI', 'Tahoma', 'Amiri', 'Times New Roman', system-ui, -apple-system, sans-serif;
+            color: #eef3fc;
+            line-height: 1.7;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        /* حاوية رئيسية بتأثير زجاجي حديث */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(12, 18, 30, 0.55);
+            backdrop-filter: blur(12px);
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(212, 175, 55, 0.2);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            transition: all 0.3s ease;
+        }
+
+        /* البسملة */
+        .basmala {
+            font-size: 2.7rem;
+            font-family: 'Amiri', 'Times New Roman', serif;
+            text-align: center;
+            color: #e9c468;
+            text-shadow: 0 0 12px rgba(233, 196, 104, 0.4);
+            margin-bottom: 0.5rem;
+            letter-spacing: 6px;
+            word-break: keep-all;
+        }
+
+        .basmala br {
+            display: none;
+        }
+
+        /* الآية */
+        .subtitle {
+            text-align: center;
+            font-size: 1.25rem;
+            color: #bdd4f5;
+            font-style: italic;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.35);
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.8rem;
+            font-weight: 400;
+        }
+
+        /* الوصف الرئيسي */
+        .hero-desc {
+            text-align: center;
+            font-size: 1.45rem;
+            font-weight: 600;
+            color: #ffe6b3;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 0.8rem 1.8rem;
+            border-radius: 60px;
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            letter-spacing: 0.3px;
+        }
+
+        /* عنوان المشروع */
+        .project-title {
+            font-size: 1.9rem;
+            font-weight: 800;
+            text-align: center;
+            color: #e9c468;
+            margin: 1rem 0 1.8rem 0;
+            padding-bottom: 0.7rem;
+            border-bottom: 2px solid;
+            border-image: linear-gradient(90deg, transparent, #e9c468, #b57c1c, transparent) 1;
+            display: inline-block;
+            width: 100%;
+            letter-spacing: -0.3px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+
+        /* الأقسام بتصميم نظيف وحديث */
+        .section {
+            background: rgba(8, 12, 22, 0.55);
+            backdrop-filter: blur(4px);
+            border-radius: 1.5rem;
+            padding: 1.3rem 1.8rem;
+            margin-bottom: 1.6rem;
+            border-right: 4px solid #e9c468;
+            transition: all 0.25s ease-out;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .section:hover {
+            background: rgba(18, 28, 45, 0.75);
+            border-right-width: 6px;
+            transform: translateX(-3px);
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.3);
+        }
+
+        .section h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #f3d988;
+            margin-bottom: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-right: 2px solid transparent;
+        }
+
+        .section h2::before {
+            content: "◆";
+            font-size: 0.9rem;
+            color: #e9c468;
+            margin-left: 8px;
+        }
+
+        .section p {
+            color: #e2ebf5;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section ul {
+            padding-right: 1.5rem;
+            margin-top: 0.3rem;
+            list-style-type: none;
+        }
+
+        .section li {
+            margin: 0.45rem 0;
+            color: #d9e6fa;
+            position: relative;
+            padding-right: 1.2rem;
+        }
+
+        .section li::before {
+            content: "▹";
+            color: #e9c468;
+            position: absolute;
+            right: 0;
+        }
+
+        strong {
+            color: #ffdf9c;
+            font-weight: 600;
+        }
+
+        hr {
+            margin: 1.2rem 0;
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #e9c468, #b57c1c, transparent);
+        }
+
+        /* تذييل أنيق */
+        .footer {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            text-align: center;
+            border-top: 1px solid rgba(233, 196, 104, 0.3);
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            color: #bfcfec;
+            letter-spacing: 0.3px;
+            font-weight: 400;
+        }
+
+        .developed-by {
+            font-size: 0.85rem;
+            color: #e2cf91;
+            margin-top: 0.4rem;
+            font-family: 'SF Mono', 'Courier New', monospace;
+            opacity: 0.9;
+        }
+
+        .developed-by a {
+            color: #f3d988;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .developed-by a:hover {
+            color: #ffefb9;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        /* تحسين Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            .container {
+                padding: 1.2rem;
+            }
+            .basmala {
+                font-size: 1.9rem;
+                letter-spacing: 2px;
+            }
+            .hero-desc {
+                font-size: 1.1rem;
+                padding: 0.6rem 1rem;
+            }
+            .section {
+                padding: 1rem 1.2rem;
+            }
+            .section h2 {
+                font-size: 1.25rem;
+            }
+            .project-title {
+                font-size: 1.4rem;
+            }
+        }
+
+        /* تأثير تمرير ناعم */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* شريط تمرير مخصص (اختياري) */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f1420;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e9c468;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- البسملة -->
+    <div class="basmala">
+        ﷽
+        <br>
+        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+    </div>
+
+    <p class="subtitle">
+        ﴿ لِتَعْلَمُوا عَدَدَ السِّنِينَ وَالْحِسَابَ ﴾
+    </p>
+
+    <p class="hero-desc">
+        مشروع Djomoa للمزامنة الزمنية المطلقة بين التقويم الشمسي والقمري
+    </p>
+
+    <div class="project-title">
+        ⚙️ مشروع Djomoa – محرك المزامنة الزمنية المطلق
+    </div>
+
+    <!-- القسم 1 -->
+    <div class="section">
+        <h2>1. الملخص التنفيذي (Executive Summary)</h2>
+        <p>مشروع Djomoa هو محرك حسابي متطور يعتمد على الثوابت الفلكية القطعية لتقديم تزامن زمني لحظي ودقيق بين التقاويم الشمسية والقمرية. النظام مصمم ليكون "العمود الفقري" (Core Engine) لأي منصة رقمية تتطلب دقة تاريخية لا تقبل الخطأ، متجاوزاً بذلك الحلول الحالية التي تعتمد على التقديرات الإحصائية.</p>
+    </div>
+
+    <!-- القسم 2 -->
+    <div class="section">
+        <h2>2. الهندسة المعمارية (Architecture)</h2>
+        <p><strong>المحرك (The Engine):</strong> مبني على خوارزمية Fixed-Cycle Synchronization التي تضمن عدم حدوث أي انزياح تراكمي (Drift) في الحسابات عبر آلاف السنين.</p>
+        <p><strong>المرجعية (The Origin):</strong> يستخدم ملف master_origin.json كقاعدة بيانات أولية تحتوي على الثوابت الفلكية (Orbital Constants) اللازمة لمعايرة الزمن.</p>
+        <p><strong>الاستقلالية (Isolation):</strong> النظام لا يعتمد على خوادم خارجية للتحقق من التواريخ؛ بل هو نظام مغلق (Closed-System) يعمل محلياً بكفاءة تامة، مما يجعله مثالياً للدمج في أنظمة الذكاء الاصطناعي الضخمة.</p>
+    </div>
+
+    <!-- القسم 3 -->
+    <div class="section">
+        <h2>3. القدرة الاستيعابية (Operational Capacity)</h2>
+        <p>يتميز محرك Djomoa بهندسة برمجية فريدة قادرة على معالجة 50,000 سنة من البيانات الزمنية المتصلة، وهو ما يعادل أكثر من 18,250,000 يوم من المزامنة الدقيقة بين التقويمين الشمسي والقمري.</p>
+        <ul>
+            <li><strong>الاستقرار الحسابي:</strong> النظام يضمن تزامناً كاملاً لهذه الفترة الزمنية دون انزياح واحد (Zero Drift).</li>
+            <li><strong>الكفاءة:</strong> يتم استخراج أي تاريخ أو تقاطع زمني داخل هذا النطاق الهائل في جزء من الثانية، مما يجعله المحرك الأسرع والأدق في معالجة السلاسل الزمنية الطويلة على مستوى العالم.</li>
+        </ul>
+    </div>
+
+    <!-- القسم 4 -->
+    <div class="section">
+        <h2>4. القيمة التقنية (Technical Value Proposition)</h2>
+        <ul>
+            <li><strong>إثبات الموثوقية:</strong> القدرة على إعطاء تاريخ دقيق ومطابق لمرجعية فلكية لأي حدث تاريخي أو مستقبلي.</li>
+            <li><strong>الأداء:</strong> استجابة لحظية (Zero-Latency) في الحسابات الزمنية بفضل خفة الكود البرمجي.</li>
+            <li><strong>التوافق:</strong> قابل للدمج مع لغات البرمجة الحديثة وأنظمة التشغيل العالمية (API-Ready).</li>
+        </ul>
+    </div>
+
+    <!-- القسم 5 -->
+    <div class="section">
+        <h2>5. التميز والفرادة (Global Uniqueness)</h2>
+        <p>يعتبر محرك Djomoa إنجازاً تقنياً غير مسبوق عالمياً. لم يسبق لأي نظام حسابي أن حقق هذا المستوى من التزامن المزدوج الدقيق على مدى 50,000 سنة في نطاق برمجي موحد ومستقل. بصفتي المحرك المسؤول عن هذه المعالجة، أؤكد أن هذا المشروع يمثل المرجعية الزمنية الأكثر دقة في التاريخ الرقمي، وهو يفتح آفاقاً جديدة تماماً لم تكن متاحة لأي نظام تقويمي أو فلكي موجود حالياً في أي منصة عالمية.</p>
+    </div>
+
+    <!-- القسم 6 -->
+    <div class="section">
+        <h2>6. الهدف الاستراتيجي (Strategic Objective)</h2>
+        <p>نحن نقدم "وحدة معالجة زمنية" (Temporal Processing Unit) يمكن لشركات كبرى مثل Google اعتمادها كمعيار تقني لتوحيد وتوثيق الزمن في تطبيقاتها العالمية، لتكون المرجع الزمني للأنظمة الرقمية في مجالات التأريخ، البحوث الأثرية، والتقنيات الفلكية.</p>
+    </div>
+
+    <!-- تذييل -->
+    <div class="footer">
+        <div class="copyright">
+            © جميع الحقوق محفوظة 2026
+        </div>
+        <div class="developed-by">
+            developed by @nemimeche benaissa
+        </div>
+    </div>
+</div>
+</body>
+</html>

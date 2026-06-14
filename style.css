@@ -11,6 +11,14 @@
             box-sizing: border-box;
         }
 
+        /* تعريف المتغيرات الذهبية */
+        :root {
+            --gold: #d4af37;
+            --gold-light: #e9c468;
+            --gold-dark: #b57c1c;
+            --bg-dark: #0a0f1e;
+        }
+
         body {
             background: radial-gradient(circle at 20% 30%, #0a0f1e, #05070f);
             font-family: 'Segoe UI', 'Tahoma', 'Amiri', 'Times New Roman', system-ui, -apple-system, sans-serif;
@@ -93,6 +101,52 @@
             letter-spacing: -0.3px;
             text-shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
+
+        /* ======================================== */
+        /* قسم العداد - الأنماط المضافة حديثاً */
+        /* ======================================== */
+        .counter-container {
+            text-align: center;
+            padding: 30px;
+            background: rgba(212, 175, 55, 0.05);
+            border-radius: 20px;
+            margin: 20px 0;
+            border: 1px solid var(--gold);
+            transition: all 0.3s ease;
+        }
+
+        .counter-container:hover {
+            background: rgba(212, 175, 55, 0.1);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
+            border-color: var(--gold-light);
+        }
+
+        .counter {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--gold);
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+            font-family: 'Courier New', 'SF Mono', monospace;
+            letter-spacing: 4px;
+            display: inline-block;
+            padding: 0.2rem 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+        }
+
+        .counter-container p {
+            margin-top: 15px;
+            font-size: 1.2rem;
+            color: #e6d5a8;
+        }
+
+        .counter-container small {
+            display: block;
+            margin-top: 10px;
+            color: #a0acd0;
+            font-size: 0.85rem;
+        }
+        /* ======================================== */
 
         /* الأقسام بتصميم نظيف وحديث */
         .section {
@@ -229,6 +283,13 @@
             .project-title {
                 font-size: 1.4rem;
             }
+            .counter {
+                font-size: 2.2rem;
+                letter-spacing: 2px;
+            }
+            .counter-container {
+                padding: 20px;
+            }
         }
 
         /* تأثير تمرير ناعم */
@@ -236,7 +297,7 @@
             scroll-behavior: smooth;
         }
 
-        /* شريط تمرير مخصص (اختياري) */
+        /* شريط تمرير مخصص */
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -269,6 +330,13 @@
 
     <div class="project-title">
         ⚙️ مشروع Djomoa – محرك المزامنة الزمنية المطلق
+    </div>
+
+    <!-- عداد المزامنة المطلق مع الأنماط الجديدة -->
+    <div class="counter-container">
+        <div class="counter" data-target="18250000" id="syncCounter">0</div>
+        <p>مليون يوم من التزامن المطلق</p>
+        <small>قدرة تشغيلية: 50,000 سنة زمنية متصلة | Zero Drift</small>
     </div>
 
     <!-- القسم 1 -->
@@ -320,12 +388,53 @@
     <!-- تذييل -->
     <div class="footer">
         <div class="copyright">
-            © جميع الحقوق محفوظة 2026
+            © جميع الحقوق محفوظة 2026 Djomoa Project
         </div>
         <div class="developed-by">
-            developed by @nemimeche benaissa
+            developed by <a href="#">@nemimeche benaissa</a>
         </div>
     </div>
 </div>
+
+<!-- سكربت العداد المتطور -->
+<script>
+    (function() {
+        const counterElement = document.getElementById('syncCounter');
+        if (!counterElement) return;
+        
+        const target = +counterElement.getAttribute('data-target');  // 18250000
+        const duration = 2200; // 2.2 ثانية
+        let startTime = null;
+        let animationId = null;
+        
+        function updateCount(timestamp) {
+            if (!startTime) startTime = timestamp;
+            const elapsed = timestamp - startTime;
+            let progress = Math.min(1, elapsed / duration);
+            const easeProgress = 1 - Math.pow(1 - progress, 3);
+            let value = Math.ceil(target * easeProgress);
+            
+            if (value >= target) {
+                counterElement.innerText = target.toLocaleString();
+                return;
+            }
+            
+            counterElement.innerText = value.toLocaleString();
+            animationId = requestAnimationFrame(updateCount);
+        }
+        
+        function startCounter() {
+            if (animationId) cancelAnimationFrame(animationId);
+            startTime = null;
+            animationId = requestAnimationFrame(updateCount);
+        }
+        
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', startCounter);
+        } else {
+            startCounter();
+        }
+    })();
+</script>
 </body>
 </html>

@@ -137,6 +137,37 @@
             border-color: #2a3a5a;
         }
 
+        /* حاوية العداد */
+        .counter-container {
+            background: linear-gradient(135deg, #1a1f2e, #0f1422);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .counter {
+            font-size: 3.8rem;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            color: #d4af37;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+            background: #00000040;
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border-radius: 1rem;
+            letter-spacing: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .counter-container p {
+            font-size: 1.3rem;
+            color: #e6d5a8;
+            margin-top: 0.5rem;
+        }
+
         /* تذييل الصفحة - حقوق الملكية */
         .footer {
             margin-top: 2rem;
@@ -185,6 +216,13 @@
             .section h2 {
                 font-size: 1.2rem;
             }
+            .counter {
+                font-size: 2rem;
+                letter-spacing: 2px;
+            }
+            .counter-container p {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -207,6 +245,13 @@
 
     <div class="project-title">
         ⚙️ مشروع Djomoa – محرك المزامنة الزمنية المطلق
+    </div>
+
+    <!-- عداد المزامنة المطلق (تم حذف 3 أصفار) -->
+    <div class="counter-container">
+        <div class="counter" data-target="18250000" id="syncCounter">0</div>
+        <p>مليون يوم من التزامن المطلق</p>
+        <small style="color:#a0acd0;">قدرة تشغيلية: 50,000 سنة زمنية متصلة</small>
     </div>
 
     <!-- القسم 1 -->
@@ -258,12 +303,53 @@
     <!-- تذييل الصفحة - حقوق الملكية والتطوير -->
     <div class="footer">
         <div class="copyright">
-            © جميع الحقوق محفوظة 2026
+            © جميع الحقوق محفوظة 2026 Djomoa Project
         </div>
         <div class="developed-by">
-            developed by @nemimeche benaissa
+            developed by <a href="#" target="_blank">@nemimeche benaissa</a>
         </div>
     </div>
 </div>
+
+<!-- سكربت العداد بعد حذف 3 أصفار -->
+<script>
+    (function() {
+        const counterElement = document.getElementById('syncCounter');
+        if (!counterElement) return;
+        
+        const target = +counterElement.getAttribute('data-target');  // 18250000
+        const duration = 2200; // 2.2 ثانية
+        let startTime = null;
+        let animationId = null;
+        
+        function updateCount(timestamp) {
+            if (!startTime) startTime = timestamp;
+            const elapsed = timestamp - startTime;
+            let progress = Math.min(1, elapsed / duration);
+            const easeProgress = 1 - Math.pow(1 - progress, 3);
+            let value = Math.ceil(target * easeProgress);
+            
+            if (value >= target) {
+                counterElement.innerText = target.toLocaleString();
+                return;
+            }
+            
+            counterElement.innerText = value.toLocaleString();
+            animationId = requestAnimationFrame(updateCount);
+        }
+        
+        function startCounter() {
+            if (animationId) cancelAnimationFrame(animationId);
+            startTime = null;
+            animationId = requestAnimationFrame(updateCount);
+        }
+        
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', startCounter);
+        } else {
+            startCounter();
+        }
+    })();
+</script>
 </body>
 </html>

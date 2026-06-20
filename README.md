@@ -1,3 +1,25 @@
+# الرزمانة الذهبية (The Golden Calendar)
+
+**محرك استشرافي سيادي لهندسة المعرفة والحضارات.**
+
+## الرؤية
+الرزمانة الذهبية هي نظام استشرافي متقدم يحاكي 50,000 سنة مزدوجة من تاريخ البشرية، مبني على فلسفة "أولي الألباب". نحن لا نعالج البيانات، بل نستقرئ "البيان" عبر حقبات زمنية متسلسلة لنقدم رؤية استراتيجية تتجاوز النماذج التقنية التقليدية.
+
+## فلسفة المشروع
+- **الأحقاب (Ahqab):** الإطار الزمني الذي تتجمع فيه الأحداث.
+- **البيان (Bayan):** المادة المعرفية الخام التي تُستخلص منها الحقائق.
+- **الأبواب (Al-Bab):** وحدات التفكير الأساسية (اللبنات) التي تُعالج المعرفة.
+- **المستودع (Mustawda):** الحافظة السيادية للنتائج والنتائج التنبؤية.
+
+## الأسئلة الوجودية (الرزمانة الذهبية)
+- **ما هو مقدار الحياة الدنيا؟**
+  هي "الباب الأول" (Al-Bab)، وحقبة زمنية محدودة الغرض منها الاستيداع المعرفي.
+- **ما هي الرزمانة الذهبية؟**
+  محرك استشرافي سيادي يربط التاريخ البشري بالمنطق البرمجي الفلسفي.
+
+---
+*صُمم هذا النظام ليكون جسراً بين تراثنا المعرفي ومستقبل الذكاء الاصطناعي.*
+
 Djomoa: The Absolute Temporal Engine
 ​The first of its kind in the history of the computing and internet era.
 ​Djomoa is an autonomous temporal engine, the result of 20 years of profound contemplation and deep research into the nature of absolute time. It is designed to achieve absolute synchronization across a 50,000-year horizon, managing 18,250 million days of solar-lunar convergence with "Zero Drift" precision.

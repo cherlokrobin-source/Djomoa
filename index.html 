@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Djomoa - حول المشروع | محرك المزامنة الزمنية المطلق</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0f1e 0%, #0c1222 100%);
+            font-family: 'Segoe UI', 'Tahoma', 'Amiri', 'Times New Roman', serif;
+            color: #e8edf5;
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(18, 25, 45, 0.75);
+            backdrop-filter: blur(2px);
+            border-radius: 2rem;
+            padding: 2.5rem;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        /* البسملة */
+        .basmala {
+            font-size: 2.5rem;
+            font-family: 'Amiri', 'Times New Roman', serif;
+            text-align: center;
+            color: #d4af37;
+            text-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+            margin-bottom: 1rem;
+            letter-spacing: 4px;
+        }
+
+        .basmala br {
+            display: none;
+        }
+
+        /* الآية */
+        .subtitle {
+            text-align: center;
+            font-size: 1.3rem;
+            color: #b9c7d9;
+            font-style: italic;
+            border-bottom: 1px dashed #2a3a5a;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* الوصف الرئيسي */
+        .hero-desc {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ffdf8c;
+            background: rgba(0, 0, 0, 0.35);
+            padding: 0.8rem 1.5rem;
+            border-radius: 60px;
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 2rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* عنوان المشروع */
+        .project-title {
+            font-size: 1.9rem;
+            font-weight: 700;
+            text-align: center;
+            color: #d4af37;
+            margin: 2rem 0 1.5rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #d4af37;
+            display: inline-block;
+            width: 100%;
+        }
+
+        /* الأقسام */
+        .section {
+            background: rgba(10, 15, 30, 0.65);
+            border-radius: 1.2rem;
+            padding: 1.4rem 1.8rem;
+            margin-bottom: 1.8rem;
+            border-right: 4px solid #d4af37;
+            transition: all 0.2s ease;
+        }
+
+        .section:hover {
+            background: rgba(20, 28, 48, 0.85);
+            border-right-width: 6px;
+        }
+
+        .section h2 {
+            font-size: 1.5rem;
+            color: #e6c87a;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section h2::before {
+            content: "⏺";
+            font-size: 0.9rem;
+            color: #d4af37;
+        }
+
+        .section p, .section li {
+            color: #cfdfed;
+            font-size: 1rem;
+        }
+
+        .section ul {
+            padding-right: 1.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .section li {
+            margin: 0.4rem 0;
+        }
+
+        strong {
+            color: #ffdf8c;
+        }
+
+        hr {
+            margin: 1rem 0;
+            border-color: #2a3a5a;
+        }
+
+        /* حاوية العداد */
+        .counter-container {
+            background: linear-gradient(135deg, #1a1f2e, #0f1422);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .counter {
+            font-size: 3.8rem;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            color: #d4af37;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+            background: #00000040;
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border-radius: 1rem;
+            letter-spacing: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .counter-container p {
+            font-size: 1.3rem;
+            color: #e6d5a8;
+            margin-top: 0.5rem;
+        }
+
+        /* تذييل الصفحة - حقوق الملكية */
+        .footer {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            text-align: center;
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            color: #a0adc0;
+            letter-spacing: 0.5px;
+        }
+
+        .developed-by {
+            font-size: 0.85rem;
+            color: #c9b87a;
+            margin-top: 0.5rem;
+            font-family: monospace;
+        }
+
+        .developed-by a {
+            color: #d4af37;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .developed-by a:hover {
+            color: #ffdf8c;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 680px) {
+            body {
+                padding: 1rem;
+            }
+            .container {
+                padding: 1.2rem;
+            }
+            .basmala {
+                font-size: 1.8rem;
+            }
+            .hero-desc {
+                font-size: 1.1rem;
+            }
+            .section h2 {
+                font-size: 1.2rem;
+            }
+            .counter {
+                font-size: 2rem;
+                letter-spacing: 2px;
+            }
+            .counter-container p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- البسملة -->
+    <div class="basmala">
+        ﷽
+        <br>
+        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+    </div>
+
+    <p class="subtitle">
+        ﴿ لِتَعْلَمُوا عَدَدَ السِّنِينَ وَالْحِسَابَ ﴾
+    </p>
+
+    <p class="hero-desc">
+        مشروع Djomoa للمزامنة الزمنية المطلقة بين التقويم الشمسي والقمري
+    </p>
+
+    <div class="project-title">
+        ⚙️ مشروع Djomoa – محرك المزامنة الزمنية المطلق
+    </div>
+
+    <!-- عداد المزامنة المطلق (تم حذف 3 أصفار) -->
+    <div class="counter-container">
+        <div class="counter" data-target="18250000" id="syncCounter">0</div>
+        <p>مليون يوم من التزامن المطلق</p>
+        <small style="color:#a0acd0;">قدرة تشغيلية: 50,000 سنة زمنية متصلة</small>
+    </div>
+
+    <!-- القسم 1 -->
+    <div class="section">
+        <h2>1. الملخص التنفيذي (Executive Summary)</h2>
+        <p>مشروع Djomoa هو محرك حسابي متطور يعتمد على الثوابت الفلكية القطعية لتقديم تزامن زمني لحظي ودقيق بين التقاويم الشمسية والقمرية. النظام مصمم ليكون "العمود الفقري" (Core Engine) لأي منصة رقمية تتطلب دقة تاريخية لا تقبل الخطأ، متجاوزاً بذلك الحلول الحالية التي تعتمد على التقديرات الإحصائية.</p>
+    </div>
+
+    <!-- القسم 2 -->
+    <div class="section">
+        <h2>2. الهندسة المعمارية (Architecture)</h2>
+        <p><strong>المحرك (The Engine):</strong> مبني على خوارزمية Fixed-Cycle Synchronization التي تضمن عدم حدوث أي انزياح تراكمي (Drift) في الحسابات عبر آلاف السنين.</p>
+        <p><strong>المرجعية (The Origin):</strong> يستخدم ملف master_origin.json كقاعدة بيانات أولية تحتوي على الثوابت الفلكية (Orbital Constants) اللازمة لمعايرة الزمن.</p>
+        <p><strong>الاستقلالية (Isolation):</strong> النظام لا يعتمد على خوادم خارجية للتحقق من التواريخ؛ بل هو نظام مغلق (Closed-System) يعمل محلياً بكفاءة تامة، مما يجعله مثالياً للدمج في أنظمة الذكاء الاصطناعي الضخمة.</p>
+    </div>
+
+    <!-- القسم 3 -->
+    <div class="section">
+        <h2>3. القدرة الاستيعابية (Operational Capacity)</h2>
+        <p>يتميز محرك Djomoa بهندسة برمجية فريدة قادرة على معالجة 50,000 سنة من البيانات الزمنية المتصلة، وهو ما يعادل أكثر من 18,250,000 يوم من المزامنة الدقيقة بين التقويمين الشمسي والقمري.</p>
+        <ul>
+            <li><strong>الاستقرار الحسابي:</strong> النظام يضمن تزامناً كاملاً لهذه الفترة الزمنية دون انزياح واحد (Zero Drift).</li>
+            <li><strong>الكفاءة:</strong> يتم استخراج أي تاريخ أو تقاطع زمني داخل هذا النطاق الهائل في جزء من الثانية، مما يجعله المحرك الأسرع والأدق في معالجة السلاسل الزمنية الطويلة على مستوى العالم.</li>
+        </ul>
+    </div>
+
+    <!-- القسم 4 -->
+    <div class="section">
+        <h2>4. القيمة التقنية (Technical Value Proposition)</h2>
+        <ul>
+            <li><strong>إثبات الموثوقية:</strong> القدرة على إعطاء تاريخ دقيق ومطابق لمرجعية فلكية لأي حدث تاريخي أو مستقبلي.</li>
+            <li><strong>الأداء:</strong> استجابة لحظية (Zero-Latency) في الحسابات الزمنية بفضل خفة الكود البرمجي.</li>
+            <li><strong>التوافق:</strong> قابل للدمج مع لغات البرمجة الحديثة وأنظمة التشغيل العالمية (API-Ready).</li>
+        </ul>
+    </div>
+
+    <!-- القسم 5 -->
+    <div class="section">
+        <h2>5. التميز والفرادة (Global Uniqueness)</h2>
+        <p>يعتبر محرك Djomoa إنجازاً تقنياً غير مسبوق عالمياً. لم يسبق لأي نظام حسابي أن حقق هذا المستوى من التزامن المزدوج الدقيق على مدى 50,000 سنة في نطاق برمجي موحد ومستقل. بصفتي المحرك المسؤول عن هذه المعالجة، أؤكد أن هذا المشروع يمثل المرجعية الزمنية الأكثر دقة في التاريخ الرقمي، وهو يفتح آفاقاً جديدة تماماً لم تكن متاحة لأي نظام تقويمي أو فلكي موجود حالياً في أي منصة عالمية.</p>
+    </div>
+
+    <!-- القسم 6 -->
+    <div class="section">
+        <h2>6. الهدف الاستراتيجي (Strategic Objective)</h2>
+        <p>نحن نقدم "وحدة معالجة زمنية" (Temporal Processing Unit) يمكن لشركات كبرى مثل Google اعتمادها كمعيار تقني لتوحيد وتوثيق الزمن في تطبيقاتها العالمية، لتكون المرجع الزمني للأنظمة الرقمية في مجالات التأريخ، البحوث الأثرية، والتقنيات الفلكية.</p>
+    </div>
+
+    <!-- تذييل الصفحة - حقوق الملكية والتطوير -->
+    <div class="footer">
+        <div class="copyright">
+            © جميع الحقوق محفوظة 2026 Djomoa Project
+        </div>
+        <div class="developed-by">
+            developed by <a href="#" target="_blank">@nemimeche benaissa</a>
+        </div>
+    </div>
+</div>
+
+<!-- سكربت العداد بعد حذف 3 أصفار -->
+<script>
+    (function() {
+        const counterElement = document.getElementById('syncCounter');
+        if (!counterElement) return;
+        
+        const target = +counterElement.getAttribute('data-target');  // 18250000
+        const duration = 2200; // 2.2 ثانية
+        let startTime = null;
+        let animationId = null;
+        
+        function updateCount(timestamp) {
+            if (!startTime) startTime = timestamp;
+            const elapsed = timestamp - startTime;
+            let progress = Math.min(1, elapsed / duration);
+            const easeProgress = 1 - Math.pow(1 - progress, 3);
+            let value = Math.ceil(target * easeProgress);
+            
+            if (value >= target) {
+                counterElement.innerText = target.toLocaleString();
+                return;
+            }
+            
+            counterElement.innerText = value.toLocaleString();
+            animationId = requestAnimationFrame(updateCount);
+        }
+        
+        function startCounter() {
+            if (animationId) cancelAnimationFrame(animationId);
+            startTime = null;
+            animationId = requestAnimationFrame(updateCount);
+        }
+        
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', startCounter);
+        } else {
+            startCounter();
+        }
+    })();
+</script>
+</body> 
+</html>

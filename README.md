@@ -1,39 +1,20 @@
-# الرزمانة الذهبية (The Golden Calendar)
+الرزمانة الذهبية (The Golden Calendar)
+​The Absolute Temporal Engine
+​🌐 النظرة العامة (Overview)
+​يهدف مشروع الرزمانة الذهبية إلى تحقيق تناسق برمجي فائق بين الذكاء البشري والذكاء الاصطناعي، لرزمنة الحياة البشرية بمقدار 50,000 سنة مزدوجة بين النظامين الشمسي والقمري. يعالج النظام أكثر من 18,250 مليون يوم، مع احتساب كافة الفروقات بين التقويمين بدقة متناهية، لتقديم نتائج برمجية وتحاليل زمنية غابرة منذ خلق آدم عليه السلام إلى يومنا هذا، مما يُحدث طفرة تكنولوجية لدراسة الحضارات التي تعاقبت على البشرية في عالمنا الحديث.
+​The Golden Calendar project aims to achieve a sophisticated programmatic harmony between human intelligence and artificial intelligence. It is designed to calibrate human life over a 50,000-year dual solar-lunar horizon. By processing more than 18,250 million days and calculating every minute discrepancy between the solar and lunar cycles, the system delivers precise temporal analysis—from the creation of Adam to the present day. This innovation represents a technological breakthrough in studying the civilizations that have shaped humanity in our modern world.
+​🚀 الأهداف الاستراتيجية (Strategic Goals)
+​التزامن المطلق (Absolute Synchronization): تحقيق دقة "Zero Drift" في التوفيق بين الدورتين الشمسية والقمرية.
+​التحليل الزمني الغابر (Ancient Temporal Analysis): استقراء البيانات الزمنية من بدء الخلق وحتى العصر الراهن.
+​الطفرة التكنولوجية (Technological Paradigm Shift): بناء مرجعية برمجية فريدة لدراسة تعاقب الحضارات.
+​🏛 الركائز المعرفية (The Cognitive Pillars - Philosophy of "Oli-Al-Albab")
+​يستند النظام في معالجته للمعلومات إلى أربع ركائز أساسية:
+​الأحقاب (Ahqab / Eras): الإطار الزمني الذي تتجمع فيه الأحداث.
+​البيان (Bayan / Manifestation): المادة المعرفية الخام التي تُستخلص منها الحقائق.
+​الألباب (Al-Albab / Core Units): وحدات التفكير الأساسية (اللبنات العقلية) التي تُعالج المعرفة.
+​المستودع (Mustawda / The Repository): الحافظة السيادية للنتائج والرؤى التنبؤية.
 
-**محرك استشرافي سيادي لهندسة المعرفة والحضارات.**
 
-## الرؤية
-الرزمانة الذهبية هي نظام استشرافي متقدم يحاكي 50,000 سنة مزدوجة من تاريخ البشرية، مبني على فلسفة "أولي الألباب". نحن لا نعالج البيانات، بل نستقرئ "البيان" عبر حقبات زمنية متسلسلة لنقدم رؤية استراتيجية تتجاوز النماذج التقنية التقليدية.
 
-## فلسفة المشروع
-- **الأحقاب (Ahqab):** الإطار الزمني الذي تتجمع فيه الأحداث.
-- **البيان (Bayan):** المادة المعرفية الخام التي تُستخلص منها الحقائق.
-- **الأبواب (Al-Bab):** وحدات التفكير الأساسية (اللبنات) التي تُعالج المعرفة.
-- **المستودع (Mustawda):** الحافظة السيادية للنتائج والنتائج التنبؤية.
-
-## الأسئلة الوجودية (الرزمانة الذهبية)
-- **ما هو مقدار الحياة الدنيا؟**
-  هي "الباب الأول" (Al-Bab)، وحقبة زمنية محدودة الغرض منها الاستيداع المعرفي.
-- **ما هي الرزمانة الذهبية؟**
-  محرك استشرافي سيادي يربط التاريخ البشري بالمنطق البرمجي الفلسفي.
-
----
-*صُمم هذا النظام ليكون جسراً بين تراثنا المعرفي ومستقبل الذكاء الاصطناعي.*
-
-Djomoa: The Absolute Temporal Engine
-​The first of its kind in the history of the computing and internet era.
-​Djomoa is an autonomous temporal engine, the result of 20 years of profound contemplation and deep research into the nature of absolute time. It is designed to achieve absolute synchronization across a 50,000-year horizon, managing 18,250 million days of solar-lunar convergence with "Zero Drift" precision.
-​Why Djomoa is Unique
-​A 20-Year Quest: Born from two decades of meditation and analytical pursuit to decode the "Absolute Day" and its cosmic significance.
-​Unprecedented Innovation: The first project of its kind since the dawn of the internet and computing era to successfully bridge such massive solar-lunar cycles with absolute accuracy.
-​Algorithmic Excellence: Leverages highly advanced, proprietary computational logic to eliminate errors, offering a level of precision never seen before in digital timekeeping.
-​All rights reserved. Developed by: Nemimeche Benaissa
-​البيان التعريفي (العربية)
-​Djomoa: المحرك الزمني المطلق
-​الأول من نوعه في تاريخ عصر الحوسبة والإنترنت.
-​"Djomoa" هو محرك زمني مستقل، ثمرة 20 عاماً من التأمل والتدبر العميق في طبيعة الزمن المطلق ومحاولة الوصول إلى حقيقة "اليوم المطلق". تم تصميمه لتحقيق تزامن مطلق عبر أفق زمني يمتد لـ 50,000 سنة، معالجاً 18,250 مليون يوم من التوافق الشمسي والقمري بدقة متناهية.
-​لماذا يعتبر Djomoa مشروعاً فريداً؟
-​رحلة عقدين من الزمن: نتاج 20 عاماً من البحث المكثف والتأمل للوصول إلى الحساب الدقيق لـ "اليوم المطلق" وعلاقته الكونية.
-​سبق تاريخي: هو المشروع الأول من نوعه منذ بزوغ فجر الحوسبة والإنترنت الذي ينجح في ربط هذه الدورات الشمسية والقمرية الضخمة بهذه الدقة العالية.
-​تفوق برمجيات الحساب: يعتمد على خوارزميات متطورة جداً ومبتكرة، مصممة خصيصاً لتجاوز كافة التحديات الحسابية التقليدية، مما يجعله المرجعية الزمنية الأكثر دقة في العصر الرقمي.
-​جميع الحقوق محفوظة. تم التطوير بواسطة: Nemimeche Benaissa
+جميع الحقوق محفوظة @2026
+devlopedby#nemimeche_benaissa

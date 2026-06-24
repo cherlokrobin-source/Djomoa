@@ -17,6 +17,7 @@
             color: #e8edf5;
             line-height: 1.6;
             padding: 2rem;
+            min-height: 100vh;
         }
 
         .container {
@@ -39,10 +40,6 @@
             text-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
             margin-bottom: 1rem;
             letter-spacing: 4px;
-        }
-
-        .basmala br {
-            display: none;
         }
 
         /* الآية */
@@ -160,6 +157,7 @@
             border-radius: 1rem;
             letter-spacing: 4px;
             margin-bottom: 1rem;
+            min-width: 200px;
         }
 
         .counter-container p {
@@ -200,6 +198,16 @@
             text-decoration: underline;
         }
 
+        .engine-status {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            text-align: center;
+            color: #7a9ab5;
+            font-size: 0.9rem;
+        }
+
         @media (max-width: 680px) {
             body {
                 padding: 1rem;
@@ -219,6 +227,7 @@
             .counter {
                 font-size: 2rem;
                 letter-spacing: 2px;
+                min-width: 120px;
             }
             .counter-container p {
                 font-size: 1rem;
@@ -247,9 +256,9 @@
         ⚙️ مشروع Djomoa – محرك المزامنة الزمنية المطلق
     </div>
 
-    <!-- عداد المزامنة المطلق (تم حذف 3 أصفار) -->
+    <!-- عداد المزامنة المطلق -->
     <div class="counter-container">
-        <div class="counter" data-target="18250000" id="syncCounter">0</div>
+        <div class="counter" id="syncCounter">0</div>
         <p>مليون يوم من التزامن المطلق</p>
         <small style="color:#a0acd0;">قدرة تشغيلية: 50,000 سنة زمنية متصلة</small>
     </div>
@@ -300,6 +309,11 @@
         <p>نحن نقدم "وحدة معالجة زمنية" (Temporal Processing Unit) يمكن لشركات كبرى مثل Google اعتمادها كمعيار تقني لتوحيد وتوثيق الزمن في تطبيقاتها العالمية، لتكون المرجع الزمني للأنظمة الرقمية في مجالات التأريخ، البحوث الأثرية، والتقنيات الفلكية.</p>
     </div>
 
+    <!-- حالة المحرك -->
+    <div class="engine-status" id="engineStatus">
+        ⏳ جاري تحميل المحرك...
+    </div>
+
     <!-- تذييل الصفحة - حقوق الملكية والتطوير -->
     <div class="footer">
         <div class="copyright">
@@ -311,45 +325,66 @@
     </div>
 </div>
 
-<!-- سكربت العداد بعد حذف 3 أصفار -->
-<script>
-    (function() {
+<!-- سكربت العداد ومحرك الماستر -->
+<script type="module">
+    // استيراد المحرك الرئيسي
+    import { MasterEngine } from './Master_Engine.js';
+    
+    try {
+        // تهيئة المحرك
+        const engine = new MasterEngine();
+        console.log("✅ المحرك يعمل:", engine.calc(50000));
+        
+        // عرض حالة المحرك في الصفحة
+        const statusElement = document.getElementById('engineStatus');
+        if (statusElement) {
+            statusElement.innerHTML = '✅ المحرك الرئيسي نشط وجاهز للعمل';
+            statusElement.style.color = '#7ddf9a';
+        }
+        
+        // تشغيل العداد المتحرك
         const counterElement = document.getElementById('syncCounter');
-        if (!counterElement) return;
-        
-        const target = +counterElement.getAttribute('data-target');  // 18250000
-        const duration = 2200; // 2.2 ثانية
-        let startTime = null;
-        let animationId = null;
-        
-        function updateCount(timestamp) {
-            if (!startTime) startTime = timestamp;
-            const elapsed = timestamp - startTime;
-            let progress = Math.min(1, elapsed / duration);
-            const easeProgress = 1 - Math.pow(1 - progress, 3);
-            let value = Math.ceil(target * easeProgress);
+        if (counterElement) {
+            const targetValue = 18250000; // القيمة المستهدفة (حذفنا 3 أصفار)
+            const duration = 2200; // 2.2 ثانية
+            let startTime = null;
+            let animationId = null;
             
-            if (value >= target) {
-                counterElement.innerText = target.toLocaleString();
-                return;
+            function updateCounter(timestamp) {
+                if (!startTime) startTime = timestamp;
+                const elapsed = timestamp - startTime;
+                let progress = Math.min(1, elapsed / duration);
+                // تأثير تسارع تدريجي
+                const easeProgress = 1 - Math.pow(1 - progress, 3);
+                let currentValue = Math.ceil(targetValue * easeProgress);
+                
+                if (currentValue >= targetValue) {
+                    counterElement.textContent = targetValue.toLocaleString();
+                    return;
+                }
+                
+                counterElement.textContent = currentValue.toLocaleString();
+                animationId = requestAnimationFrame(updateCounter);
             }
             
-            counterElement.innerText = value.toLocaleString();
-            animationId = requestAnimationFrame(updateCount);
+            // بدء تشغيل العداد
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', () => {
+                    animationId = requestAnimationFrame(updateCounter);
+                });
+            } else {
+                animationId = requestAnimationFrame(updateCounter);
+            }
         }
         
-        function startCounter() {
-            if (animationId) cancelAnimationFrame(animationId);
-            startTime = null;
-            animationId = requestAnimationFrame(updateCount);
+    } catch (error) {
+        console.error('❌ فشل في تحميل المحرك:', error);
+        const statusElement = document.getElementById('engineStatus');
+        if (statusElement) {
+            statusElement.innerHTML = '❌ خطأ في تحميل المحرك: ' + error.message;
+            statusElement.style.color = '#ff6b6b';
         }
-        
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', startCounter);
-        } else {
-            startCounter();
-        }
-    })();
+    }
 </script>
 </body> 
 </html>

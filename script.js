@@ -1,549 +1,481 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Djomoa - محرك المزامنة الزمنية المطلق</title>
-    <style>
-        /* ===== المتغيرات ===== */
-        :root {
-            --gold: #d4af37;
-            --gold-light: #e9c468;
-            --gold-dark: #b57c1c;
-            --bg-primary: #0a0f1e;
-            --bg-secondary: #0c1222;
-            --text-primary: #e8edf5;
-            --text-secondary: #b9c7d9;
-        }
+/* ================================================================
+   الأسطرلاب الزمني | Astrolabe Chronos Pro
+   ملف الجافا سكريبت الرئيسي - محرك المحاكاة المتقدم
+   ================================================================ */
 
-        /* ===== إعادة تعيين ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+// ================================================================
+//  CLASS: AstrolabeEngine
+// ================================================================
 
-        /* ===== الجسم ===== */
-        body {
-            background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
-            font-family: 'Segoe UI', 'Tahoma', 'Amiri', 'Times New Roman', serif;
-            color: var(--text-primary);
-            line-height: 1.7;
-            padding: 2rem;
-            min-height: 100vh;
-        }
+class AstrolabeEngine {
+    constructor() {
+        // === الثوابت ===
+        this.TOTAL_DAYS = 18250000; // 50,000 سنة
+        this.MONTHS_SOLAR = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
+            'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'
+        ];
+        this.MONTHS_LUNAR = ['محرم', 'صفر', 'ربيع الأول', 'ربيع الآخر', 'جمادى الأولى',
+            'جمادى الآخرة', 'رجب', 'شعبان', 'رمضان', 'شوال',
+            'ذو القعدة', 'ذو الحجة'
+        ];
+        this.DAY_NAMES = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+        this.MILESTONES = [1000, 5000, 10000, 50000, 100000, 500000, 
+                          1000000, 5000000, 10000000, 15000000, 18000000];
 
-        /* ===== الحاوية ===== */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: rgba(18, 25, 45, 0.8);
-            backdrop-filter: blur(8px);
-            border-radius: 2rem;
-            padding: 2.5rem;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-        }
+        // === الحالة ===
+        this.currentDay = 0;
+        this.isRunning = false;
+        this.intervalId = null;
+        this.speed = 50;
+        this.nextMilestoneIndex = 0;
+        this.speedHistory = [];
+        this.startTime = null;
+        this.isSoundEnabled = true;
+        this.lastTickValue = 0;
 
-        /* ===== البسملة ===== */
-        .basmala {
-            font-size: 2.5rem;
-            font-family: 'Amiri', 'Times New Roman', serif;
-            text-align: center;
-            color: var(--gold);
-            text-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-            margin-bottom: 0.5rem;
-            letter-spacing: 4px;
-        }
+        // === مراجع DOM ===
+        this.elements = {
+            counter: document.getElementById('counterNumber'),
+            progress: document.getElementById('progressFill'),
+            progressPercent: document.getElementById('progressPercent'),
+            elapsedTime: document.getElementById('elapsedTime'),
+            currentSpeed: document.getElementById('currentSpeed'),
+            remainingDays: document.getElementById('remainingDays'),
+            progressInfo: document.getElementById('progressInfo'),
+            solarDayNum: document.getElementById('solarDayNum'),
+            solarMonth: document.getElementById('solarMonth'),
+            solarYear: document.getElementById('solarYear'),
+            solarDayName: document.getElementById('solarDayName'),
+            lunarDayNum: document.getElementById('lunarDayNum'),
+            lunarMonth: document.getElementById('lunarMonth'),
+            lunarYear: document.getElementById('lunarYear'),
+            lunarDayName: document.getElementById('lunarDayName'),
+            statusIndicator: document.getElementById('statusIndicator'),
+            statusText: document.getElementById('statusText'),
+            speedSlider: document.getElementById('speedSlider'),
+            speedValue: document.getElementById('speedValue'),
+            subHours: document.getElementById('subHours'),
+            subMinutes: document.getElementById('subMinutes'),
+            subSeconds: document.getElementById('subSeconds'),
+            subWeeks: document.getElementById('subWeeks'),
+            counterDisplay: document.querySelector('.counter-display'),
+            notification: document.getElementById('notification'),
+            notifMessage: document.getElementById('notifMessage'),
+        };
 
-        /* ===== الآية ===== */
-        .subtitle {
-            text-align: center;
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            font-style: italic;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-            padding-bottom: 0.75rem;
-            margin-bottom: 1.5rem;
-        }
-
-        /* ===== الوصف الرئيسي ===== */
-        .hero-desc {
-            text-align: center;
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: #ffdf8c;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 0.8rem 1.5rem;
-            border-radius: 60px;
-            width: 100%;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(212, 175, 55, 0.15);
-        }
-
-        /* ===== عنوان المشروع ===== */
-        .project-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            text-align: center;
-            color: var(--gold);
-            margin: 1.5rem 0;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--gold);
-            width: 100%;
-        }
-
-        /* ===== العداد ===== */
-        .counter-container {
-            background: linear-gradient(135deg, #1a1f2e, #0f1422);
-            border-radius: 1.5rem;
-            padding: 2.5rem 2rem;
-            margin: 1.5rem 0 2.5rem;
-            text-align: center;
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* تأثير الخلفية المتوهجة */
-        .counter-container::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.03) 0%, transparent 70%);
-            animation: rotateGlow 30s linear infinite;
-            pointer-events: none;
-        }
-
-        @keyframes rotateGlow {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* نبض ذهبي للعداد */
-        @keyframes goldPulse {
-            0%, 100% {
-                text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
-            }
-            50% {
-                text-shadow: 0 0 40px rgba(212, 175, 55, 0.7), 0 0 80px rgba(212, 175, 55, 0.2);
-            }
-        }
-
-        .counter {
-            font-size: 4.5rem;
-            font-weight: 900;
-            font-family: 'Courier New', monospace;
-            color: var(--gold);
-            background: rgba(0, 0, 0, 0.5);
-            display: inline-block;
-            padding: 0.5rem 2rem;
-            border-radius: 1rem;
-            letter-spacing: 6px;
-            min-width: 300px;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            animation: goldPulse 2.5s ease-in-out infinite;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            z-index: 1;
-        }
-
-        .counter:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 40px rgba(212, 175, 55, 0.2);
-        }
-
-        .counter-label {
-            font-size: 1.2rem;
-            color: #e6d5a8;
-            margin-top: 1rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .counter-sub {
-            display: block;
-            color: #7a8aa8;
-            font-size: 0.85rem;
-            margin-top: 0.5rem;
-            position: relative;
-            z-index: 1;
-            letter-spacing: 1px;
-        }
-
-        .counter-badge {
-            display: inline-block;
-            background: rgba(212, 175, 55, 0.12);
-            padding: 0.2rem 1.2rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            color: var(--gold-light);
-            border: 1px solid rgba(212, 175, 55, 0.15);
-            margin-top: 0.8rem;
-            position: relative;
-            z-index: 1;
-            letter-spacing: 2px;
-        }
-
-        /* ===== الأقسام ===== */
-        .section {
-            background: rgba(10, 15, 30, 0.6);
-            border-radius: 1.2rem;
-            padding: 1.5rem 2rem;
-            margin-bottom: 1.5rem;
-            border-right: 4px solid var(--gold);
-            transition: all 0.3s ease;
-        }
-
-        .section:hover {
-            background: rgba(20, 28, 48, 0.8);
-            border-right-width: 6px;
-            transform: translateX(-4px);
-        }
-
-        .section h2 {
-            font-size: 1.4rem;
-            color: #e6c87a;
-            margin-bottom: 0.8rem;
-        }
-
-        .section h2::before {
-            content: "◆";
-            color: var(--gold);
-            margin-left: 10px;
-        }
-
-        .section p {
-            color: #cfdfed;
-            font-size: 1rem;
-        }
-
-        .section ul {
-            list-style: none;
-            padding-right: 1.5rem;
-            margin-top: 0.5rem;
-        }
-
-        .section li {
-            color: #cfdfed;
-            margin: 0.4rem 0;
-            position: relative;
-            padding-right: 1.2rem;
-        }
-
-        .section li::before {
-            content: "▹";
-            color: var(--gold);
-            position: absolute;
-            right: 0;
-        }
-
-        strong {
-            color: #ffdf8c;
-        }
-
-        /* ===== حالة المحرك ===== */
-        .engine-status {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 0.8rem 1.5rem;
-            border-radius: 0.8rem;
-            margin: 1rem 0 1.5rem;
-            text-align: center;
-            color: #7a9ab5;
-            font-size: 0.9rem;
-            border: 1px solid rgba(212, 175, 55, 0.08);
-            transition: all 0.4s ease;
-        }
-
-        .engine-status.success {
-            color: #7ddf9a;
-            border-color: rgba(125, 223, 154, 0.2);
-        }
-
-        .engine-status.error {
-            color: #ff6b6b;
-            border-color: rgba(255, 107, 107, 0.2);
-        }
-
-        /* ===== التذييل ===== */
-        .footer {
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            text-align: center;
-            border-top: 1px solid rgba(212, 175, 55, 0.15);
-        }
-
-        .copyright {
-            font-size: 0.85rem;
-            color: #8a9ab5;
-            letter-spacing: 0.5px;
-        }
-
-        .developed-by {
-            font-size: 0.8rem;
-            color: #c9b87a;
-            margin-top: 0.3rem;
-            font-family: monospace;
-        }
-
-        .developed-by a {
-            color: var(--gold);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .developed-by a:hover {
-            color: #ffdf8c;
-            text-decoration: underline;
-        }
-
-        /* ===== شريط التمرير ===== */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0f1420;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--gold);
-            border-radius: 10px;
-        }
-
-        /* ===== استجابة ===== */
-        @media (max-width: 768px) {
-            body { padding: 1rem; }
-            .container { padding: 1.5rem; }
-            .basmala { font-size: 1.8rem; }
-            .hero-desc { font-size: 1.1rem; }
-            .counter { 
-                font-size: 2.8rem; 
-                min-width: 200px;
-                padding: 0.4rem 1rem;
-                letter-spacing: 3px;
-            }
-            .section { padding: 1rem 1.2rem; }
-            .section h2 { font-size: 1.2rem; }
-            .project-title { font-size: 1.4rem; }
-        }
-
-        @media (max-width: 480px) {
-            .counter { 
-                font-size: 2rem; 
-                min-width: 160px;
-                padding: 0.3rem 0.8rem;
-                letter-spacing: 2px;
-            }
-            .counter-container { padding: 1.5rem 1rem; }
-            .basmala { font-size: 1.5rem; }
-        }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <!-- ===== البسملة ===== -->
-    <div class="basmala">﷽</div>
-
-    <!-- ===== الآية ===== -->
-    <p class="subtitle">﴿ لِتَعْلَمُوا عَدَدَ السِّنِينَ وَالْحِسَابَ ﴾</p>
-
-    <!-- ===== الوصف ===== -->
-    <p class="hero-desc">مشروع Djomoa للمزامنة الزمنية المطلقة</p>
-
-    <!-- ===== العنوان ===== -->
-    <div class="project-title">⚙️ محرك المزامنة الزمنية المطلق</div>
-
-    <!-- ===== العداد ===== -->
-    <div class="counter-container">
-        <div class="counter" id="syncCounter">0</div>
-        <p class="counter-label">مليون يوم من التزامن المطلق</p>
-        <span class="counter-sub">قدرة تشغيلية: 50,000 سنة زمنية متصلة</span>
-        <span class="counter-badge">⚡ ZERO DRIFT</span>
-    </div>
-
-    <!-- ===== الأقسام ===== -->
-    <div class="section">
-        <h2>الملخص التنفيذي</h2>
-        <p>مشروع Djomoa هو محرك حسابي متطور يعتمد على الثوابت الفلكية القطعية لتقديم تزامن زمني لحظي ودقيق بين التقاويم الشمسية والقمرية. النظام مصمم ليكون "العمود الفقري" لأي منصة رقمية تتطلب دقة تاريخية لا تقبل الخطأ.</p>
-    </div>
-
-    <div class="section">
-        <h2>الهندسة المعمارية</h2>
-        <p><strong>المحرك:</strong> مبني على خوارزمية Fixed-Cycle Synchronization التي تضمن عدم حدوث أي انزياح تراكمي.</p>
-        <p><strong>المرجعية:</strong> يستخدم ملف master_origin.json كقاعدة بيانات تحتوي على الثوابت الفلكية.</p>
-        <p><strong>الاستقلالية:</strong> نظام مغلق يعمل محلياً بكفاءة تامة.</p>
-    </div>
-
-    <div class="section">
-        <h2>القدرة الاستيعابية</h2>
-        <p>قادر على معالجة 50,000 سنة من البيانات الزمنية المتصلة، أي أكثر من 18,250,000 يوم من المزامنة الدقيقة.</p>
-        <ul>
-            <li><strong>الاستقرار:</strong> تزامن كامل دون انزياح واحد (Zero Drift).</li>
-            <li><strong>الكفاءة:</strong> استخراج أي تاريخ في جزء من الثانية.</li>
-        </ul>
-    </div>
-
-    <div class="section">
-        <h2>القيمة التقنية</h2>
-        <ul>
-            <li><strong>الموثوقية:</strong> دقة مطلقة لأي حدث تاريخي أو مستقبلي.</li>
-            <li><strong>الأداء:</strong> استجابة لحظية (Zero-Latency).</li>
-            <li><strong>التوافق:</strong> قابل للدمج مع أي منصة (API-Ready).</li>
-        </ul>
-    </div>
-
-    <div class="section">
-        <h2>التميز والفرادة</h2>
-        <p>إنجاز تقني غير مسبوق عالمياً. لم يسبق لأي نظام أن حقق هذا المستوى من التزامن المزدوج الدقيق على مدى 50,000 سنة في نطاق برمجي موحد ومستقل.</p>
-    </div>
-
-    <div class="section">
-        <h2>الهدف الاستراتيجي</h2>
-        <p>تقديم "وحدة معالجة زمنية" يمكن للشركات الكبرى اعتمادها كمعيار تقني لتوحيد وتوثيق الزمن في التطبيقات العالمية.</p>
-    </div>
-
-    <!-- ===== حالة المحرك ===== -->
-    <div class="engine-status" id="engineStatus">⏳ جاري تهيئة المحرك...</div>
-
-    <!-- ===== التذييل ===== -->
-    <div class="footer">
-        <div class="copyright">© 2026 Djomoa Project</div>
-        <div class="developed-by">
-            developed by <a href="#">@nemimeche benaissa</a>
-        </div>
-    </div>
-</div>
-
-<!-- ===== JavaScript ===== -->
-<script type="module">
-    // ==========================================
-    // 1. استيراد المحرك الرئيسي
-    // ==========================================
-    import { MasterEngine } from './Master_Engine.js';
-
-    // ==========================================
-    // 2. عناصر الصفحة
-    // ==========================================
-    const counterEl = document.getElementById('syncCounter');
-    const statusEl = document.getElementById('engineStatus');
-
-    // ==========================================
-    // 3. دالة تهيئة المحرك
-    // ==========================================
-    async function initializeEngine() {
-        try {
-            const engine = new MasterEngine();
-            const result = engine.calc(50000);
-            console.log('✅ المحرك يعمل:', result);
-
-            if (statusEl) {
-                statusEl.textContent = '✅ المحرك الرئيسي نشط وجاهز للعمل';
-                statusEl.className = 'engine-status success';
-            }
-            return { success: true, engine, result };
-        } catch (error) {
-            console.error('❌ خطأ في المحرك:', error);
-            if (statusEl) {
-                statusEl.textContent = `❌ ${error.message}`;
-                statusEl.className = 'engine-status error';
-            }
-            return { success: false, error };
-        }
+        // === تهيئة ===
+        this.loadState();
+        this.init();
     }
 
-    // ==========================================
-    // 4. دالة تشغيل العداد
-    // ==========================================
-    function startCounter(element, target = 18250000, duration = 2500) {
-        if (!element) return null;
+    // ---------- التهيئة ----------
+    init() {
+        this.updateDisplay();
 
-        let start = null;
-        let id = null;
-
-        const update = (timestamp) => {
-            if (!start) start = timestamp;
-            const progress = Math.min(1, (timestamp - start) / duration);
-            const eased = 1 - Math.pow(1 - progress, 3);
-            const current = Math.floor(target * eased);
-
-            if (current >= target) {
-                element.textContent = target.toLocaleString();
-                return;
+        // ربط سرعة المحاكاة
+        this.elements.speedSlider.addEventListener('input', (e) => {
+            this.speed = parseInt(e.target.value);
+            this.elements.speedValue.textContent = this.speed + 'x';
+            if (this.isRunning) {
+                this.pause();
+                this.start();
             }
+        });
 
-            element.textContent = current.toLocaleString();
-            id = requestAnimationFrame(update);
+        // حفظ الحالة تلقائياً كل 5 ثوانٍ
+        setInterval(() => this.saveState(), 5000);
+
+        // إغلاق الإشعار بالنقر
+        this.elements.notification.addEventListener('click', () => {
+            this.elements.notification.classList.remove('show');
+        });
+
+        // تحديث شريط التقدم في معلومات إضافية
+        this.updateProgressInfo();
+
+        // اختصارات لوحة المفاتيح
+        document.addEventListener('keydown', (e) => {
+            if (e.key === ' ' || e.key === 'Space') {
+                e.preventDefault();
+                this.isRunning ? this.pause() : this.start();
+            }
+            if (e.key === 'r' || e.key === 'R') resetEngine();
+            if (e.key === 'f' || e.key === 'F') toggleFullscreen();
+            if (e.key === 'd' || e.key === 'D') addDays(10000);
+            if (e.key === 't' || e.key === 'T') toggleTheme();
+            if (e.key === 's' || e.key === 'S') toggleSound();
+        });
+
+        console.log('🚀 الأسطرلاب الزمني Pro v3.5');
+        console.log('📅 الهدف: ' + this.TOTAL_DAYS.toLocaleString() + ' يوم');
+        console.log('⌨️  اختصارات: [Space] تشغيل/إيقاف  [R] إعادة ضبط  [F] ملء شاشة  [D] +10k  [T] تبديل الوضع  [S] صوت');
+    }
+
+    // ---------- دوال التقويم ----------
+    daysToSolar(d) {
+        const base = new Date(2000, 0, 1);
+        const dt = new Date(base.getTime() + d * 86400000);
+        return {
+            year: dt.getFullYear(),
+            month: this.MONTHS_SOLAR[dt.getMonth()],
+            day: dt.getDate(),
+            dayName: this.DAY_NAMES[dt.getDay()]
         };
+    }
 
-        const startCounterFn = () => {
-            if (id) cancelAnimationFrame(id);
-            start = null;
-            id = requestAnimationFrame(update);
+    daysToLunar(d) {
+        const baseLunar = new Date(1999, 3, 17);
+        const dt = new Date(baseLunar.getTime() + d * 86400000);
+        const lunarYear = 1420 + Math.floor(d / 354.367);
+        const dayInYear = d % 354.367;
+        const monthIndex = Math.floor(dayInYear / 29.53);
+        const dayOfMonth = Math.floor(dayInYear % 29.53) + 1;
+        return {
+            year: lunarYear,
+            month: this.MONTHS_LUNAR[monthIndex % 12] || 'محرم',
+            day: dayOfMonth,
+            dayName: this.DAY_NAMES[dt.getDay()]
         };
+    }
 
-        // بدء العداد
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', startCounterFn);
+    // ---------- عرض الإشعار ----------
+    showNotification(message, icon = '🎯') {
+        this.elements.notifMessage.textContent = message;
+        document.querySelector('.notif-icon').textContent = icon;
+        this.elements.notification.classList.add('show');
+        clearTimeout(this.elements.notification._timer);
+        this.elements.notification._timer = setTimeout(() => {
+            this.elements.notification.classList.remove('show');
+        }, 4000);
+    }
+
+    // ---------- تحديث واجهة المستخدم ----------
+    updateDisplay() {
+        const d = this.currentDay;
+
+        // العداد الرئيسي مع تأثير
+        const newValue = d.toLocaleString();
+        if (this.elements.counter.textContent !== newValue) {
+            this.elements.counter.textContent = newValue;
+            this.elements.counter.classList.remove('bump');
+            void this.elements.counter.offsetWidth;
+            this.elements.counter.classList.add('bump');
+        }
+
+        // شريط التقدم
+        const progress = Math.min((d / this.TOTAL_DAYS) * 100, 100);
+        this.elements.progress.style.width = progress + '%';
+        this.elements.progressPercent.textContent = progress.toFixed(2) + '%';
+        this.elements.elapsedTime.textContent = d.toLocaleString();
+
+        // الأيام المتبقية
+        const remaining = Math.max(0, this.TOTAL_DAYS - d);
+        this.elements.remainingDays.textContent = remaining.toLocaleString();
+
+        // العداد الفرعي (ساعات، دقائق، ثواني، أسابيع)
+        const totalSeconds = Math.floor(d * 86400);
+        const hours = Math.floor(totalSeconds / 3600) % 24;
+        const minutes = Math.floor(totalSeconds / 60) % 60;
+        const seconds = totalSeconds % 60;
+        const weeks = Math.floor(d / 7);
+
+        this.elements.subHours.textContent = String(hours).padStart(2, '0');
+        this.elements.subMinutes.textContent = String(minutes).padStart(2, '0');
+        this.elements.subSeconds.textContent = String(seconds).padStart(2, '0');
+        this.elements.subWeeks.textContent = weeks.toLocaleString();
+
+        // تحديث التقويم الشمسي
+        const solar = this.daysToSolar(d);
+        this.elements.solarDayNum.textContent = solar.year;
+        this.elements.solarMonth.textContent = solar.month;
+        this.elements.solarYear.textContent = solar.day;
+        this.elements.solarDayName.textContent = solar.dayName;
+
+        // تحديث التقويم القمري
+        const lunar = this.daysToLunar(d);
+        this.elements.lunarDayNum.textContent = lunar.year;
+        this.elements.lunarMonth.textContent = lunar.month;
+        this.elements.lunarYear.textContent = lunar.day;
+        this.elements.lunarDayName.textContent = lunar.dayName;
+
+        // تحديث معلومات التقدم
+        this.updateProgressInfo();
+
+        // توهج متناغم مع القيمة
+        const counterDisplay = this.elements.counterDisplay;
+        counterDisplay.className = 'counter-display';
+        if (d > 5000000) {
+            counterDisplay.classList.add('glow-gold');
+        } else if (d > 1000000) {
+            counterDisplay.classList.add('glow-blue');
+        } else if (d > 100000) {
+            counterDisplay.classList.add('glow-purple');
+        }
+
+        // تحديث حالة المحرك
+        if (this.isRunning) {
+            this.elements.statusIndicator.className = 'status-indicator running';
+            this.elements.statusText.textContent = 'يعمل';
         } else {
-            startCounterFn();
+            this.elements.statusIndicator.className = 'status-indicator paused';
+            this.elements.statusText.textContent = 'متوقف';
         }
 
-        // إرجاع دالة لإيقاف العداد
-        return () => {
-            if (id) {
-                cancelAnimationFrame(id);
-                id = null;
+        // التحقق من النقاط المرجعية
+        if (this.nextMilestoneIndex < this.MILESTONES.length &&
+            d >= this.MILESTONES[this.nextMilestoneIndex]) {
+            const milestone = this.MILESTONES[this.nextMilestoneIndex];
+            this.showNotification(
+                `🏆 تم الوصول إلى ${milestone.toLocaleString()} يوم!`,
+                '🏆'
+            );
+            this.nextMilestoneIndex++;
+            
+            // صوت عند تحقيق الهدف (إذا كان الصوت مفعل)
+            if (this.isSoundEnabled) {
+                this.playBeep(800, 200);
             }
-        };
+        }
+
+        // تحديث عنوان الصفحة
+        document.title = `الأسطرلاب الزمني | ${d.toLocaleString()} يوم`;
     }
 
-    // ==========================================
-    // 5. دالة رئيسية لتشغيل كل شيء
-    // ==========================================
-    async function main() {
-        // تهيئة المحرك
-        await initializeEngine();
+    updateProgressInfo() {
+        const progress = Math.min((this.currentDay / this.TOTAL_DAYS) * 100, 100);
+        document.getElementById('progressInfo').textContent = progress.toFixed(2) + '%';
+    }
 
-        // تشغيل العداد
-        if (counterEl) {
-            startCounter(counterEl);
+    // ---------- تأثير التموج ----------
+    createRipple() {
+        const container = this.elements.counterDisplay;
+        if (!container) return;
+        const rect = container.getBoundingClientRect();
+        const x = rect.left + rect.width / 2;
+        const y = rect.top + rect.height / 2;
+
+        const ripple = document.createElement('div');
+        ripple.className = 'ripple-effect';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        ripple.style.width = '0';
+        ripple.style.height = '0';
+        document.body.appendChild(ripple);
+
+        setTimeout(() => ripple.remove(), 2400);
+    }
+
+    // ---------- الصوت ----------
+    playBeep(frequency = 600, duration = 150) {
+        try {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            oscillator.frequency.value = frequency;
+            oscillator.type = 'sine';
+            gainNode.gain.value = 0.08;
+            oscillator.start();
+            setTimeout(() => {
+                oscillator.stop();
+                audioCtx.close();
+            }, duration);
+        } catch (e) { /* تجاهل إذا لم يدعم المتصفح */ }
+    }
+
+    // ---------- محرك المحاكاة ----------
+    tick() {
+        if (!this.isRunning) return;
+
+        const now = Date.now();
+        const delta = (now - this.startTime) / 1000;
+        this.startTime = now;
+
+        // حساب الخطوة حسب السرعة
+        const step = Math.max(1, Math.floor(this.speed / 2));
+        this.currentDay += step;
+
+        // حساب السرعة الفعلية
+        const speedVal = Math.round(step / (delta || 0.1));
+        this.speedHistory.push(speedVal);
+        if (this.speedHistory.length > 10) this.speedHistory.shift();
+        const avgSpeed = Math.round(this.speedHistory.reduce((a, b) => a + b, 0) / this.speedHistory.length);
+        this.elements.currentSpeed.textContent = avgSpeed;
+
+        // تأثير تموج كل 500 يوم
+        if (this.currentDay % 500 === 0 && this.currentDay > 0) {
+            this.createRipple();
+        }
+
+        if (this.currentDay > this.TOTAL_DAYS) {
+            this.currentDay = this.TOTAL_DAYS;
+            this.updateDisplay();
+            this.pause();
+            this.showNotification('🌟 تم تحقيق الهدف النهائي! 18,250,000 يوم', '🌟');
+            if (this.isSoundEnabled) {
+                this.playBeep(1000, 400);
+                setTimeout(() => this.playBeep(1200, 400), 200);
+            }
+            return;
+        }
+
+        this.updateDisplay();
+    }
+
+    // ---------- وظائف التحكم ----------
+    start() {
+        if (this.isRunning) return;
+        if (this.currentDay >= this.TOTAL_DAYS) {
+            this.currentDay = 0;
+            this.nextMilestoneIndex = 0;
+            this.updateDisplay();
+        }
+        this.isRunning = true;
+        this.startTime = Date.now();
+        const intervalMs = Math.max(20, 120 - this.speed * 0.4);
+        this.intervalId = setInterval(() => this.tick(), intervalMs);
+        this.updateDisplay();
+        this.showNotification('🚀 تم تشغيل المحرك الزمني', '🚀');
+        if (this.isSoundEnabled) {
+            this.playBeep(500, 100);
         }
     }
 
-    // ==========================================
-    // 6. تشغيل التطبيق
-    // ==========================================
-    main();
-
-    // ==========================================
-    // 7. دالة إضافية: إعادة تشغيل العداد عند الطلب
-    // ==========================================
-    window.restartCounter = function() {
-        if (counterEl) {
-            // إعادة تعيين العداد إلى 0
-            counterEl.textContent = '0';
-            // إعادة تشغيل العداد
-            startCounter(counterEl);
+    pause() {
+        this.isRunning = false;
+        if (this.intervalId) {
+            clearInterval(this.intervalId);
+            this.intervalId = null;
         }
-    };
+        this.updateDisplay();
+        if (this.isSoundEnabled) {
+            this.playBeep(400, 80);
+        }
+    }
 
-    // ==========================================
-    // 8. دالة إضافية: عرض معلومات المحرك في console
-    // ==========================================
-    window.showEngineInfo = async function() {
-        const result = await initializeEngine();
-        console.log('معلومات المحرك:', result);
-        return result;
-    };
+    reset() {
+        this.pause();
+        this.currentDay = 0;
+        this.nextMilestoneIndex = 0;
+        this.speedHistory = [];
+        this.elements.currentSpeed.textContent = '0';
+        this.updateDisplay();
+        this.showNotification('🔄 تم إعادة ضبط العدادات', '🔄');
+        if (this.isSoundEnabled) {
+            this.playBeep(300, 150);
+        }
+    }
 
-    console.log('✅ Djomoa جاهز!');
-    console.log('📌 استخدم window.restartCounter() لإعادة تشغيل العداد');
-    console.log('📌 استخدم window.showEngineInfo() لعرض معلومات المحرك');
-</script>
+    addDays(days) {
+        this.currentDay += days;
+        if (this.currentDay > this.TOTAL_DAYS) this.currentDay = this.TOTAL_DAYS;
+        this.updateDisplay();
+        this.showNotification(`➕ تمت إضافة ${days.toLocaleString()} يوم`, '📈');
+        if (this.isSoundEnabled) {
+            this.playBeep(700, 100);
+        }
+    }
 
-</body>
-</html>
+    // ---------- حفظ واستعادة الحالة ----------
+    saveState() {
+        try {
+            const state = {
+                currentDay: this.currentDay,
+                nextMilestoneIndex: this.nextMilestoneIndex,
+                speed: this.speed,
+                timestamp: Date.now()
+            };
+            localStorage.setItem('astrolabe_state', JSON.stringify(state));
+        } catch (e) { /* تجاهل */ }
+    }
+
+    loadState() {
+        try {
+            const raw = localStorage.getItem('astrolabe_state');
+            if (!raw) return;
+            const state = JSON.parse(raw);
+            this.currentDay = state.currentDay || 0;
+            this.nextMilestoneIndex = state.nextMilestoneIndex || 0;
+            this.speed = state.speed || 50;
+            if (this.elements.speedSlider) {
+                this.elements.speedSlider.value = this.speed;
+                this.elements.speedValue.textContent = this.speed + 'x';
+            }
+        } catch (e) { /* تجاهل */ }
+    }
+}
+
+// ================================================================
+//  تهيئة المحرك
+// ================================================================
+
+const engine = new AstrolabeEngine();
+
+// ================================================================
+//  وظائف التحكم العامة (متاحة من HTML)
+// ================================================================
+
+function startEngine() { engine.start(); }
+function pauseEngine() { engine.pause(); }
+function resetEngine() { engine.reset(); }
+function addDays(d) { engine.addDays(d); }
+
+function updateSpeed(val) {
+    engine.speed = parseInt(val);
+    document.getElementById('speedValue').textContent = engine.speed + 'x';
+    if (engine.isRunning) {
+        engine.pause();
+        engine.start();
+    }
+}
+
+// ================================================================
+//  تبديل الوضع (ليلي/نهاري)
+// ================================================================
+
+let isDayMode = false;
+
+function toggleTheme() {
+    isDayMode = !isDayMode;
+    document.body.classList.toggle('day-mode', isDayMode);
+    const icon = document.querySelector('#themeToggle i');
+    icon.className = isDayMode ? 'fas fa-sun' : 'fas fa-moon';
+    engine.showNotification(isDayMode ? '☀️ الوضع النهاري' : '🌙 الوضع الليلي', '🎨');
+}
+
+// ================================================================
+//  ملء الشاشة
+// ================================================================
+
+function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+    } else {
+        document.exitFullscreen().catch(() => {});
+    }
+}
+
+// ================================================================
+//  تشغيل/إيقاف الصوت
+// ================================================================
+
+function toggleSound() {
+    engine.isSoundEnabled = !engine.isSoundEnabled;
+    const icon = document.querySelector('.sound-toggle i');
+    icon.className = engine.isSoundEnabled ? 'fas fa-volume-up' : 'fas fa-volume-mute';
+    engine.showNotification(
+        engine.isSoundEnabled ? '🔊 تم تشغيل الصوت' : '🔇 تم إيقاف الصوت',
+        '🔊'
+    );
+}
+
+// ================================================================
+//  تهيئة أولية
+// ================================================================
+
+// تحديث واجهة المستخدم
+engine.updateDisplay();
+
+// طباعة اختصارات لوحة المفاتيح
+console.log('⌨️  اختصارات: [Space] تشغيل/إيقاف  [R] إعادة ضبط  [F] ملء شاشة  [D] +10k  [T] تبديل الوضع  [S] صوت');

@@ -1,870 +1,183 @@
-/* ================================================================
-   الأسطرلاب الزمني | Astrolabe Chronos Pro
-   ملف الأنماط الرئيسي
-   ================================================================ */
-
-/* ===== RESET & BASE ===== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-:root {
-    --gold: #d4af37;
-    --gold-light: #f5d76e;
-    --gold-dark: #b8962a;
-    --gold-glow: rgba(212, 175, 55, 0.3);
-    --bg-primary: #0a0e1a;
-    --bg-secondary: rgba(20, 30, 50, 0.85);
-    --text-primary: #f5e6c8;
-    --text-secondary: #b8a88a;
-    --text-muted: #6a5a4a;
-    --border-gold: rgba(212, 175, 55, 0.15);
-    --transition: 0.3s ease;
-    --radius: 24px;
-    --shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+body{
+    background:#030712;
+    color:#fff;
+    font-family:'Cairo',sans-serif;
+    overflow-x:hidden;
 }
 
-html {
-    scroll-behavior: smooth;
+.stars{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background-image:
+    radial-gradient(#ffffff 1px,transparent 1px);
+    background-size:50px 50px;
+    opacity:.12;
+    animation:stars 120s linear infinite;
+    z-index:-2;
 }
 
-body {
-    font-family: 'Amiri', 'Cairo', serif;
-    background: var(--bg-primary);
-    color: var(--text-primary);
-    min-height: 100vh;
-    overflow-x: hidden;
-    position: relative;
-    transition: background 0.8s ease, color 0.8s ease;
+.orb{
+    position:fixed;
+    width:500px;
+    height:500px;
+    border:2px solid rgba(255,215,0,.15);
+    border-radius:50%;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    animation:rotate 60s linear infinite;
+    z-index:-1;
 }
 
-/* ===== وضع ليلي/نهاري ===== */
-body.day-mode {
-    --bg-primary: #f0ebe0;
-    --bg-secondary: rgba(255, 255, 255, 0.92);
-    --text-primary: #1a1a2e;
-    --text-secondary: #4a3f2e;
-    --text-muted: #8a7a6a;
-    --border-gold: rgba(212, 175, 55, 0.25);
+@keyframes rotate{
+    from{transform:translate(-50%,-50%) rotate(0deg);}
+    to{transform:translate(-50%,-50%) rotate(360deg);}
 }
 
-/* ===== خلفية النجوم ===== */
-#stars {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-    z-index: 0;
-    pointer-events: none;
-    transition: opacity 1s ease;
-}
-body.day-mode #stars {
-    opacity: 0.04;
+@keyframes stars{
+    from{transform:translateY(0);}
+    to{transform:translateY(-500px);}
 }
 
-#stars::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: 
-        radial-gradient(2px 2px at 20px 30px, #eee, transparent),
-        radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
-        radial-gradient(2px 2px at 50px 160px, #ddd, transparent),
-        radial-gradient(2px 2px at 90px 40px, rgba(255,255,255,0.6), transparent),
-        radial-gradient(2px 2px at 130px 80px, #fff, transparent),
-        radial-gradient(2px 2px at 160px 30px, rgba(255,255,255,0.7), transparent);
-    background-size: 200px 200px;
-    background-repeat: repeat;
-    animation: twinkle 4s ease-in-out infinite alternate;
+header{
+    padding:30px;
+    text-align:center;
 }
 
-@keyframes twinkle {
-    0% { opacity: 0.3; }
-    100% { opacity: 1; }
+.logo{
+    font-size:42px;
+    font-weight:900;
+    color:#FFD700;
+    text-shadow:0 0 25px #FFD700;
 }
 
-/* ===== الحاوية الرئيسية ===== */
-.container {
-    position: relative;
-    z-index: 1;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1.5rem;
-    background: rgba(10, 14, 26, 0.55);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-radius: var(--radius);
-    border: 1px solid var(--border-gold);
-    transition: all 0.8s ease;
-}
-body.day-mode .container {
-    background: rgba(255, 255, 255, 0.85);
+.subtitle{
+    color:#ccc;
+    margin-top:10px;
 }
 
-/* ===== أزرار التحكم العلوية ===== */
-.top-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.8rem;
-    margin-bottom: 1.5rem;
+.hero{
+    min-height:60vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:20px;
 }
 
-.top-left-controls {
-    display: flex;
-    gap: 0.6rem;
+.hero h1{
+    font-size:72px;
+    color:#FFD700;
 }
 
-.theme-toggle,
-.fullscreen-toggle,
-.sound-toggle {
-    background: rgba(212, 175, 55, 0.1);
-    border: 1px solid var(--border-gold);
-    color: var(--gold);
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: all var(--transition);
-    backdrop-filter: blur(8px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.theme-toggle:hover,
-.fullscreen-toggle:hover,
-.sound-toggle:hover {
-    transform: scale(1.1);
-    background: rgba(212, 175, 55, 0.2);
-    box-shadow: 0 0 30px var(--gold-glow);
+.hero h2{
+    max-width:900px;
+    margin-top:30px;
+    line-height:2;
+    font-weight:300;
 }
 
-.top-right-info {
-    display: flex;
-    gap: 0.8rem;
-    font-size: 0.8rem;
-    color: var(--text-muted);
+button{
+    margin-top:40px;
+    padding:15px 40px;
+    background:#FFD700;
+    border:none;
+    border-radius:40px;
+    cursor:pointer;
+    font-size:18px;
+    font-weight:bold;
 }
 
-.live-badge {
-    background: rgba(46, 204, 113, 0.15);
-    color: #2ecc71;
-    padding: 0.2rem 0.8rem;
-    border-radius: 20px;
-    font-size: 0.7rem;
-    border: 1px solid rgba(46, 204, 113, 0.2);
-}
-.live-badge i {
-    font-size: 0.5rem;
-    animation: pulse-dot 1.5s ease-in-out infinite;
+.stats{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:30px;
+    padding:50px 20px;
 }
 
-.save-indicator {
-    background: rgba(212, 175, 55, 0.08);
-    padding: 0.2rem 0.8rem;
-    border-radius: 20px;
-    border: 1px solid var(--border-gold);
+.card{
+    background:#111827;
+    padding:35px;
+    width:280px;
+    text-align:center;
+    border-radius:20px;
+    box-shadow:0 0 25px rgba(255,215,0,.1);
 }
 
-/* ===== البسملة العريضة ===== */
-.basmala {
-    text-align: center;
-    padding: 1.8rem 0 1.2rem;
-    border-bottom: 1px solid var(--border-gold);
-    margin-bottom: 1.5rem;
+.main{
+    border:1px solid rgba(255,215,0,.3);
 }
 
-.basmala h1 {
-    font-size: 3rem;
-    font-weight: 700;
-    color: var(--gold);
-    text-shadow: 0 0 40px var(--gold-glow);
-    letter-spacing: 4px;
-    font-family: 'Amiri', serif;
-    line-height: 1.4;
+.num,#counter{
+    font-size:46px;
+    color:#FFD700;
+    font-weight:900;
 }
 
-.golden-line {
-    width: 50%;
-    height: 2px;
-    margin: 0.6rem auto;
-    background: linear-gradient(90deg, transparent, var(--gold), var(--gold-light), var(--gold), transparent);
-    border-radius: 2px;
-}
-.golden-line.small {
-    width: 30%;
-    height: 1px;
-    margin: 0.4rem auto;
+.txt{
+    margin-top:10px;
+    color:#bbb;
 }
 
-.basmala .subtitle {
-    font-size: 1.3rem;
-    color: var(--text-secondary);
-    font-style: italic;
-    letter-spacing: 2px;
+.about{
+    max-width:1100px;
+    margin:auto;
+    padding:80px 20px;
+    text-align:center;
 }
 
-.ayah {
-    margin-top: 0.8rem;
-    font-size: 1.2rem;
-    color: var(--text-primary);
-    line-height: 2;
-}
-.ayah-highlight {
-    background: linear-gradient(180deg, transparent 60%, rgba(212, 175, 55, 0.15) 60%);
-    padding: 0 0.3rem;
-}
-.ayah-ref {
-    color: var(--gold);
-    font-size: 0.9rem;
-    font-weight: 700;
-    margin-right: 0.5rem;
+.about h2{
+    color:#FFD700;
+    margin-bottom:40px;
 }
 
-.ayah-sub {
-    margin-top: 0.4rem;
-    font-size: 1.1rem;
-    color: var(--text-secondary);
-}
-.ayah-sub i {
-    color: var(--gold);
-    margin-left: 0.5rem;
+.about p{
+    line-height:2.2;
+    margin:25px 0;
+    color:#ddd;
 }
 
-/* ===== HEADER ===== */
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.5rem 0 1rem;
-    flex-wrap: wrap;
-    gap: 0.8rem;
+.features{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+    padding:50px;
 }
 
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.logo i {
-    font-size: 2rem;
-    color: var(--gold);
-}
-.logo span {
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--text-primary);
-}
-.logo small {
-    font-size: 0.7rem;
-    color: var(--gold);
-    display: block;
-    font-weight: 400;
+.feature{
+    background:#111827;
+    padding:30px;
+    border-radius:20px;
+    transition:.3s;
 }
 
-.header-info {
-    display: flex;
-    gap: 0.8rem;
-    align-items: center;
-    flex-wrap: wrap;
+.feature:hover{
+    transform:translateY(-8px);
+    box-shadow:0 0 20px rgba(255,215,0,.2);
 }
 
-.version {
-    background: rgba(212, 175, 55, 0.1);
-    padding: 0.2rem 1rem;
-    border-radius: 20px;
-    color: var(--gold);
-    font-size: 0.8rem;
-    border: 1px solid var(--border-gold);
+.feature h3{
+    color:#FFD700;
+    margin-bottom:15px;
 }
 
-.badge {
-    background: #1a3a5c;
-    padding: 0.2rem 1rem;
-    border-radius: 20px;
-    color: #7ec8e3;
-    font-size: 0.8rem;
-}
-body.day-mode .badge {
-    background: var(--gold);
-    color: #1a1a2e;
+footer{
+    padding:50px;
+    text-align:center;
+    color:#888;
 }
 
-.status-indicator {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 0.2rem 1rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
-}
-.status-indicator.running {
-    background: rgba(46, 204, 113, 0.12);
-    color: #2ecc71;
-    border: 1px solid rgba(46, 204, 113, 0.15);
-}
-.status-indicator.paused {
-    background: rgba(241, 196, 15, 0.12);
-    color: #f1c40f;
-    border: 1px solid rgba(241, 196, 15, 0.15);
-}
-.status-indicator .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    animation: pulse-dot 1.5s ease-in-out infinite;
-}
-.status-indicator.running .dot {
-    background: #2ecc71;
-}
-.status-indicator.paused .dot {
-    background: #f1c40f;
-    animation: none;
-}
-@keyframes pulse-dot {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.3; transform: scale(0.6); }
-}
-
-/* ===== COUNTER ===== */
-.counter-section {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-gold);
-    border-radius: var(--radius);
-    padding: 2.5rem 1.5rem;
-    margin: 1.5rem 0;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-}
-
-.counter-section::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle at center, rgba(212, 175, 55, 0.03) 0%, transparent 70%);
-    animation: rotate-glow 25s linear infinite;
-    pointer-events: none;
-}
-@keyframes rotate-glow {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.counter-label {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-size: 1.1rem;
-    color: var(--text-secondary);
-    position: relative;
-    z-index: 1;
-}
-.counter-label i {
-    color: var(--gold);
-    font-size: 1.4rem;
-}
-.counter-badge {
-    background: var(--gold);
-    color: #0a0e1a;
-    padding: 0.1rem 0.8rem;
-    border-radius: 20px;
-    font-size: 0.7rem;
-    font-weight: 700;
-}
-
-/* ===== العداد الرئيسي ===== */
-.counter-display {
-    font-size: 5.5rem;
-    font-weight: 900;
-    font-family: 'Cairo', 'Courier New', monospace;
-    letter-spacing: 4px;
-    padding: 0.3rem 0;
-    position: relative;
-    z-index: 1;
-}
-
-.counter-display #counterNumber {
-    background: linear-gradient(180deg, var(--text-primary), var(--gold));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    transition: all 0.3s ease;
-    display: inline-block;
-}
-
-/* توهج العداد المتناغم */
-.counter-display::before {
-    content: '';
-    position: absolute;
-    top: -30%;
-    left: -30%;
-    width: 160%;
-    height: 160%;
-    background: radial-gradient(circle at center, rgba(212, 175, 55, 0.06), transparent 70%);
-    border-radius: 50%;
-    transition: all 0.8s ease;
-    pointer-events: none;
-    z-index: 0;
-}
-.counter-display.glow-gold::before {
-    background: radial-gradient(circle at center, rgba(212, 175, 55, 0.2), transparent 70%);
-    animation: pulse-glow 2s ease-in-out infinite alternate;
-}
-.counter-display.glow-blue::before {
-    background: radial-gradient(circle at center, rgba(100, 180, 255, 0.15), transparent 70%);
-    animation: pulse-glow 1.8s ease-in-out infinite alternate;
-}
-.counter-display.glow-purple::before {
-    background: radial-gradient(circle at center, rgba(180, 100, 255, 0.15), transparent 70%);
-    animation: pulse-glow 2.2s ease-in-out infinite alternate;
-}
-@keyframes pulse-glow {
-    0% { transform: scale(0.9); opacity: 0.5; }
-    100% { transform: scale(1.2); opacity: 1; }
-}
-
-.counter-display .bump {
-    animation: bump 0.15s ease;
-}
-@keyframes bump {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.06); }
-    100% { transform: scale(1); }
-}
-
-/* ===== العداد الفرعي ===== */
-.sub-counter {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    margin-top: 0.5rem;
-    font-size: 0.95rem;
-    color: var(--text-muted);
-    position: relative;
-    z-index: 1;
-    flex-wrap: wrap;
-}
-.sub-counter span {
-    background: rgba(212, 175, 55, 0.05);
-    padding: 0.2rem 1rem;
-    border-radius: 20px;
-    border: 1px solid var(--border-gold);
-    font-family: 'Courier New', monospace;
-}
-.sub-counter .sub-value {
-    color: var(--gold);
-    font-weight: 700;
-    font-size: 1rem;
-    min-width: 30px;
-    display: inline-block;
-}
-
-/* ===== إحصائيات العداد ===== */
-.counter-stats {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    margin-top: 0.8rem;
-    flex-wrap: wrap;
-    position: relative;
-    z-index: 1;
-}
-.counter-stats .stat-item {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-}
-.counter-stats .stat-item strong {
-    color: var(--gold);
-    font-weight: 700;
-}
-
-.counter-target {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-    margin-top: 0.5rem;
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    position: relative;
-    z-index: 1;
-}
-
-.progress-bar {
-    width: 100%;
-    max-width: 500px;
-    height: 6px;
-    background: rgba(255, 255, 255, 0.06);
-    border-radius: 4px;
-    margin: 0 auto;
-    overflow: hidden;
-}
-.progress-bar span {
-    display: block;
-    height: 100%;
-    background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
-    border-radius: 4px;
-    transition: width 0.3s ease;
-}
-
-/* ===== التقويمات ===== */
-.calendars-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin: 1.5rem 0;
-}
-
-.calendar-card {
-    background: var(--bg-secondary);
-    border-radius: 20px;
-    padding: 1.5rem;
-    border: 1px solid var(--border-gold);
-    transition: transform var(--transition), box-shadow var(--transition);
-    position: relative;
-    overflow: hidden;
-}
-.calendar-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow);
-}
-.calendar-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-}
-.calendar-card.solar::before {
-    background: linear-gradient(90deg, transparent, #f39c12, transparent);
-}
-.calendar-card.lunar::before {
-    background: linear-gradient(90deg, transparent, #7ec8e3, transparent);
-}
-
-.card-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 1rem;
-}
-.card-header i {
-    font-size: 1.8rem;
-}
-.calendar-card.solar .card-header i { color: #f39c12; }
-.calendar-card.lunar .card-header i { color: #7ec8e3; }
-.card-header h3 {
-    font-size: 1.2rem;
-    font-weight: 400;
-    color: var(--text-primary);
-}
-
-.card-body {
-    text-align: center;
-}
-
-.date-display {
-    display: flex;
-    justify-content: center;
-    align-items: baseline;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-.date-display span {
-    font-size: 2.4rem;
-    font-weight: 700;
-}
-.date-display .day {
-    color: var(--gold);
-    font-size: 3rem;
-}
-.date-display .month {
-    color: var(--text-primary);
-}
-.date-display .year {
-    color: var(--text-muted);
-    font-size: 1.8rem;
-}
-
-.day-name {
-    margin-top: 0.3rem;
-    font-size: 1.1rem;
-    color: var(--text-secondary);
-}
-
-/* ===== المحرك ===== */
-.engine-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-    background: var(--bg-secondary);
-    padding: 1.2rem 1.5rem;
-    border-radius: 16px;
-    margin: 1.5rem 0;
-    border: 1px solid var(--border-gold);
-}
-
-.control-group {
-    display: flex;
-    gap: 0.8rem;
-    flex-wrap: wrap;
-}
-
-.btn-primary, .btn-secondary, .btn-danger {
-    padding: 0.6rem 1.5rem;
-    border: none;
-    border-radius: 12px;
-    font-size: 0.95rem;
-    font-family: 'Amiri', serif;
-    cursor: pointer;
-    transition: all var(--transition);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-weight: 700;
-}
-.btn-primary {
-    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-    color: #0a0e1a;
-}
-.btn-primary:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 30px var(--gold-glow);
-}
-.btn-secondary {
-    background: rgba(255, 255, 255, 0.04);
-    color: var(--text-primary);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-}
-.btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.08);
-}
-.btn-danger {
-    background: rgba(231, 76, 60, 0.12);
-    color: #e74c3c;
-    border: 1px solid rgba(231, 76, 60, 0.12);
-}
-.btn-danger:hover {
-    background: rgba(231, 76, 60, 0.2);
-}
-
-.speed-control {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    color: var(--text-secondary);
-}
-.speed-control input[type="range"] {
-    width: 130px;
-    height: 4px;
-    -webkit-appearance: none;
-    appearance: none;
-    background: rgba(212, 175, 55, 0.15);
-    border-radius: 4px;
-    outline: none;
-}
-.speed-control input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: var(--gold);
-    cursor: pointer;
-    box-shadow: 0 0 20px var(--gold-glow);
-}
-#speedValue {
-    color: var(--gold);
-    font-weight: 700;
-    min-width: 45px;
-}
-
-/* ===== معلومات إضافية ===== */
-.info-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-    margin: 1.5rem 0;
-}
-.info-card {
-    background: var(--bg-secondary);
-    padding: 1rem;
-    border-radius: 16px;
-    text-align: center;
-    border: 1px solid rgba(212, 175, 55, 0.05);
-    transition: transform var(--transition);
-}
-.info-card:hover {
-    transform: translateY(-3px);
-}
-.info-card i {
-    font-size: 1.6rem;
-    color: var(--gold);
-    margin-bottom: 0.3rem;
-}
-.info-card h4 {
-    color: var(--text-secondary);
-    font-size: 0.8rem;
-    font-weight: 400;
-}
-.info-card p {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--gold);
-    margin: 0.1rem 0;
-}
-.info-card small {
-    color: var(--text-muted);
-    font-size: 0.7rem;
-}
-
-/* ===== الإشعار ===== */
-.notification {
-    position: fixed;
-    top: 80px;
-    right: 20px;
-    z-index: 9999;
-    background: var(--bg-secondary);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--border-gold);
-    padding: 0.8rem 1.2rem;
-    border-radius: 12px;
-    color: var(--text-primary);
-    font-family: 'Amiri', serif;
-    transform: translateX(120%);
-    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-shadow: var(--shadow);
-    max-width: 340px;
-    cursor: pointer;
-}
-.notification.show {
-    transform: translateX(0);
-}
-.notification .notif-icon {
-    margin-left: 8px;
-    font-size: 1.2rem;
-}
-.notification .notif-title {
-    font-weight: 700;
-    color: var(--gold);
-}
-
-/* ===== التموج ===== */
-.ripple-effect {
-    position: fixed;
-    border-radius: 50%;
-    background: rgba(212, 175, 55, 0.06);
-    border: 1px solid rgba(212, 175, 55, 0.04);
-    pointer-events: none;
-    animation: ripple-expand 2.2s ease-out forwards;
-    z-index: 999;
-}
-@keyframes ripple-expand {
-    0% { width: 0; height: 0; opacity: 0.8; }
-    100% { width: 400px; height: 400px; opacity: 0; transform: translate(-50%, -50%); }
-}
-
-/* ===== التذييل ===== */
-footer {
-    margin-top: 2rem;
-    padding: 1.5rem 0 0.5rem;
-    border-top: 1px solid var(--border-gold);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.8rem;
-    color: var(--text-muted);
-    font-size: 0.8rem;
-}
-.footer-links {
-    display: flex;
-    gap: 1rem;
-}
-.footer-links a {
-    color: var(--text-muted);
-    font-size: 1.2rem;
-    transition: color var(--transition);
-}
-.footer-links a:hover {
-    color: var(--gold);
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 992px) {
-    .info-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 768px) {
-    .container { padding: 1rem; }
-    .basmala h1 { font-size: 2rem; }
-    .basmala .subtitle { font-size: 1rem; }
-    .ayah { font-size: 1rem; }
-    .counter-display { font-size: 3.5rem; }
-    .calendars-grid { grid-template-columns: 1fr; }
-    .engine-controls { flex-direction: column; align-items: stretch; }
-    .control-group { justify-content: center; }
-    .speed-control { justify-content: center; }
-    .date-display span { font-size: 1.8rem; }
-    .date-display .day { font-size: 2.4rem; }
-    header { flex-direction: column; align-items: flex-start; }
-    .top-controls { flex-wrap: wrap; }
-    .counter-stats { gap: 0.8rem; }
-    .counter-stats .stat-item { font-size: 0.75rem; }
-    .sub-counter { gap: 0.8rem; font-size: 0.8rem; }
-    .sub-counter span { padding: 0.2rem 0.6rem; }
-}
-
-@media (max-width: 480px) {
-    .counter-display { font-size: 2.5rem; letter-spacing: 2px; }
-    .info-grid { grid-template-columns: 1fr; }
-    .basmala h1 { font-size: 1.5rem; }
-    .btn-primary, .btn-secondary, .btn-danger { padding: 0.5rem 1rem; font-size: 0.85rem; }
-    .theme-toggle, .fullscreen-toggle, .sound-toggle { width: 36px; height: 36px; font-size: 0.9rem; }
-    .date-display span { font-size: 1.4rem; }
-    .date-display .day { font-size: 2rem; }
-    .top-right-info { font-size: 0.65rem; }
-    .sub-counter { gap: 0.5rem; font-size: 0.7rem; }
-    .sub-counter span { padding: 0.1rem 0.4rem; }
-}
-
-/* ===== وضع النهار تحسينات ===== */
-body.day-mode .counter-display::before {
-    opacity: 0.3;
-}
-body.day-mode .sub-counter span {
-    background: rgba(0, 0, 0, 0.03);
-    border-color: rgba(0, 0, 0, 0.08);
-}
-body.day-mode .sub-counter .sub-value {
-    color: var(--gold-dark);
-}
-body.day-mode .btn-secondary {
-    background: rgba(0, 0, 0, 0.04);
-    color: var(--text-primary);
-    border-color: rgba(0, 0, 0, 0.08);
-}
-body.day-mode .btn-secondary:hover {
-    background: rgba(0, 0, 0, 0.08);
-}
-body.day-mode .counter-badge {
-    color: #fff;
+.dev{
+    margin-top:15px;
+    color:#FFD700;
+    font-weight:bold;
 }

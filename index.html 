@@ -1,209 +1,126 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
-    <title>الأسطرلاب الزمني | Astrolabe Chronos Pro</title>
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;700;900&display=swap" rel="stylesheet" />
-    <!-- Styles -->
-    <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الرزمانة الذهبية | الاسترلاب الرقمي للزمن</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
-    <!-- ===== خلفية النجوم ===== -->
-    <div id="stars"></div>
+<div class="stars"></div>
+<div class="orb"></div>
 
-    <!-- ===== إشعار ===== -->
-    <div class="notification" id="notification">
-        <span class="notif-icon">🎯</span>
-        <span class="notif-title">هدف محقق!</span>
-        <span id="notifMessage">تم الوصول إلى 10,000 يوم</span>
+<header>
+    <div class="logo">
+        ✦ الرزمانة الذهبية
     </div>
 
-    <!-- ===== الحاوية الرئيسية ===== -->
-    <div class="container">
+    <div class="subtitle">
+        الاسترلاب الرقمي لدقة الزمن
+    </div>
+</header>
 
-        <!-- ===== أزرار التحكم العلوية ===== -->
-        <div class="top-controls">
-            <div class="top-left-controls">
-                <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle" aria-label="تبديل الوضع">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <button class="fullscreen-toggle" onclick="toggleFullscreen()" aria-label="ملء الشاشة">
-                    <i class="fas fa-expand"></i>
-                </button>
-                <button class="sound-toggle" onclick="toggleSound()" aria-label="تشغيل الصوت">
-                    <i class="fas fa-volume-up"></i>
-                </button>
-            </div>
-            <div class="top-right-info">
-                <span class="live-badge"><i class="fas fa-circle"></i> مباشر</span>
-                <span class="save-indicator"><i class="fas fa-save"></i> حفظ تلقائي</span>
-            </div>
-        </div>
+<section class="hero">
 
-        <!-- ===== البسملة العريضة ===== -->
-        <div class="basmala">
-            <h1>بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</h1>
-            <div class="golden-line"></div>
-            <p class="subtitle">وَجَعَلْنَا اللَّيْلَ وَالنَّهَارَ آيَتَيْنِ</p>
-            <div class="golden-line small"></div>
-            <p class="ayah">
-                <span class="ayah-highlight">وَمَا أَعْمَرْنَاهُ مِنْ عُمُرٍ</span>
-                <span class="ayah-highlight">وَلَا نُنَكِّسْهُ فِي الْخَلْقِ</span>
-                <span class="ayah-ref">(يس: 68)</span>
-            </p>
-            <p class="ayah-sub">
-                <i class="fas fa-clock"></i>
-                لِيَعْلَمُوا عَدَدَ السِّنِينَ وَالْحِسَابَ
-                <span class="ayah-ref">(يونس: 5)</span>
-            </p>
-        </div>
+    <h1>الرزمانة الذهبية</h1>
 
-        <!-- ===== الرأس ===== -->
-        <header>
-            <div class="logo">
-                <i class="fas fa-crown"></i>
-                <span>الأسطرلاب الزمني</span>
-                <small>Astrolabe Chronos Pro</small>
-            </div>
-            <div class="header-info">
-                <span class="version">v3.5</span>
-                <span class="badge">🔬 بحثي متقدم</span>
-                <span class="status-indicator paused" id="statusIndicator">
-                    <span class="dot"></span>
-                    <span id="statusText">متوقف</span>
-                </span>
-            </div>
-        </header>
+    <h2>
+        مشروع حسابي وفلكي مستوحى من الإرث العلمي للاستُرلاب،
+        يهدف إلى تحقيق التزامن الرياضي بين الزمن الشمسي
+        والزمن القمري عبر نطاق زمني يمتد إلى خمسين ألف سنة.
+    </h2>
 
-        <!-- ===== العداد الرئيسي ===== -->
-        <section class="counter-section">
-            <div class="counter-label">
-                <i class="fas fa-clock"></i>
-                <span>عدد الأيام المحاكاة</span>
-                <span class="counter-badge">18.25 مليون</span>
-            </div>
-            
-            <div class="counter-display" id="counterDisplay">
-                <span id="counterNumber">0</span>
-            </div>
+    <button onclick="goProject()">
+        استكشف المشروع
+    </button>
 
-            <!-- العداد الفرعي -->
-            <div class="sub-counter" id="subCounter">
-                <span>🕐 <span class="sub-value" id="subHours">00</span> س</span>
-                <span>⏱️ <span class="sub-value" id="subMinutes">00</span> د</span>
-                <span>⏲️ <span class="sub-value" id="subSeconds">00</span> ث</span>
-                <span>📅 <span class="sub-value" id="subWeeks">0</span> أسبوع</span>
-            </div>
+</section>
 
-            <div class="counter-stats">
-                <span class="stat-item">⏱️ <strong id="elapsedTime">0</strong> يوم</span>
-                <span class="stat-item">📈 <strong id="progressPercent">0%</strong></span>
-                <span class="stat-item">⚡ <strong id="currentSpeed">0</strong> يوم/ث</span>
-                <span class="stat-item">🎯 <strong id="remainingDays">18,250,000</strong> متبقي</span>
-            </div>
+<section class="stats">
 
-            <div class="counter-target">
-                <span>الهدف: 18,250,000 يوم (≈ 50,000 سنة)</span>
-                <div class="progress-bar">
-                    <span id="progressFill" style="width:0%"></span>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== التقويمات ===== -->
-        <section class="calendars-grid">
-            <div class="calendar-card solar">
-                <div class="card-header">
-                    <i class="fas fa-sun"></i>
-                    <h3>التقويم الشمسي</h3>
-                </div>
-                <div class="card-body">
-                    <div class="date-display" id="solarDate">
-                        <span class="day" id="solarDayNum">2000</span>
-                        <span class="month" id="solarMonth">يناير</span>
-                        <span class="year" id="solarYear">1</span>
-                    </div>
-                    <div class="day-name" id="solarDayName">السبت</div>
-                </div>
-            </div>
-            <div class="calendar-card lunar">
-                <div class="card-header">
-                    <i class="fas fa-moon"></i>
-                    <h3>التقويم القمري</h3>
-                </div>
-                <div class="card-body">
-                    <div class="date-display" id="lunarDate">
-                        <span class="day" id="lunarDayNum">1420</span>
-                        <span class="month" id="lunarMonth">محرم</span>
-                        <span class="year" id="lunarYear">1</span>
-                    </div>
-                    <div class="day-name" id="lunarDayName">السبت</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== المحرك ===== -->
-        <section class="engine-controls">
-            <div class="control-group">
-                <button onclick="startEngine()" class="btn-primary"><i class="fas fa-play"></i> تشغيل</button>
-                <button onclick="pauseEngine()" class="btn-secondary"><i class="fas fa-pause"></i> إيقاف</button>
-                <button onclick="resetEngine()" class="btn-danger"><i class="fas fa-undo"></i> إعادة ضبط</button>
-                <button onclick="addDays(10000)" class="btn-secondary"><i class="fas fa-plus"></i> +10k</button>
-                <button onclick="addDays(100000)" class="btn-secondary"><i class="fas fa-plus-circle"></i> +100k</button>
-            </div>
-            <div class="speed-control">
-                <label><i class="fas fa-tachometer-alt"></i> السرعة</label>
-                <input type="range" min="1" max="300" value="50" id="speedSlider" oninput="updateSpeed(this.value)" />
-                <span id="speedValue">50x</span>
-            </div>
-        </section>
-
-        <!-- ===== معلومات إضافية ===== -->
-        <section class="info-grid">
-            <div class="info-card">
-                <i class="fas fa-history"></i>
-                <h4>المدى الزمني</h4>
-                <p>50,000</p>
-                <small>سنة</small>
-            </div>
-            <div class="info-card">
-                <i class="fas fa-bullseye"></i>
-                <h4>الدقة</h4>
-                <p>99.9999%</p>
-                <small>معادلات فلكية</small>
-            </div>
-            <div class="info-card">
-                <i class="fas fa-database"></i>
-                <h4>الأحداث</h4>
-                <p id="eventCount">1,247</p>
-                <small>حدث موثق</small>
-            </div>
-            <div class="info-card">
-                <i class="fas fa-calendar-check"></i>
-                <h4>التقدم</h4>
-                <p id="progressInfo">0%</p>
-                <small>نحو الهدف</small>
-            </div>
-        </section>
-
-        <!-- ===== التذييل ===== -->
-        <footer>
-            <p>© 2026 الأسطرلاب الزمني - مشروع بحثي لتوحيد التواريخ البشرية</p>
-            <div class="footer-links">
-                <a href="#"><i class="fab fa-github"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fas fa-envelope"></i></a>
-            </div>
-        </footer>
+    <div class="card">
+        <div class="num">50,000</div>
+        <div class="txt">سنة محسوبة</div>
     </div>
 
-    <!-- ===== JavaScript ===== -->
-    <script src="script.js"></script>
+    <div class="card main">
+        <div id="counter">0</div>
+        <div class="txt">يوم تمت معالجته</div>
+    </div>
+
+    <div class="card">
+        <div class="num">2</div>
+        <div class="txt">أنظمة زمنية متزامنة</div>
+    </div>
+
+</section>
+
+<section id="project" class="about">
+
+    <h2>حول المشروع</h2>
+
+    <p>
+        الرزمانة الذهبية هي مشروع بحثي وحسابي يهدف إلى دراسة
+        العلاقة الرياضية والفلكية بين التقويم الشمسي والتقويم القمري
+        باستخدام خوارزمية هندسية متقدمة تعتمد على التزامن الزمني طويل المدى.
+    </p>
+
+    <p>
+        يعالج المشروع أكثر من <strong>18,250,000</strong> يوم
+        موزعة على <strong>50,000</strong> سنة،
+        بهدف تحليل الأنماط الزمنية والدورات الفلكية
+        واكتشاف العلاقات الرياضية الدقيقة بين النظامين.
+    </p>
+
+    <p>
+        يستلهم المشروع فلسفته من الاسترلاب،
+        أحد أعظم إنجازات الحضارة العلمية الإسلامية،
+        ليقدم نموذجاً رقمياً حديثاً يجمع بين التراث العلمي
+        والحوسبة المعاصرة.
+    </p>
+
+</section>
+
+<section class="features">
+
+    <div class="feature">
+        <h3>☀️ التقويم الشمسي</h3>
+        <p>حسابات دقيقة للدورات الشمسية طويلة المدى.</p>
+    </div>
+
+    <div class="feature">
+        <h3>🌙 التقويم القمري</h3>
+        <p>محاكاة كاملة للدورات القمرية والسنوات الهجرية.</p>
+    </div>
+
+    <div class="feature">
+        <h3>⚙️ الخوارزمية الهندسية</h3>
+        <p>معالجة ملايين العمليات الحسابية الزمنية.</p>
+    </div>
+
+    <div class="feature">
+        <h3>🛰️ الاسترلاب الرقمي</h3>
+        <p>جسر بين التراث العلمي الإسلامي والحوسبة الحديثة.</p>
+    </div>
+
+</section>
+
+<footer>
+    <div>
+        © 2026 مشروع الرزمانة الذهبية
+    </div>
+
+    <div class="dev">
+        Developed by Nemimeche Benaissa
+    </div>
+</footer>
+
+<script src="script.js"></script>
+
 </body>
 </html>

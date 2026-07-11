@@ -32,3 +32,10 @@ I built 'Djomoa,' a lightweight, high-precision temporal engine deployed on Clou
 ​Infrastructure: Serverless architecture that processes millions of days of chronological data with near-zero latency.
 ​The 'Mobile-First' Edge: Interestingly, the entire architecture and deployment pipeline were developed and managed using only a smartphone (Termux/Node.js/Cloudflare Dashboard).
 ​I am sharing this to get feedback from the HN community on the mathematical approach to calendar synchronization and to demonstrate what can be achieved with mobile-first development workflows.
+
+     ╔══════════════════════════════════════╗
+║   DIGITAL ASTROLABE ENGINE           ║
+║   Temporal Database System           ║
+║   Epoch-Based Time Architecture      ║
+║   © 2026 Benaissa Nemimeche          ║
+╚══════════════════════════════════════╝
